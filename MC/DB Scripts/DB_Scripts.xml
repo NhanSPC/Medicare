@@ -1,0 +1,3351 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Root>
+  <Reference>
+    <DBO name="pbs_MC_APPOINTMENT_{XXX}" type="U">
+      <Install>
+        IF NOT EXISTS (SELECT * FROM dbo.sysobjects WHERE id=OBJECT_ID(N'dbo.[pbs_MC_APPOINTMENT_{XXX}]'))
+        BEGIN
+        CREATE TABLE [dbo].[pbs_MC_APPOINTMENT_{XXX}](
+	        [LINE_NO] [int] IDENTITY(1,1) NOT NULL,
+	        [CLINIC_CODE] [varchar](15) NOT NULL,
+	        [PATIENT_CODE] [varchar](15) NOT NULL,
+	        [NAME] [nvarchar](50) NOT NULL,
+	        [DOB] [int] NOT NULL,
+	        [GENDER] [char](1) NOT NULL,
+	        [PHONE] [varchar](20) NOT NULL,
+	        [EMAIL] [varchar](200) NOT NULL,
+	        [ADDRESS] [nvarchar](50) NOT NULL,
+	        [WARD] [varchar](15) NOT NULL,
+	        [DISTRICT] [varchar](15) NOT NULL,
+	        [CITY] [varchar](15) NOT NULL,
+	        [STATUS] [nvarchar](50) NOT NULL,
+	        [CREATE_DATE] [int] NOT NULL,
+	        [APPOINTMENT_DATE] [int] NOT NULL,
+	        [APPOINTMENT_TYPE] [nvarchar](50) NOT NULL,
+	        [REMINDER_DATE] [int] NOT NULL,
+	        [NOTES] [nvarchar](2000) NOT NULL,
+	        [UPDATED] [int] NOT NULL,
+	        [UPDATED_BY] [varchar](15) NOT NULL,
+	        [TIME_STAMP] [timestamp] NULL,
+         CONSTRAINT [PK_pbs_MC_APPOINTMENT_{XXX}] PRIMARY KEY CLUSTERED 
+        (
+	        [LINE_NO] ASC
+        ))
+        END
+      </Install>
+    </DBO>
+    <DBO name="pbs_MC_APPOINTMENT_{XXX}_Insert" type="P">
+      <Install>
+        IF NOT EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'[dbo].[pbs_MC_APPOINTMENT_{XXX}_Insert]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+        BEGIN
+        CREATE PROCEDURE [dbo].[pbs_MC_APPOINTMENT_{XXX}_Insert]
+        	@LINE_NO int output,
+@CLINIC_CODE varchar(15),
+@PATIENT_CODE varchar(15),
+@NAME nvarchar (50),
+@DOB int,
+@GENDER char(1),
+@PHONE varchar(20),
+@EMAIL varchar(200),
+@ADDRESS nvarchar (50),
+@WARD varchar(15),
+@DISTRICT varchar(15),
+@CITY varchar(15),
+@STATUS nvarchar (50),
+@CREATE_DATE int,
+@APPOINTMENT_DATE int,
+@APPOINTMENT_TYPE nvarchar (50),
+@REMINDER_DATE int,
+@NOTES nvarchar (2000),
+@UPDATED int,
+@UPDATED_BY varchar(15)
+        AS
+
+        SET NOCOUNT ON
+        INSERT INTO [dbo].[pbs_MC_APPOINTMENT_{XXX}] ([CLINIC_CODE],
+[PATIENT_CODE],
+[NAME],
+[DOB],
+[GENDER],
+[PHONE],
+[EMAIL],
+[ADDRESS],
+[WARD],
+[DISTRICT],
+[CITY],
+[STATUS],
+[CREATE_DATE],
+[APPOINTMENT_DATE],
+[APPOINTMENT_TYPE],
+[REMINDER_DATE],
+[NOTES],
+[UPDATED],
+[UPDATED_BY]) 
+        VALUES (@CLINIC_CODE,
+@PATIENT_CODE,
+@NAME,
+@DOB,
+@GENDER,
+@PHONE,
+@EMAIL,
+@ADDRESS,
+@WARD,
+@DISTRICT,
+@CITY,
+@STATUS,
+@CREATE_DATE,
+@APPOINTMENT_DATE,
+@APPOINTMENT_TYPE,
+@REMINDER_DATE,
+@NOTES,
+@UPDATED,
+@UPDATED_BY)
+
+         SET @LINE_NO = SCOPE_IDENTITY()
+        END
+      </Install>
+    </DBO>
+    <DBO name="pbs_MC_APPOINTMENT_{XXX}_Update" type="P">
+      <Install>
+        IF NOT EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'[dbo].[pbs_MC_APPOINTMENT_{XXX}_Update]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+        BEGIN
+        CREATE PROCEDURE [dbo].[pbs_MC_APPOINTMENT_{XXX}_Update]
+        	@LINE_NO int,
+@CLINIC_CODE varchar(15),
+@PATIENT_CODE varchar(15),
+@NAME nvarchar (50),
+@DOB int,
+@GENDER char(1),
+@PHONE varchar(20),
+@EMAIL varchar(200),
+@ADDRESS nvarchar (50),
+@WARD varchar(15),
+@DISTRICT varchar(15),
+@CITY varchar(15),
+@STATUS nvarchar (50),
+@CREATE_DATE int,
+@APPOINTMENT_DATE int,
+@APPOINTMENT_TYPE nvarchar (50),
+@REMINDER_DATE int,
+@NOTES nvarchar (2000),
+@UPDATED int,
+@UPDATED_BY varchar(15)
+        AS
+
+        SET NOCOUNT ON
+        UPDATE [dbo].[pbs_MC_APPOINTMENT_{XXX}] SET [CLINIC_CODE] = @CLINIC_CODE,
+[PATIENT_CODE] = @PATIENT_CODE,
+[NAME] = @NAME,
+[DOB] = @DOB,
+[GENDER] = @GENDER,
+[PHONE] = @PHONE,
+[EMAIL] = @EMAIL,
+[ADDRESS] = @ADDRESS,
+[WARD] = @WARD,
+[DISTRICT] = @DISTRICT,
+[CITY] = @CITY,
+[STATUS] = @STATUS,
+[CREATE_DATE] = @CREATE_DATE,
+[APPOINTMENT_DATE] = @APPOINTMENT_DATE,
+[APPOINTMENT_TYPE] = @APPOINTMENT_TYPE,
+[REMINDER_DATE] = @REMINDER_DATE,
+[NOTES] = @NOTES,
+[UPDATED] = @UPDATED,
+[UPDATED_BY] = @UPDATED_BY
+        WHERE [LINE_NO] = @LINE_NO
+        END
+      </Install>
+    </DBO>
+    
+    <DBO name="pbs_MC_CHECKIN_{XXX}" type="U">
+      <Install>
+        IF NOT EXISTS (SELECT * FROM dbo.sysobjects WHERE id=OBJECT_ID(N'dbo.[pbs_MC_CHECKIN_{XXX}]'))
+        BEGIN
+        CREATE TABLE [dbo].[pbs_MC_CHECKIN_{XXX}](
+        [LINE_NO] [int] IDENTITY(1,1) NOT NULL,
+        [APPOINTMENT_NO] [int] NOT NULL,
+        [REFERENCE_NO] [varchar](15) NOT NULL,
+        [MEDICAL_RECORD_CODE] [varchar](15) NOT NULL,
+        [PATIENT_CODE] [varchar](15) NOT NULL,
+        [CHECKIN_DATE] [int] NOT NULL,
+        [CHECKIN_TIME] [int] NOT NULL,
+        [CHECKIN_TYPE] [varchar](15) NOT NULL,
+        [TRANSFER_FROM] [varchar](15) NOT NULL,
+        [TRANSFER_FROM_NAME] [nvarchar](100) NOT NULL,
+        [DEPARTMENT] [varchar](15) NOT NULL,
+        [DEPT_CHECKIN_TIME] [int] NOT NULL,
+        [DEPT_CHECKIN_DATE] [int] NOT NULL,
+        [CABINET_NO] [varchar](15) NOT NULL,
+        [CHECKOUT_TIME] [int] NOT NULL,
+        [CHECKOUT_DATE] [int] NOT NULL,
+        [CHECKOUT_TYPE] [varchar](15) NOT NULL,
+        [TREATMENT_RESULT] [varchar](15) NOT NULL,
+        [DOCTOR] [varchar](15) NOT NULL,
+        [HOSPITALIZED_REASON] [nvarchar](2000) NOT NULL,
+        [DAY_OF_DISEASE] [int] NOT NULL,
+        [SYMPTOMS_CODE] [varchar](15) NOT NULL,
+        [SYMPTOMS] [nvarchar](2000) NOT NULL,
+        [HISTORY] [nvarchar](2000) NOT NULL,
+        [ALLERGIC] [char](1) NOT NULL,
+        [ALLERGENS] [nvarchar](200) NOT NULL,
+        [FAMILY] [nvarchar](200) NOT NULL,
+        [MAIN_CAUSE] [nvarchar](2000) NOT NULL,
+        [RELATE_CAUSE] [nvarchar](2000) NOT NULL,
+        [DISTINCTION] [nvarchar](2000) NOT NULL,
+        [DIAGNOSIS_CODE] [nvarchar](15) NOT NULL,
+        [DIAGNOSIS] [nvarchar](2000) NOT NULL,
+        [TREATMENT] [nvarchar](2000) NOT NULL,
+        [DOCTOR_ADVICE] [nvarchar](2000) NOT NULL,
+        [REEXAM_DATE] [int] NOT NULL,
+        [DEAD] [char](1) NOT NULL,
+        [SURGERY] [char](1) NOT NULL,
+        [NOTES] [nvarchar](2000) NOT NULL,
+        [STATUS] [varchar](15) NOT NULL,
+        [NC_CI9] [varchar](15) NOT NULL,
+        [NC_CI8] [varchar](15) NOT NULL,
+        [NC_CI7] [varchar](15) NOT NULL,
+        [NC_CI6] [varchar](15) NOT NULL,
+        [NC_CI5] [varchar](15) NOT NULL,
+        [NC_CI4] [varchar](15) NOT NULL,
+        [NC_CI3] [varchar](15) NOT NULL,
+        [NC_CI2] [varchar](15) NOT NULL,
+        [NC_CI1] [varchar](15) NOT NULL,
+        [NC_CI0] [varchar](15) NOT NULL,
+        [UPDATED] [int] NOT NULL,
+        [UPDATED_BY] [char](5) NOT NULL,
+        [TIME_STAMP] [timestamp] NULL,
+        CONSTRAINT [PK_pbs_MC_CHECKIN_{XXX}] PRIMARY KEY CLUSTERED
+        (
+        [LINE_NO] ASC
+        )
+        )
+        END
+      </Install>
+    </DBO>
+    <DBO name="pbs_MC_CHECKIN_{XXX}_Insert" type="P">
+      <Install>
+        IF NOT EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'[dbo].[pbs_MC_CHECKIN_{XXX}_Insert]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+        BEGIN
+        CREATE PROCEDURE [dbo].[pbs_MC_CHECKIN_{XXX}_Insert]
+        @LINE_NO int output,
+        @APPOINTMENT_NO int,
+        @REFERENCE_NO varchar(15),
+        @MEDICAL_RECORD_CODE varchar(15),
+        @PATIENT_CODE varchar(15),
+        @CHECKIN_DATE int,
+        @CHECKIN_TIME int,
+        @CHECKIN_TYPE varchar(15),
+        @TRANSFER_FROM varchar(15),
+        @TRANSFER_FROM_NAME nvarchar (100),
+        @DEPARTMENT varchar(15),
+        @DEPT_CHECKIN_TIME int,
+        @DEPT_CHECKIN_DATE int,
+        @CABINET_NO varchar(15),
+        @CHECKOUT_TIME int,
+        @CHECKOUT_DATE int,
+        @CHECKOUT_TYPE varchar(15),
+        @TREATMENT_RESULT varchar(15),
+        @DOCTOR varchar(15),
+        @HOSPITALIZED_REASON nvarchar (2000),
+        @DAY_OF_DISEASE int,
+        @SYMPTOMS_CODE varchar(15),
+        @SYMPTOMS nvarchar (2000),
+        @HISTORY nvarchar (2000),
+        @ALLERGIC char(1),
+        @ALLERGENS nvarchar (200),
+        @FAMILY nvarchar (200),
+        @MAIN_CAUSE nvarchar (2000),
+        @RELATE_CAUSE nvarchar (2000),
+        @DISTINCTION nvarchar (2000),
+        @DIAGNOSIS_CODE nvarchar (15),
+        @DIAGNOSIS nvarchar (2000),
+        @TREATMENT nvarchar (2000),
+        @DOCTOR_ADVICE nvarchar (2000),
+        @REEXAM_DATE int,
+        @DEAD char(1),
+        @SURGERY char(1),
+        @NOTES nvarchar (2000),
+        @STATUS varchar(15),
+        @NC_CI9 varchar(15),
+        @NC_CI8 varchar(15),
+        @NC_CI7 varchar(15),
+        @NC_CI6 varchar(15),
+        @NC_CI5 varchar(15),
+        @NC_CI4 varchar(15),
+        @NC_CI3 varchar(15),
+        @NC_CI2 varchar(15),
+        @NC_CI1 varchar(15),
+        @NC_CI0 varchar(15),
+        @UPDATED int,
+        @UPDATED_BY char(5)
+        AS
+
+        SET NOCOUNT ON
+        INSERT INTO [dbo].[pbs_MC_CHECKIN_{XXX}] ([APPOINTMENT_NO],
+        [REFERENCE_NO],
+        [MEDICAL_RECORD_CODE],
+        [PATIENT_CODE],
+        [CHECKIN_DATE],
+        [CHECKIN_TIME],
+        [CHECKIN_TYPE],
+        [TRANSFER_FROM],
+        [TRANSFER_FROM_NAME],
+        [DEPARTMENT],
+        [DEPT_CHECKIN_TIME],
+        [DEPT_CHECKIN_DATE],
+        [CABINET_NO],
+        [CHECKOUT_TIME],
+        [CHECKOUT_DATE],
+        [CHECKOUT_TYPE],
+        [TREATMENT_RESULT],
+        [DOCTOR],
+        [HOSPITALIZED_REASON],
+        [DAY_OF_DISEASE],
+        [SYMPTOMS_CODE],
+        [SYMPTOMS],
+        [HISTORY],
+        [ALLERGIC],
+        [ALLERGENS],
+        [FAMILY],
+        [MAIN_CAUSE],
+        [RELATE_CAUSE],
+        [DISTINCTION],
+        [DIAGNOSIS_CODE],
+        [DIAGNOSIS],
+        [TREATMENT],
+        [DOCTOR_ADVICE],
+        [REEXAM_DATE],
+        [DEAD],
+        [SURGERY],
+        [NOTES],
+        [STATUS],
+        [NC_CI9],
+        [NC_CI8],
+        [NC_CI7],
+        [NC_CI6],
+        [NC_CI5],
+        [NC_CI4],
+        [NC_CI3],
+        [NC_CI2],
+        [NC_CI1],
+        [NC_CI0],
+        [UPDATED],
+        [UPDATED_BY])
+        VALUES (@APPOINTMENT_NO,
+        @REFERENCE_NO,
+        @MEDICAL_RECORD_CODE,
+        @PATIENT_CODE,
+        @CHECKIN_DATE,
+        @CHECKIN_TIME,
+        @CHECKIN_TYPE,
+        @TRANSFER_FROM,
+        @TRANSFER_FROM_NAME,
+        @DEPARTMENT,
+        @DEPT_CHECKIN_TIME,
+        @DEPT_CHECKIN_DATE,
+        @CABINET_NO,
+        @CHECKOUT_TIME,
+        @CHECKOUT_DATE,
+        @CHECKOUT_TYPE,
+        @TREATMENT_RESULT,
+        @DOCTOR,
+        @HOSPITALIZED_REASON,
+        @DAY_OF_DISEASE,
+        @SYMPTOMS_CODE,
+        @SYMPTOMS,
+        @HISTORY,
+        @ALLERGIC,
+        @ALLERGENS,
+        @FAMILY,
+        @MAIN_CAUSE,
+        @RELATE_CAUSE,
+        @DISTINCTION,
+        @DIAGNOSIS_CODE,
+        @DIAGNOSIS,
+        @TREATMENT,
+        @DOCTOR_ADVICE,
+        @REEXAM_DATE,
+        @DEAD,
+        @SURGERY,
+        @NOTES,
+        @STATUS,
+        @NC_CI9,
+        @NC_CI8,
+        @NC_CI7,
+        @NC_CI6,
+        @NC_CI5,
+        @NC_CI4,
+        @NC_CI3,
+        @NC_CI2,
+        @NC_CI1,
+        @NC_CI0,
+        @UPDATED,
+        @UPDATED_BY)
+
+        SET @LINE_NO = SCOPE_IDENTITY()
+
+        END
+      </Install>
+    </DBO>
+    <DBO name="pbs_MC_CHECKIN_{XXX}_Update" type="P">
+      <Install>
+        IF NOT EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'[dbo].[pbs_MC_CHECKIN_{XXX}_Update]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+        BEGIN
+        CREATE PROCEDURE [dbo].[pbs_MC_CHECKIN_{XXX}_Update]
+        @LINE_NO int,
+        @APPOINTMENT_NO int,
+        @REFERENCE_NO varchar(15),
+        @MEDICAL_RECORD_CODE varchar(15),
+        @PATIENT_CODE varchar(15),
+        @CHECKIN_DATE int,
+        @CHECKIN_TIME int,
+        @CHECKIN_TYPE varchar(15),
+        @TRANSFER_FROM varchar(15),
+        @TRANSFER_FROM_NAME nvarchar (100),
+        @DEPARTMENT varchar(15),
+        @DEPT_CHECKIN_TIME int,
+        @DEPT_CHECKIN_DATE int,
+        @CABINET_NO varchar(15),
+        @CHECKOUT_TIME int,
+        @CHECKOUT_DATE int,
+        @CHECKOUT_TYPE varchar(15),
+        @TREATMENT_RESULT varchar(15),
+        @DOCTOR varchar(15),
+        @HOSPITALIZED_REASON nvarchar (2000),
+        @DAY_OF_DISEASE int,
+        @SYMPTOMS_CODE varchar(15),
+        @SYMPTOMS nvarchar (2000),
+        @HISTORY nvarchar (2000),
+        @ALLERGIC char(1),
+        @ALLERGENS nvarchar (200),
+        @FAMILY nvarchar (200),
+        @MAIN_CAUSE nvarchar (2000),
+        @RELATE_CAUSE nvarchar (2000),
+        @DISTINCTION nvarchar (2000),
+        @DIAGNOSIS_CODE nvarchar (15),
+        @DIAGNOSIS nvarchar (2000),
+        @TREATMENT nvarchar (2000),
+        @DOCTOR_ADVICE nvarchar (2000),
+        @REEXAM_DATE int,
+        @DEAD char(1),
+        @SURGERY char(1),
+        @NOTES nvarchar (2000),
+        @STATUS varchar(15),
+        @NC_CI9 varchar(15),
+        @NC_CI8 varchar(15),
+        @NC_CI7 varchar(15),
+        @NC_CI6 varchar(15),
+        @NC_CI5 varchar(15),
+        @NC_CI4 varchar(15),
+        @NC_CI3 varchar(15),
+        @NC_CI2 varchar(15),
+        @NC_CI1 varchar(15),
+        @NC_CI0 varchar(15),
+        @UPDATED int,
+        @UPDATED_BY char(5)
+        AS
+
+        SET NOCOUNT ON
+        UPDATE [dbo].[pbs_MC_CHECKIN_{XXX}] SET [APPOINTMENT_NO] = @APPOINTMENT_NO,
+        [REFERENCE_NO] = @REFERENCE_NO,
+        [MEDICAL_RECORD_CODE] = @MEDICAL_RECORD_CODE,
+        [PATIENT_CODE] = @PATIENT_CODE,
+        [CHECKIN_DATE] = @CHECKIN_DATE,
+        [CHECKIN_TIME] = @CHECKIN_TIME,
+        [CHECKIN_TYPE] = @CHECKIN_TYPE,
+        [TRANSFER_FROM] = @TRANSFER_FROM,
+        [TRANSFER_FROM_NAME] = @TRANSFER_FROM_NAME,
+        [DEPARTMENT] = @DEPARTMENT,
+        [DEPT_CHECKIN_TIME] = @DEPT_CHECKIN_TIME,
+        [DEPT_CHECKIN_DATE] = @DEPT_CHECKIN_DATE,
+        [CABINET_NO] = @CABINET_NO,
+        [CHECKOUT_TIME] = @CHECKOUT_TIME,
+        [CHECKOUT_DATE] = @CHECKOUT_DATE,
+        [CHECKOUT_TYPE] = @CHECKOUT_TYPE,
+        [TREATMENT_RESULT] = @TREATMENT_RESULT,
+        [DOCTOR] = @DOCTOR,
+        [HOSPITALIZED_REASON] = @HOSPITALIZED_REASON,
+        [DAY_OF_DISEASE] = @DAY_OF_DISEASE,
+        [SYMPTOMS_CODE] = @SYMPTOMS_CODE,
+        [SYMPTOMS] = @SYMPTOMS,
+        [HISTORY] = @HISTORY,
+        [ALLERGIC] = @ALLERGIC,
+        [ALLERGENS] = @ALLERGENS,
+        [FAMILY] = @FAMILY,
+        [MAIN_CAUSE] = @MAIN_CAUSE,
+        [RELATE_CAUSE] = @RELATE_CAUSE,
+        [DISTINCTION] = @DISTINCTION,
+        [DIAGNOSIS_CODE] = @DIAGNOSIS_CODE,
+        [DIAGNOSIS] = @DIAGNOSIS,
+        [TREATMENT] = @TREATMENT,
+        [DOCTOR_ADVICE] = @DOCTOR_ADVICE,
+        [REEXAM_DATE] = @REEXAM_DATE,
+        [DEAD] = @DEAD,
+        [SURGERY] = @SURGERY,
+        [NOTES] = @NOTES,
+        [STATUS] = @STATUS,
+        [NC_CI9] = @NC_CI9,
+        [NC_CI8] = @NC_CI8,
+        [NC_CI7] = @NC_CI7,
+        [NC_CI6] = @NC_CI6,
+        [NC_CI5] = @NC_CI5,
+        [NC_CI4] = @NC_CI4,
+        [NC_CI3] = @NC_CI3,
+        [NC_CI2] = @NC_CI2,
+        [NC_CI1] = @NC_CI1,
+        [NC_CI0] = @NC_CI0,
+        [UPDATED] = @UPDATED,
+        [UPDATED_BY] = @UPDATED_BY
+        WHERE [LINE_NO] = @LINE_NO
+        END
+      </Install>
+    </DBO>
+
+    <DBO name="pbs_MC_DEAD_{XXX}" type="U">
+      <Install>
+        IF NOT EXISTS (SELECT * FROM dbo.sysobjects WHERE id=OBJECT_ID(N'dbo.[pbs_MC_DEAD_{XXX}]'))
+        BEGIN
+        CREATE TABLE [dbo].[pbs_MC_DEAD_{XXX}](
+        [LINE_NO] [int] IDENTITY(1,1) NOT NULL,
+        [CHECKIN_NO] [int] NOT NULL,
+        [PATIENT_CODE] [varchar](15) NOT NULL,
+        [DEAD_TIME] [int] NOT NULL,
+        [DEAD_DATE] [int] NOT NULL,
+        [DEAD_REASON] [varchar](15) NOT NULL,
+        [MAIN_REASON] [nvarchar](1000) NOT NULL,
+        [MAIN_REASON_CODE] [varchar](15) NOT NULL,
+        [AUTOPSY] [char](1) NOT NULL,
+        [AUTOPSY_RESULT] [nvarchar](2000) NOT NULL,
+        [AUTOPSY_RESULT_CODE] [varchar](15) NOT NULL,
+        [UPDATED] [int] NOT NULL,
+        [UPDATED_BY] [varchar](15) NOT NULL,
+        [TIME_STAMP] [timestamp] NULL,
+        CONSTRAINT [PK_pbs_MC_DEAD_{XXX}] PRIMARY KEY CLUSTERED
+        (
+        [LINE_NO] ASC
+        )
+        )
+        END
+      </Install>
+    </DBO>
+    <DBO name="pbs_MC_DEAD_{XXX}_Insert" type="P">
+      <Install>
+        IF NOT EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'[dbo].[pbs_MC_DEAD_{XXX}_Insert]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+        BEGIN
+        CREATE PROCEDURE [dbo].[pbs_MC_DEAD_{XXX}_Insert]
+        @LINE_NO int output,
+        @CHECKIN_NO int,
+        @PATIENT_CODE varchar(15),
+        @DEAD_TIME int,
+        @DEAD_DATE int,
+        @DEAD_REASON varchar(15),
+        @MAIN_REASON nvarchar (1000),
+        @MAIN_REASON_CODE varchar(15),
+        @AUTOPSY char(1),
+        @AUTOPSY_RESULT nvarchar (2000),
+        @AUTOPSY_RESULT_CODE varchar(15),
+        @UPDATED int,
+        @UPDATED_BY varchar(15)
+        AS
+
+        SET NOCOUNT ON
+        INSERT INTO [dbo].[pbs_MC_DEAD_{XXX}] ([CHECKIN_NO],
+        [PATIENT_CODE],
+        [DEAD_TIME],
+        [DEAD_DATE],
+        [DEAD_REASON],
+        [MAIN_REASON],
+        [MAIN_REASON_CODE],
+        [AUTOPSY],
+        [AUTOPSY_RESULT],
+        [AUTOPSY_RESULT_CODE],
+        [UPDATED],
+        [UPDATED_BY])
+        VALUES (@CHECKIN_NO,
+        @PATIENT_CODE,
+        @DEAD_TIME,
+        @DEAD_DATE,
+        @DEAD_REASON,
+        @MAIN_REASON,
+        @MAIN_REASON_CODE,
+        @AUTOPSY,
+        @AUTOPSY_RESULT,
+        @AUTOPSY_RESULT_CODE,
+        @UPDATED,
+        @UPDATED_BY)
+
+        SET @LINE_NO = SCOPE_IDENTITY()
+        END
+      </Install>
+    </DBO>
+    <DBO name="pbs_MC_DEAD_{XXX}_Update" type="P">
+      <Install>
+        IF NOT EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'[dbo].[pbs_MC_DEAD_{XXX}_Update]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+        BEGIN
+        CREATE PROCEDURE [dbo].[pbs_MC_DEAD_{XXX}_Update]
+        @LINE_NO int,
+        @CHECKIN_NO int,
+        @PATIENT_CODE varchar(15),
+        @DEAD_TIME int,
+        @DEAD_DATE int,
+        @DEAD_REASON varchar(15),
+        @MAIN_REASON nvarchar (1000),
+        @MAIN_REASON_CODE varchar(15),
+        @AUTOPSY char(1),
+        @AUTOPSY_RESULT nvarchar (2000),
+        @AUTOPSY_RESULT_CODE varchar(15),
+        @UPDATED int,
+        @UPDATED_BY varchar(15)
+        AS
+
+        SET NOCOUNT ON
+        UPDATE [dbo].[pbs_MC_DEAD_{XXX}] SET [CHECKIN_NO] = @CHECKIN_NO,
+        [PATIENT_CODE] = @PATIENT_CODE,
+        [DEAD_TIME] = @DEAD_TIME,
+        [DEAD_DATE] = @DEAD_DATE,
+        [DEAD_REASON] = @DEAD_REASON,
+        [MAIN_REASON] = @MAIN_REASON,
+        [MAIN_REASON_CODE] = @MAIN_REASON_CODE,
+        [AUTOPSY] = @AUTOPSY,
+        [AUTOPSY_RESULT] = @AUTOPSY_RESULT,
+        [AUTOPSY_RESULT_CODE] = @AUTOPSY_RESULT_CODE,
+        [UPDATED] = @UPDATED,
+        [UPDATED_BY] = @UPDATED_BY
+        WHERE [LINE_NO] = @LINE_NO
+        END
+      </Install>
+    </DBO>
+
+    <DBO name="pbs_MC_GENCHECK_{XXX}" type="U">
+      <Install>
+        IF NOT EXISTS (SELECT * FROM dbo.sysobjects WHERE id=OBJECT_ID(N'dbo.[pbs_MC_GENCHECK_{XXX}]'))
+        BEGIN
+        CREATE TABLE [dbo].[pbs_MC_GENCHECK_{XXX}](
+	[LINE_NO] [int] IDENTITY(1,1) NOT NULL,
+	[CHECK_DATE] [int] NOT NULL,
+	[CHECK_BY] [nvarchar](50) NOT NULL,
+	[PATIENT_CODE] [varchar](15) NOT NULL,
+	[CHECKIN_NO] [int] NOT NULL,
+	[WAITING_NUMBER] [int] NOT NULL,
+	[PULSE] [int] NOT NULL,
+	[TEMPERATURE] [decimal](18, 3) NOT NULL,
+	[BLOOD_PRESSURE] [varchar](15) NOT NULL,
+	[BREATHING_RATE] [int] NOT NULL,
+	[WEIGHT] [decimal](18, 3) NOT NULL,
+	[HEIGHT] [decimal](18, 3) NOT NULL,
+	[BLOOD_GROUP] [varchar](5) NOT NULL,
+	[EXT_DECS5] [nvarchar](15) NOT NULL,
+	[EXT_DECS4] [nvarchar](15) NOT NULL,
+	[EXT_DECS3] [nvarchar](15) NOT NULL,
+	[EXT_DECS2] [nvarchar](15) NOT NULL,
+	[EXT_DECS1] [nvarchar](15) NOT NULL,
+	[EXT_VAL5] [decimal](18, 3) NOT NULL,
+	[EXT_VAL4] [decimal](18, 3) NOT NULL,
+	[EXT_VAL3] [decimal](18, 3) NOT NULL,
+	[EXT_VAL2] [decimal](18, 3) NOT NULL,
+	[EXT_VAL1] [decimal](18, 3) NOT NULL,
+	[UPDATED] [int] NOT NULL,
+	[UPDATED_BY] [varchar](15) NOT NULL,
+	[TIME_STAMP] [timestamp] NULL,
+ CONSTRAINT [PK_pbs_MC_GENERAL_CHECK_{XXX}] PRIMARY KEY CLUSTERED 
+(
+	[LINE_NO] ASC
+))
+        END
+      </Install>
+    </DBO>
+    <DBO name="pbs_MC_GENCHECK_{XXX}_Insert" type="P">
+      <Install>
+        IF NOT EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'[dbo].[pbs_MC_GENCHECK_{XXX}_Insert]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+        BEGIN
+        CREATE PROCEDURE [dbo].[pbs_MC_GENCHECK_{XXX}_Insert]
+        	@LINE_NO int output,
+@CHECK_DATE int,
+@CHECK_BY nvarchar (50),
+@PATIENT_CODE varchar(15),
+@CHECKIN_NO int,
+@WAITING_NUMBER int,
+@PULSE int,
+@TEMPERATURE decimal(18, 3),
+@BLOOD_PRESSURE varchar(15),
+@BREATHING_RATE int,
+@WEIGHT decimal(18, 3),
+@HEIGHT decimal(18, 3),
+@BLOOD_GROUP varchar(5),
+@EXT_DECS5 nvarchar (15),
+@EXT_DECS4 nvarchar (15),
+@EXT_DECS3 nvarchar (15),
+@EXT_DECS2 nvarchar (15),
+@EXT_DECS1 nvarchar (15),
+@EXT_VAL5 decimal(18, 3),
+@EXT_VAL4 decimal(18, 3),
+@EXT_VAL3 decimal(18, 3),
+@EXT_VAL2 decimal(18, 3),
+@EXT_VAL1 decimal(18, 3),
+@UPDATED int,
+@UPDATED_BY varchar(15)
+        AS
+
+        SET NOCOUNT ON
+        INSERT INTO [dbo].[pbs_MC_GENCHECK_{XXX}] ([CHECK_DATE],
+[CHECK_BY],
+[PATIENT_CODE],
+[CHECKIN_NO],
+[WAITING_NUMBER],
+[PULSE],
+[TEMPERATURE],
+[BLOOD_PRESSURE],
+[BREATHING_RATE],
+[WEIGHT],
+[HEIGHT],
+[BLOOD_GROUP],
+[EXT_DECS5],
+[EXT_DECS4],
+[EXT_DECS3],
+[EXT_DECS2],
+[EXT_DECS1],
+[EXT_VAL5],
+[EXT_VAL4],
+[EXT_VAL3],
+[EXT_VAL2],
+[EXT_VAL1],
+[UPDATED],
+[UPDATED_BY]) 
+        VALUES (@CHECK_DATE,
+@CHECK_BY,
+@PATIENT_CODE,
+@CHECKIN_NO,
+@WAITING_NUMBER,
+@PULSE,
+@TEMPERATURE,
+@BLOOD_PRESSURE,
+@BREATHING_RATE,
+@WEIGHT,
+@HEIGHT,
+@BLOOD_GROUP,
+@EXT_DECS5,
+@EXT_DECS4,
+@EXT_DECS3,
+@EXT_DECS2,
+@EXT_DECS1,
+@EXT_VAL5,
+@EXT_VAL4,
+@EXT_VAL3,
+@EXT_VAL2,
+@EXT_VAL1,
+@UPDATED,
+@UPDATED_BY)
+
+         SET @LINE_NO = SCOPE_IDENTITY()
+
+        END
+      </Install>
+    </DBO>
+    <DBO name="pbs_MC_GENCHECK_{XXX}_Update" type="P">
+      <Install>
+        IF NOT EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'[dbo].[pbs_MC_GENCHECK_{XXX}_Update]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+        BEGIN
+        CREATE PROCEDURE [dbo].[pbs_MC_GENCHECK_{XXX}_Update]
+        	@LINE_NO int,
+@CHECK_DATE int,
+@CHECK_BY nvarchar (50),
+@PATIENT_CODE varchar(15),
+@CHECKIN_NO int,
+@WAITING_NUMBER int,
+@PULSE int,
+@TEMPERATURE decimal(18, 3),
+@BLOOD_PRESSURE varchar(15),
+@BREATHING_RATE int,
+@WEIGHT decimal(18, 3),
+@HEIGHT decimal(18, 3),
+@BLOOD_GROUP varchar(5),
+@EXT_DECS5 nvarchar (15),
+@EXT_DECS4 nvarchar (15),
+@EXT_DECS3 nvarchar (15),
+@EXT_DECS2 nvarchar (15),
+@EXT_DECS1 nvarchar (15),
+@EXT_VAL5 decimal(18, 3),
+@EXT_VAL4 decimal(18, 3),
+@EXT_VAL3 decimal(18, 3),
+@EXT_VAL2 decimal(18, 3),
+@EXT_VAL1 decimal(18, 3),
+@UPDATED int,
+@UPDATED_BY varchar(15)
+        AS
+
+        SET NOCOUNT ON
+        UPDATE [dbo].[pbs_MC_GENCHECK_{XXX}] SET [CHECK_DATE] = @CHECK_DATE,
+[CHECK_BY] = @CHECK_BY,
+[PATIENT_CODE] = @PATIENT_CODE,
+[CHECKIN_NO] = @CHECKIN_NO,
+[WAITING_NUMBER] = @WAITING_NUMBER,
+[PULSE] = @PULSE,
+[TEMPERATURE] = @TEMPERATURE,
+[BLOOD_PRESSURE] = @BLOOD_PRESSURE,
+[BREATHING_RATE] = @BREATHING_RATE,
+[WEIGHT] = @WEIGHT,
+[HEIGHT] = @HEIGHT,
+[BLOOD_GROUP] = @BLOOD_GROUP,
+[EXT_DECS5] = @EXT_DECS5,
+[EXT_DECS4] = @EXT_DECS4,
+[EXT_DECS3] = @EXT_DECS3,
+[EXT_DECS2] = @EXT_DECS2,
+[EXT_DECS1] = @EXT_DECS1,
+[EXT_VAL5] = @EXT_VAL5,
+[EXT_VAL4] = @EXT_VAL4,
+[EXT_VAL3] = @EXT_VAL3,
+[EXT_VAL2] = @EXT_VAL2,
+[EXT_VAL1] = @EXT_VAL1,
+[UPDATED] = @UPDATED,
+[UPDATED_BY] = @UPDATED_BY
+        WHERE [LINE_NO] = @LINE_NO
+        END
+      </Install>
+    </DBO>
+
+    <DBO name="pbs_MC_LAB_{XXX}" type="U">
+      <Install>
+        IF NOT EXISTS (SELECT * FROM dbo.sysobjects WHERE id=OBJECT_ID(N'dbo.[pbs_MC_LAB_{XXX}]'))
+        BEGIN
+        CREATE TABLE [dbo].[pbs_MC_LAB_{XXX}](
+        [LINE_NO] [int] IDENTITY(1,1) NOT NULL,
+        [PATIENT_CODE] [varchar](15) NOT NULL,
+        [CHECKIN_NO] [int] NOT NULL,
+        [CABINET_NO] [varchar](15) NOT NULL,
+        [WAITING_NUMBER] [int] NOT NULL,
+        [LAB_PACKAGE_CODE] [varchar](15) NOT NULL,
+        [LAB_NAME] [nvarchar](2000) NOT NULL,
+        [ANALYSIS_DATE] [int] NOT NULL,
+        [ANALYSIS_TIME] [int] NOT NULL,
+        [DOCTOR_APPOINTED] [varchar](15) NOT NULL,
+        [RESULT] [nvarchar](4000) NOT NULL,
+        [LABORATORY_TECHNICIAN] [varchar](15) NOT NULL,
+        [STATUS] [varchar](15) NOT NULL,
+        [NC_LB9] [varchar](15) NOT NULL,
+        [NC_LB8] [varchar](15) NOT NULL,
+        [NC_LB7] [varchar](15) NOT NULL,
+        [NC_LB6] [varchar](15) NOT NULL,
+        [NC_LB5] [varchar](15) NOT NULL,
+        [NC_LB4] [varchar](15) NOT NULL,
+        [NC_LB3] [varchar](15) NOT NULL,
+        [NC_LB2] [varchar](15) NOT NULL,
+        [NC_LB1] [varchar](15) NOT NULL,
+        [NC_LB0] [varchar](15) NOT NULL,
+        [UPDATED] [int] NOT NULL,
+        [UPDATED_BY] [varchar](15) NOT NULL,
+        [TIME_STAMP] [timestamp] NULL,
+        CONSTRAINT [PK_pbs_MC_LAB_{XXX}] PRIMARY KEY CLUSTERED
+        (
+        [LINE_NO] ASC
+        )
+        )
+        END
+      </Install>
+    </DBO>
+    <DBO name="pbs_MC_LAB_{XXX}_Insert" type="P">
+      <Install>
+        IF NOT EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'[dbo].[pbs_MC_LAB_{XXX}_Insert]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+        BEGIN
+        CREATE PROCEDURE [dbo].[pbs_MC_LAB_{XXX}_Insert]
+        @LINE_NO int output,
+        @PATIENT_CODE varchar(15),
+        @CHECKIN_NO int,
+        @CABINET_NO varchar(15),
+        @WAITING_NUMBER int,
+        @LAB_PACKAGE_CODE varchar(15),
+        @LAB_NAME nvarchar (2000),
+        @ANALYSIS_DATE int,
+        @ANALYSIS_TIME int,
+        @DOCTOR_APPOINTED varchar(15),
+        @RESULT nvarchar (4000),
+        @LABORATORY_TECHNICIAN varchar(15),
+        @STATUS varchar(15),
+        @NC_LB9 varchar(15),
+        @NC_LB8 varchar(15),
+        @NC_LB7 varchar(15),
+        @NC_LB6 varchar(15),
+        @NC_LB5 varchar(15),
+        @NC_LB4 varchar(15),
+        @NC_LB3 varchar(15),
+        @NC_LB2 varchar(15),
+        @NC_LB1 varchar(15),
+        @NC_LB0 varchar(15),
+        @UPDATED int,
+        @UPDATED_BY varchar(15)
+        AS
+
+        SET NOCOUNT ON
+        INSERT INTO [dbo].[pbs_MC_LAB_{XXX}] ([PATIENT_CODE],
+        [CHECKIN_NO],
+        [CABINET_NO],
+        [WAITING_NUMBER],
+        [LAB_PACKAGE_CODE],
+        [LAB_NAME],
+        [ANALYSIS_DATE],
+        [ANALYSIS_TIME],
+        [DOCTOR_APPOINTED],
+        [RESULT],
+        [LABORATORY_TECHNICIAN],
+        [STATUS],
+        [NC_LB9],
+        [NC_LB8],
+        [NC_LB7],
+        [NC_LB6],
+        [NC_LB5],
+        [NC_LB4],
+        [NC_LB3],
+        [NC_LB2],
+        [NC_LB1],
+        [NC_LB0],
+        [UPDATED],
+        [UPDATED_BY])
+        VALUES (@PATIENT_CODE,
+        @CHECKIN_NO,
+        @CABINET_NO,
+        @WAITING_NUMBER,
+        @LAB_PACKAGE_CODE,
+        @LAB_NAME,
+        @ANALYSIS_DATE,
+        @ANALYSIS_TIME,
+        @DOCTOR_APPOINTED,
+        @RESULT,
+        @LABORATORY_TECHNICIAN,
+        @STATUS,
+        @NC_LB9,
+        @NC_LB8,
+        @NC_LB7,
+        @NC_LB6,
+        @NC_LB5,
+        @NC_LB4,
+        @NC_LB3,
+        @NC_LB2,
+        @NC_LB1,
+        @NC_LB0,
+        @UPDATED,
+        @UPDATED_BY)
+
+        SET @LINE_NO = SCOPE_IDENTITY()
+
+        END
+      </Install>
+    </DBO>
+    <DBO name="pbs_MC_LAB_{XXX}_Update" type="P">
+      <Install>
+        IF NOT EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'[dbo].[pbs_MC_LAB_{XXX}_Update]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+        BEGIN
+        CREATE PROCEDURE [dbo].[pbs_MC_LAB_{XXX}_Update]
+        @LINE_NO int,
+        @PATIENT_CODE varchar(15),
+        @CHECKIN_NO int,
+        @CABINET_NO varchar(15),
+        @WAITING_NUMBER int,
+        @LAB_PACKAGE_CODE varchar(15),
+        @LAB_NAME nvarchar (2000),
+        @ANALYSIS_DATE int,
+        @ANALYSIS_TIME int,
+        @DOCTOR_APPOINTED varchar(15),
+        @RESULT nvarchar (4000),
+        @LABORATORY_TECHNICIAN varchar(15),
+        @STATUS varchar(15),
+        @NC_LB9 varchar(15),
+        @NC_LB8 varchar(15),
+        @NC_LB7 varchar(15),
+        @NC_LB6 varchar(15),
+        @NC_LB5 varchar(15),
+        @NC_LB4 varchar(15),
+        @NC_LB3 varchar(15),
+        @NC_LB2 varchar(15),
+        @NC_LB1 varchar(15),
+        @NC_LB0 varchar(15),
+        @UPDATED int,
+        @UPDATED_BY varchar(15)
+        AS
+
+        SET NOCOUNT ON
+        UPDATE [dbo].[pbs_MC_LAB_{XXX}] SET [PATIENT_CODE] = @PATIENT_CODE,
+        [CHECKIN_NO] = @CHECKIN_NO,
+        [CABINET_NO] = @CABINET_NO,
+        [WAITING_NUMBER] = @WAITING_NUMBER,
+        [LAB_PACKAGE_CODE] = @LAB_PACKAGE_CODE,
+        [LAB_NAME] = @LAB_NAME,
+        [ANALYSIS_DATE] = @ANALYSIS_DATE,
+        [ANALYSIS_TIME] = @ANALYSIS_TIME,
+        [DOCTOR_APPOINTED] = @DOCTOR_APPOINTED,
+        [RESULT] = @RESULT,
+        [LABORATORY_TECHNICIAN] = @LABORATORY_TECHNICIAN,
+        [STATUS] = @STATUS,
+        [NC_LB9] = @NC_LB9,
+        [NC_LB8] = @NC_LB8,
+        [NC_LB7] = @NC_LB7,
+        [NC_LB6] = @NC_LB6,
+        [NC_LB5] = @NC_LB5,
+        [NC_LB4] = @NC_LB4,
+        [NC_LB3] = @NC_LB3,
+        [NC_LB2] = @NC_LB2,
+        [NC_LB1] = @NC_LB1,
+        [NC_LB0] = @NC_LB0,
+        [UPDATED] = @UPDATED,
+        [UPDATED_BY] = @UPDATED_BY
+        WHERE [LINE_NO] = @LINE_NO
+
+        END
+      </Install>
+    </DBO>
+
+    <DBO name="pbs_MC_LAB_DETAIL_{XXX}" type="U">
+      <Install>
+        IF NOT EXISTS (SELECT * FROM dbo.sysobjects WHERE id=OBJECT_ID(N'dbo.[pbs_MC_LAB_DETAIL_{XXX}]'))
+        BEGIN
+        CREATE TABLE [dbo].[pbs_MC_LAB_DETAIL_{XXX}](
+        [LINE_NO] [int] IDENTITY(1,1) NOT NULL,
+        [LAB_ID] [int] NOT NULL,
+        [LAB_CODE] [varchar](15) NOT NULL,
+        [TEST_CODE] [varchar](15) NOT NULL,
+        [TEST_NAME] [nvarchar](200) NOT NULL,
+        [UNIT] [nvarchar](50) NOT NULL,
+        [VALUE] [nvarchar](50) NOT NULL,
+        [MIN_VALUE] [nvarchar](50) NOT NULL,
+        [MAX_VALUE] [nvarchar](50) NOT NULL,
+        [MIN_VALUE_MALE] [nvarchar](50) NOT NULL,
+        [MAX_VALUE_MALE] [nvarchar](50) NOT NULL,
+        [MIN_VALUE_FEMALE] [nvarchar](50) NOT NULL,
+        [MAX_VALUE_FEMALE] [nvarchar](50) NOT NULL,
+        [INTERPRETATION] [nvarchar](4000) NOT NULL,
+        [UPDATED] [int] NOT NULL,
+        [UPDATED_BY] [varchar](15) NOT NULL,
+        [TIME_STAMP] [timestamp] NULL,
+        CONSTRAINT [PK_pbs_MC_LAB_DETAIL_{XXX}] PRIMARY KEY CLUSTERED
+        (
+        [LINE_NO] ASC
+        )
+        )
+        END
+      </Install>
+    </DBO>
+    <DBO name="pbs_MC_LAB_DETAIL_{XXX}_Insert" type="P">
+      <Install>
+        IF NOT EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'[dbo].[pbs_MC_LAB_DETAIL_{XXX}_Insert]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+        BEGIN
+        CREATE PROCEDURE [dbo].[pbs_MC_LAB_DETAIL_{XXX}_Insert]
+        @LINE_NO int output,
+        @LAB_ID int,
+        @LAB_CODE varchar(15),
+        @TEST_CODE varchar(15),
+        @TEST_NAME nvarchar (200),
+        @UNIT nvarchar (50),
+        @VALUE nvarchar (50),
+        @MIN_VALUE nvarchar (50),
+        @MAX_VALUE nvarchar (50),
+        @MIN_VALUE_MALE nvarchar (50),
+        @MAX_VALUE_MALE nvarchar (50),
+        @MIN_VALUE_FEMALE nvarchar (50),
+        @MAX_VALUE_FEMALE nvarchar (50),
+        @INTERPRETATION nvarchar (4000),
+        @UPDATED int,
+        @UPDATED_BY varchar(15)
+        AS
+
+        SET NOCOUNT ON
+        INSERT INTO [dbo].[pbs_MC_LAB_DETAIL_{XXX}] ([LAB_ID],
+        [LAB_CODE],
+        [TEST_CODE],
+        [TEST_NAME],
+        [UNIT],
+        [VALUE],
+        [MIN_VALUE],
+        [MAX_VALUE],
+        [MIN_VALUE_MALE],
+        [MAX_VALUE_MALE],
+        [MIN_VALUE_FEMALE],
+        [MAX_VALUE_FEMALE],
+        [INTERPRETATION],
+        [UPDATED],
+        [UPDATED_BY])
+        VALUES (@LAB_ID,
+        @LAB_CODE,
+        @TEST_CODE,
+        @TEST_NAME,
+        @UNIT,
+        @VALUE,
+        @MIN_VALUE,
+        @MAX_VALUE,
+        @MIN_VALUE_MALE,
+        @MAX_VALUE_MALE,
+        @MIN_VALUE_FEMALE,
+        @MAX_VALUE_FEMALE,
+        @INTERPRETATION,
+        @UPDATED,
+        @UPDATED_BY)
+
+        SET @LINE_NO = SCOPE_IDENTITY()
+
+
+        END
+      </Install>
+    </DBO>
+    <DBO name="pbs_MC_LAB_DETAIL_{XXX}_Update" type="P">
+      <Install>
+        IF NOT EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'[dbo].[pbs_MC_LAB_DETAIL_{XXX}_Update]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+        BEGIN
+        CREATE PROCEDURE [dbo].[pbs_MC_LAB_DETAIL_{XXX}_Update]
+        @LINE_NO int,
+        @LAB_ID int,
+        @LAB_CODE varchar(15),
+        @TEST_CODE varchar(15),
+        @TEST_NAME nvarchar (200),
+        @UNIT nvarchar (50),
+        @VALUE nvarchar (50),
+        @MIN_VALUE nvarchar (50),
+        @MAX_VALUE nvarchar (50),
+        @MIN_VALUE_MALE nvarchar (50),
+        @MAX_VALUE_MALE nvarchar (50),
+        @MIN_VALUE_FEMALE nvarchar (50),
+        @MAX_VALUE_FEMALE nvarchar (50),
+        @INTERPRETATION nvarchar (4000),
+        @UPDATED int,
+        @UPDATED_BY varchar(15)
+        AS
+
+        SET NOCOUNT ON
+        UPDATE [dbo].[pbs_MC_LAB_DETAIL_{XXX}] SET [LAB_ID] = @LAB_ID,
+        [LAB_CODE] = @LAB_CODE,
+        [TEST_CODE] = @TEST_CODE,
+        [TEST_NAME] = @TEST_NAME,
+        [UNIT] = @UNIT,
+        [VALUE] = @VALUE,
+        [MIN_VALUE] = @MIN_VALUE,
+        [MAX_VALUE] = @MAX_VALUE,
+        [MIN_VALUE_MALE] = @MIN_VALUE_MALE,
+        [MAX_VALUE_MALE] = @MAX_VALUE_MALE,
+        [MIN_VALUE_FEMALE] = @MIN_VALUE_FEMALE,
+        [MAX_VALUE_FEMALE] = @MAX_VALUE_FEMALE,
+        [INTERPRETATION] = @INTERPRETATION,
+        [UPDATED] = @UPDATED,
+        [UPDATED_BY] = @UPDATED_BY
+        WHERE [LINE_NO] = @LINE_NO
+
+        END
+      </Install>
+    </DBO>
+
+    <DBO name="pbs_MC_LAB_TEST_{XXX}" type="U">
+      <Install>
+        IF NOT EXISTS (SELECT * FROM dbo.sysobjects WHERE id=OBJECT_ID(N'dbo.[pbs_MC_LAB_TEST_{XXX}]'))
+        BEGIN
+        CREATE TABLE [dbo].[pbs_MC_LAB_TEST_{XXX}](
+        [LINE_NO] [int] IDENTITY(1,1) NOT NULL,
+        [LAB_CODE] [varchar](15) NOT NULL,
+        [TEST_CODE] [varchar](15) NOT NULL,
+        [DESCRIPTN] [nvarchar](50) NOT NULL,
+        [UNIT] [nvarchar](50) NOT NULL,
+        [MIN_VALUE] [nvarchar](50) NOT NULL,
+        [MAX_VALUE] [nvarchar](50) NOT NULL,
+        [MIN_VALUE_MALE] [nvarchar](50) NOT NULL,
+        [MAX_VALUE_MALE] [nvarchar](50) NOT NULL,
+        [MIN_VALUE_FEMALE] [nvarchar](50) NOT NULL,
+        [MAX_VALUE_FEMALE] [nvarchar](50) NOT NULL,
+        [NOTES] [nvarchar](50) NOT NULL,
+        [UPDATED] [int] NOT NULL,
+        [UPDATED_BY] [varchar](15) NOT NULL,
+        [TIME_STAMP] [timestamp] NULL,
+        CONSTRAINT [PK_pbs_MC_LAB_TEST_{XXX}] PRIMARY KEY CLUSTERED
+        (
+        [LINE_NO] ASC
+        ))
+        END
+      </Install>
+    </DBO>
+    <DBO name="pbs_MC_LAB_TEST_{XXX}_Insert" type="P">
+      <Install>
+        IF NOT EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'[dbo].[pbs_MC_LAB_TEST_{XXX}_Insert]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+        BEGIN
+        CREATE PROCEDURE [dbo].[pbs_MC_LAB_TEST_{XXX}_Insert]
+        @LINE_NO int output,
+        @LAB_CODE varchar(15),
+        @TEST_CODE varchar(15),
+        @DESCRIPTN nvarchar (50),
+        @UNIT nvarchar (50),
+        @MIN_VALUE nvarchar (50),
+        @MAX_VALUE nvarchar (50),
+        @MIN_VALUE_MALE nvarchar (50),
+        @MAX_VALUE_MALE nvarchar (50),
+        @MIN_VALUE_FEMALE nvarchar (50),
+        @MAX_VALUE_FEMALE nvarchar (50),
+        @NOTES nvarchar (50),
+        @UPDATED int,
+        @UPDATED_BY varchar(15)
+        AS
+
+        SET NOCOUNT ON
+        INSERT INTO [dbo].[pbs_MC_LAB_TEST_{XXX}] ([LAB_CODE],
+        [TEST_CODE],
+        [DESCRIPTN],
+        [UNIT],
+        [MIN_VALUE],
+        [MAX_VALUE],
+        [MIN_VALUE_MALE],
+        [MAX_VALUE_MALE],
+        [MIN_VALUE_FEMALE],
+        [MAX_VALUE_FEMALE],
+        [NOTES],
+        [UPDATED],
+        [UPDATED_BY])
+        VALUES (@LAB_CODE,
+        @TEST_CODE,
+        @DESCRIPTN,
+        @UNIT,
+        @MIN_VALUE,
+        @MAX_VALUE,
+        @MIN_VALUE_MALE,
+        @MAX_VALUE_MALE,
+        @MIN_VALUE_FEMALE,
+        @MAX_VALUE_FEMALE,
+        @NOTES,
+        @UPDATED,
+        @UPDATED_BY)
+
+        SET @LINE_NO = SCOPE_IDENTITY()
+
+        END
+      </Install>
+    </DBO>
+    <DBO name="pbs_MC_LAB_TEST_{XXX}_Update" type="P">
+      <Install>
+        IF NOT EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'[dbo].[pbs_MC_LAB_TEST_{XXX}_Update]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+        BEGIN
+        CREATE PROCEDURE [dbo].[pbs_MC_LAB_TEST_{XXX}_Update]
+        @LINE_NO int,
+        @LAB_CODE varchar(15),
+        @TEST_CODE varchar(15),
+        @DESCRIPTN nvarchar (50),
+        @UNIT nvarchar (50),
+        @MIN_VALUE nvarchar (50),
+        @MAX_VALUE nvarchar (50),
+        @MIN_VALUE_MALE nvarchar (50),
+        @MAX_VALUE_MALE nvarchar (50),
+        @MIN_VALUE_FEMALE nvarchar (50),
+        @MAX_VALUE_FEMALE nvarchar (50),
+        @NOTES nvarchar (50),
+        @UPDATED int,
+        @UPDATED_BY varchar(15)
+        AS
+
+        SET NOCOUNT ON
+        UPDATE [dbo].[pbs_MC_LAB_TEST_{XXX}] SET [LAB_CODE] = @LAB_CODE,
+        [TEST_CODE] = @TEST_CODE,
+        [DESCRIPTN] = @DESCRIPTN,
+        [UNIT] = @UNIT,
+        [MIN_VALUE] = @MIN_VALUE,
+        [MAX_VALUE] = @MAX_VALUE,
+        [MIN_VALUE_MALE] = @MIN_VALUE_MALE,
+        [MAX_VALUE_MALE] = @MAX_VALUE_MALE,
+        [MIN_VALUE_FEMALE] = @MIN_VALUE_FEMALE,
+        [MAX_VALUE_FEMALE] = @MAX_VALUE_FEMALE,
+        [NOTES] = @NOTES,
+        [UPDATED] = @UPDATED,
+        [UPDATED_BY] = @UPDATED_BY
+        WHERE [LINE_NO] = @LINE_NO
+
+
+        END
+      </Install>
+    </DBO>
+
+    <DBO name="pbs_MC_PATIENT_{XXX}" type="U">
+      <Install>
+        IF NOT EXISTS (SELECT * FROM dbo.sysobjects WHERE id=OBJECT_ID(N'dbo.[pbs_MC_PATIENT_{XXX}]'))
+        BEGIN
+        CREATE TABLE [dbo].[pbs_MC_PATIENT_{XXX}](
+        [PATIENT_CODE] [varchar](15) NOT NULL,
+        [FIRST_NAME] [nvarchar](20) NOT NULL,
+        [MIDDLE_NAME] [nvarchar](20) NOT NULL,
+        [LAST_NAME] [nvarchar](20) NOT NULL,
+        [FULLNAME] [nvarchar](50) NOT NULL,
+        [GENDER] [char](1) NOT NULL,
+        [DOB] [int] NOT NULL,
+        [JOB] [nvarchar](50) NOT NULL,
+        [ETHNIC] [varchar](15) NOT NULL,
+        [NATIONALITY] [varchar](15) NOT NULL,
+        [ADDRESS] [nvarchar](50) NOT NULL,
+        [WARD] [varchar](15) NOT NULL,
+        [DISTRICT] [varchar](15) NOT NULL,
+        [CITY] [varchar](15) NOT NULL,
+        [WORKPLACE] [nvarchar](200) NOT NULL,
+        [PHONE] [varchar](50) NOT NULL,
+        [EMAIL] [varchar](200) NOT NULL,
+        [EMERGENCY_CONTACT] [varchar](15) NOT NULL,
+        [EMERGENCY_CONTACT_NAME] [nvarchar](100) NOT NULL,
+        [EMERGENCY_CONTACT_PHONE] [varchar](50) NOT NULL,
+        [PATIENT_TYPE] [varchar](15) NOT NULL,
+        [HEALTH_INSURANCE_NO] [varchar](15) NOT NULL,
+        [VALID_TO] [int] NOT NULL,
+        [NOTES] [nvarchar](500) NOT NULL,
+        [NC_PT9] [varchar](15) NOT NULL,
+        [NC_PT8] [varchar](15) NOT NULL,
+        [NC_PT7] [varchar](15) NOT NULL,
+        [NC_PT6] [varchar](15) NOT NULL,
+        [NC_PT5] [varchar](15) NOT NULL,
+        [NC_PT4] [varchar](15) NOT NULL,
+        [NC_PT3] [varchar](15) NOT NULL,
+        [NC_PT2] [varchar](15) NOT NULL,
+        [NC_PT1] [varchar](15) NOT NULL,
+        [UPDATED] [int] NOT NULL,
+        [UPDATED_BY] [char](5) NOT NULL,
+        [TIME_STAMP] [timestamp] NULL,
+        CONSTRAINT [PK_pbs_MC_PATIENT] PRIMARY KEY CLUSTERED
+        (
+        [PATIENT_CODE] ASC
+        ))
+        END
+      </Install>
+    </DBO>
+    <DBO name="pbs_MC_PATIENT_{XXX}_Insert" type="P">
+      <Install>
+        IF NOT EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'[dbo].[pbs_MC_PATIENT_{XXX}_Insert]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+        BEGIN
+        CREATE PROCEDURE [dbo].[pbs_MC_PATIENT_{XXX}_InsertUpdate]
+        @PATIENT_CODE varchar(15),
+        @FIRST_NAME nvarchar (20),
+        @MIDDLE_NAME nvarchar (20),
+        @LAST_NAME nvarchar (20),
+        @FULLNAME nvarchar (50),
+        @GENDER char(1),
+        @DOB int,
+        @JOB nvarchar (50),
+        @ETHNIC varchar(15),
+        @NATIONALITY varchar(15),
+        @ADDRESS nvarchar (50),
+        @WARD varchar(15),
+        @DISTRICT varchar(15),
+        @CITY varchar(15),
+        @WORKPLACE nvarchar (200),
+        @PHONE varchar(50),
+        @EMAIL varchar(200),
+        @EMERGENCY_CONTACT varchar(15),
+        @EMERGENCY_CONTACT_NAME nvarchar (100),
+        @EMERGENCY_CONTACT_PHONE varchar(50),
+        @PATIENT_TYPE varchar(15),
+        @HEALTH_INSURANCE_NO varchar(15),
+        @VALID_TO int,
+        @NOTES nvarchar (500),
+        @NC_PT9 varchar(15),
+        @NC_PT8 varchar(15),
+        @NC_PT7 varchar(15),
+        @NC_PT6 varchar(15),
+        @NC_PT5 varchar(15),
+        @NC_PT4 varchar(15),
+        @NC_PT3 varchar(15),
+        @NC_PT2 varchar(15),
+        @NC_PT1 varchar(15),
+        @UPDATED int,
+        @UPDATED_BY char(5)
+        AS
+
+        SET NOCOUNT ON
+
+        IF EXISTS(SELECT PATIENT_CODE FROM [dbo].[pbs_MC_PATIENT_{XXX}] WHERE [PATIENT_CODE] = @PATIENT_CODE)
+        BEGIN
+        UPDATE [dbo].[pbs_MC_PATIENT_{XXX}] SET
+        [FIRST_NAME] = @FIRST_NAME,
+        [MIDDLE_NAME] = @MIDDLE_NAME,
+        [LAST_NAME] = @LAST_NAME,
+        [FULLNAME] = @FULLNAME,
+        [GENDER] = @GENDER,
+        [DOB] = @DOB,
+        [JOB] = @JOB,
+        [ETHNIC] = @ETHNIC,
+        [NATIONALITY] = @NATIONALITY,
+        [ADDRESS] = @ADDRESS,
+        [WARD] = @WARD,
+        [DISTRICT] = @DISTRICT,
+        [CITY] = @CITY,
+        [WORKPLACE] = @WORKPLACE,
+        [PHONE] = @PHONE,
+        [EMAIL] = @EMAIL,
+        [EMERGENCY_CONTACT] = @EMERGENCY_CONTACT,
+        [EMERGENCY_CONTACT_NAME] = @EMERGENCY_CONTACT_NAME,
+        [EMERGENCY_CONTACT_PHONE] = @EMERGENCY_CONTACT_PHONE,
+        [PATIENT_TYPE] = @PATIENT_TYPE,
+        [HEALTH_INSURANCE_NO] = @HEALTH_INSURANCE_NO,
+        [VALID_TO] = @VALID_TO,
+        [NOTES] = @NOTES,
+        [NC_PT9] = @NC_PT9,
+        [NC_PT8] = @NC_PT8,
+        [NC_PT7] = @NC_PT7,
+        [NC_PT6] = @NC_PT6,
+        [NC_PT5] = @NC_PT5,
+        [NC_PT4] = @NC_PT4,
+        [NC_PT3] = @NC_PT3,
+        [NC_PT2] = @NC_PT2,
+        [NC_PT1] = @NC_PT1,
+        [UPDATED] = @UPDATED,
+        [UPDATED_BY] = @UPDATED_BY
+        WHERE [PATIENT_CODE] = @PATIENT_CODE
+        END
+        ELSE
+        BEGIN
+        INSERT INTO [dbo].[pbs_MC_PATIENT_{XXX}] (
+        [PATIENT_CODE],
+        [FIRST_NAME],
+        [MIDDLE_NAME],
+        [LAST_NAME],
+        [FULLNAME],
+        [GENDER],
+        [DOB],
+        [JOB],
+        [ETHNIC],
+        [NATIONALITY],
+        [ADDRESS],
+        [WARD],
+        [DISTRICT],
+        [CITY],
+        [WORKPLACE],
+        [PHONE],
+        [EMAIL],
+        [EMERGENCY_CONTACT],
+        [EMERGENCY_CONTACT_NAME],
+        [EMERGENCY_CONTACT_PHONE],
+        [PATIENT_TYPE],
+        [HEALTH_INSURANCE_NO],
+        [VALID_TO],
+        [NOTES],
+        [NC_PT9],
+        [NC_PT8],
+        [NC_PT7],
+        [NC_PT6],
+        [NC_PT5],
+        [NC_PT4],
+        [NC_PT3],
+        [NC_PT2],
+        [NC_PT1],
+        [UPDATED],
+        [UPDATED_BY]
+        ) VALUES (
+        @PATIENT_CODE,
+        @FIRST_NAME,
+        @MIDDLE_NAME,
+        @LAST_NAME,
+        @FULLNAME,
+        @GENDER,
+        @DOB,
+        @JOB,
+        @ETHNIC,
+        @NATIONALITY,
+        @ADDRESS,
+        @WARD,
+        @DISTRICT,
+        @CITY,
+        @WORKPLACE,
+        @PHONE,
+        @EMAIL,
+        @EMERGENCY_CONTACT,
+        @EMERGENCY_CONTACT_NAME,
+        @EMERGENCY_CONTACT_PHONE,
+        @PATIENT_TYPE,
+        @HEALTH_INSURANCE_NO,
+        @VALID_TO,
+        @NOTES,
+        @NC_PT9,
+        @NC_PT8,
+        @NC_PT7,
+        @NC_PT6,
+        @NC_PT5,
+        @NC_PT4,
+        @NC_PT3,
+        @NC_PT2,
+        @NC_PT1,
+        @UPDATED,
+        @UPDATED_BY
+        )
+        END
+        END
+      </Install>
+    </DBO>
+    
+    <DBO name="pbs_MC_PRESCRIPTION_{XXX}" type="U">
+      <Install>
+        IF NOT EXISTS (SELECT * FROM dbo.sysobjects WHERE id=OBJECT_ID(N'dbo.[pbs_MC_PRESCRIPTION_{XXX}]'))
+        BEGIN
+        CREATE TABLE [dbo].[pbs_MC_PRESCRIPTION_{XXX}](
+        [LINE_NO] [int] IDENTITY(1,1) NOT NULL,
+        [PATIENT_CODE] [varchar](15) NOT NULL,
+        [CHECKIN_NO] [int] NOT NULL,
+        [DOCTOR_APPOINTED] [varchar](15) NOT NULL,
+        [PRESCRIPTION_DATE] [int] NOT NULL,
+        [SAMPLE_PRESCRIPTION_CODE] [varchar](15) NOT NULL,
+        [UPDATED] [int] NOT NULL,
+        [UPDATED_BY] [varchar](15) NOT NULL,
+        [TIME_STAMP] [timestamp] NULL,
+        CONSTRAINT [PK_pbs_MC_PRESCRIPTION_{XXX}] PRIMARY KEY CLUSTERED
+        (
+        [LINE_NO] ASC
+        ))
+        END
+      </Install>
+    </DBO>
+    <DBO name="pbs_MC_PRESCRIPTION_{XXX}_Insert" type="P">
+      <Install>
+        IF NOT EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'[dbo].[pbs_MC_PRESCRIPTION_{XXX}_Insert]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+        BEGIN
+        CREATE PROCEDURE [dbo].[pbs_MC_PRESCRIPTION_{XXX}_Insert]
+        @LINE_NO int output,
+        @PATIENT_CODE varchar(15),
+        @CHECKIN_NO int,
+        @DOCTOR_APPOINTED varchar(15),
+        @PRESCRIPTION_DATE int,
+        @SAMPLE_PRESCRIPTION_CODE varchar(15),
+        @UPDATED int,
+        @UPDATED_BY varchar(15)
+        AS
+
+        SET NOCOUNT ON
+        INSERT INTO [dbo].[pbs_MC_PRESCRIPTION_{XXX}] ([PATIENT_CODE],
+        [CHECKIN_NO],
+        [DOCTOR_APPOINTED],
+        [PRESCRIPTION_DATE],
+        [SAMPLE_PRESCRIPTION_CODE],
+        [UPDATED],
+        [UPDATED_BY])
+        VALUES (@PATIENT_CODE,
+        @CHECKIN_NO,
+        @DOCTOR_APPOINTED,
+        @PRESCRIPTION_DATE,
+        @SAMPLE_PRESCRIPTION_CODE,
+        @UPDATED,
+        @UPDATED_BY)
+
+        SET @LINE_NO = SCOPE_IDENTITY()
+
+        END
+      </Install>
+    </DBO>
+    <DBO name="pbs_MC_PRESCRIPTION_{XXX}_Update" type="P">
+      <Install>
+        IF NOT EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'[dbo].[pbs_MC_PRESCRIPTION_{XXX}_Update]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+        BEGIN
+        CREATE PROCEDURE [dbo].[pbs_MC_PRESCRIPTION_{XXX}_Update]
+        @LINE_NO int,
+        @PATIENT_CODE varchar(15),
+        @CHECKIN_NO int,
+        @DOCTOR_APPOINTED varchar(15),
+        @PRESCRIPTION_DATE int,
+        @SAMPLE_PRESCRIPTION_CODE varchar(15),
+        @UPDATED int,
+        @UPDATED_BY varchar(15)
+        AS
+
+        SET NOCOUNT ON
+        UPDATE [dbo].[pbs_MC_PRESCRIPTION_{XXX}] SET [PATIENT_CODE] = @PATIENT_CODE,
+        [CHECKIN_NO] = @CHECKIN_NO,
+        [DOCTOR_APPOINTED] = @DOCTOR_APPOINTED,
+        [PRESCRIPTION_DATE] = @PRESCRIPTION_DATE,
+        [SAMPLE_PRESCRIPTION_CODE] = @SAMPLE_PRESCRIPTION_CODE,
+        [UPDATED] = @UPDATED,
+        [UPDATED_BY] = @UPDATED_BY
+        WHERE [LINE_NO] = @LINE_NO
+        END
+      </Install>
+    </DBO>
+
+    <DBO name="pbs_MC_PRESCRIPTION_DETAIL_{XXX}" type="U">
+      <Install>
+        IF NOT EXISTS (SELECT * FROM dbo.sysobjects WHERE id=OBJECT_ID(N'dbo.[pbs_MC_PRESCRIPTION_DETAIL_{XXX}]'))
+        BEGIN
+        CREATE TABLE [dbo].[pbs_MC_PRESCRIPTION_DETAIL_{XXX}](
+        [LINE_NO] [int] IDENTITY(1,1) NOT NULL,
+        [PRESCRIPTION_NO] [int] NOT NULL,
+        [ITEM_CODE] [varchar](15) NOT NULL,
+        [ITEM_NAME] [nvarchar](200) NOT NULL,
+        [ACTIVE_INGRENDIENT] [nvarchar](200) NOT NULL,
+        [UNIT] [nvarchar](50) NOT NULL,
+        [DATE_OF_ISSUE] [int] NOT NULL,
+        [MORNING] [int] NOT NULL,
+        [NOON] [int] NOT NULL,
+        [AFTERNOON] [int] NOT NULL,
+        [EVENING] [int] NOT NULL,
+        [QUANTITY] [int] NOT NULL,
+        [BEFORE_BREAKFAST] [char](1) NOT NULL,
+        [BEFORE_LUNCH] [char](1) NOT NULL,
+        [BEFORE_SUPPER] [char](1) NOT NULL,
+        [BEFORE_DINNER] [char](1) NOT NULL,
+        [INSTRUCTION] [nvarchar](2000) NOT NULL,
+        [UPDATED] [int] NOT NULL,
+        [UPDATED_BY] [varchar](15) NOT NULL,
+        [TIME_STAMP] [timestamp] NULL,
+        CONSTRAINT [PK_pbs_MC_PRESCRIPTION_DETAIL_{XXX}] PRIMARY KEY CLUSTERED
+        (
+        [LINE_NO] ASC
+        ))
+        END
+      </Install>
+    </DBO>
+    <DBO name="pbs_MC_PRESCRIPTION_DETAIL_{XXX}_Insert" type="P">
+      <Install>
+        IF NOT EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'[dbo].[pbs_MC_PRESCRIPTION_DETAIL_{XXX}_Insert]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+        BEGIN
+        CREATE PROCEDURE [dbo].[pbs_MC_PRESCRIPTION_DETAIL_{XXX}_Insert]
+        @LINE_NO int output,
+        @PRESCRIPTION_NO int,
+        @ITEM_CODE varchar(15),
+        @ITEM_NAME nvarchar (200),
+        @ACTIVE_INGRENDIENT nvarchar (200),
+        @UNIT nvarchar (50),
+        @DATE_OF_ISSUE int,
+        @MORNING int,
+        @NOON int,
+        @AFTERNOON int,
+        @EVENING int,
+        @QUANTITY int,
+        @BEFORE_BREAKFAST char(1),
+        @BEFORE_LUNCH char(1),
+        @BEFORE_SUPPER char(1),
+        @BEFORE_DINNER char(1),
+        @INSTRUCTION nvarchar (2000),
+        @UPDATED int,
+        @UPDATED_BY varchar(15)
+        AS
+
+        SET NOCOUNT ON
+        INSERT INTO [dbo].[pbs_MC_PRESCRIPTION_DETAIL_{XXX}] ([PRESCRIPTION_NO],
+        [ITEM_CODE],
+        [ITEM_NAME],
+        [ACTIVE_INGRENDIENT],
+        [UNIT],
+        [DATE_OF_ISSUE],
+        [MORNING],
+        [NOON],
+        [AFTERNOON],
+        [EVENING],
+        [QUANTITY],
+        [BEFORE_BREAKFAST],
+        [BEFORE_LUNCH],
+        [BEFORE_SUPPER],
+        [BEFORE_DINNER],
+        [INSTRUCTION],
+        [UPDATED],
+        [UPDATED_BY])
+        VALUES (@PRESCRIPTION_NO,
+        @ITEM_CODE,
+        @ITEM_NAME,
+        @ACTIVE_INGRENDIENT,
+        @UNIT,
+        @DATE_OF_ISSUE,
+        @MORNING,
+        @NOON,
+        @AFTERNOON,
+        @EVENING,
+        @QUANTITY,
+        @BEFORE_BREAKFAST,
+        @BEFORE_LUNCH,
+        @BEFORE_SUPPER,
+        @BEFORE_DINNER,
+        @INSTRUCTION,
+        @UPDATED,
+        @UPDATED_BY)
+
+        SET @LINE_NO = SCOPE_IDENTITY()
+        END
+      </Install>
+    </DBO>
+    <DBO name="pbs_MC_PRESCRIPTION_DETAIL_{XXX}_Update" type="P">
+      <Install>
+        IF NOT EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'[dbo].[pbs_MC_PRESCRIPTION_DETAIL_{XXX}_Update]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+        BEGIN
+        CREATE PROCEDURE [dbo].[pbs_MC_PRESCRIPTION_DETAIL_{XXX}_Update]
+        @LINE_NO int,
+        @PRESCRIPTION_NO int,
+        @ITEM_CODE varchar(15),
+        @ITEM_NAME nvarchar (200),
+        @ACTIVE_INGRENDIENT nvarchar (200),
+        @UNIT nvarchar (50),
+        @DATE_OF_ISSUE int,
+        @MORNING int,
+        @NOON int,
+        @AFTERNOON int,
+        @EVENING int,
+        @QUANTITY int,
+        @BEFORE_BREAKFAST char(1),
+        @BEFORE_LUNCH char(1),
+        @BEFORE_SUPPER char(1),
+        @BEFORE_DINNER char(1),
+        @INSTRUCTION nvarchar (2000),
+        @UPDATED int,
+        @UPDATED_BY varchar(15)
+        AS
+
+        SET NOCOUNT ON
+        UPDATE [dbo].[pbs_MC_PRESCRIPTION_DETAIL_{XXX}] SET [PRESCRIPTION_NO] = @PRESCRIPTION_NO,
+        [ITEM_CODE] = @ITEM_CODE,
+        [ITEM_NAME] = @ITEM_NAME,
+        [ACTIVE_INGRENDIENT] = @ACTIVE_INGRENDIENT,
+        [UNIT] = @UNIT,
+        [DATE_OF_ISSUE] = @DATE_OF_ISSUE,
+        [MORNING] = @MORNING,
+        [NOON] = @NOON,
+        [AFTERNOON] = @AFTERNOON,
+        [EVENING] = @EVENING,
+        [QUANTITY] = @QUANTITY,
+        [BEFORE_BREAKFAST] = @BEFORE_BREAKFAST,
+        [BEFORE_LUNCH] = @BEFORE_LUNCH,
+        [BEFORE_SUPPER] = @BEFORE_SUPPER,
+        [BEFORE_DINNER] = @BEFORE_DINNER,
+        [INSTRUCTION] = @INSTRUCTION,
+        [UPDATED] = @UPDATED,
+        [UPDATED_BY] = @UPDATED_BY
+        WHERE [LINE_NO] = @LINE_NO
+        END
+      </Install>
+    </DBO>
+
+    <DBO name="pbs_MC_SURGERY_{XXX}" type="U">
+      <Install>
+        IF NOT EXISTS (SELECT * FROM dbo.sysobjects WHERE id=OBJECT_ID(N'dbo.[pbs_MC_SURGERY_{XXX}]'))
+        BEGIN
+        CREATE TABLE [dbo].[pbs_MC_SURGERY_{XXX}](
+        [LINE_NO] [int] IDENTITY(1,1) NOT NULL,
+        [PATIENT_CODE] [varchar](15) NOT NULL,
+        [CHECKIN_NO] [int] NOT NULL,
+        [GENCHECK_NO] [int] NOT NULL,
+        [SURGERY_DATE] [int] NOT NULL,
+        [SURGERY_TIME] [int] NOT NULL,
+        [PREOPERATIVE_DIAGNOS] [nvarchar](2000) NOT NULL,
+        [POSTOPERATIVE_DIAGNOS] [nvarchar](2000) NOT NULL,
+        [SURGICAL_TYPE] [nvarchar](50) NOT NULL,
+        [SURGICAL_METHOD] [nvarchar](50) NOT NULL,
+        [SURGEON] [varchar](15) NOT NULL,
+        [ANAESTHETIST] [varchar](15) NOT NULL,
+        [SURGERY_DIAGRAM] [nvarchar](2000) NOT NULL,
+        [OPERATION_STEPS] [nvarchar](4000) NOT NULL,
+        [RESULT] [nvarchar](2000) NOT NULL,
+        [TREATMENT] [nvarchar](2000) NOT NULL,
+        [UPDATED] [int] NOT NULL,
+        [UPDATED_BY] [varchar](15) NOT NULL,
+        [TIME_STAMP] [timestamp] NULL,
+        CONSTRAINT [PK_pbs_MC_SURGERY_{XXX}] PRIMARY KEY CLUSTERED
+        (
+        [LINE_NO] ASC
+        ))
+        END
+      </Install>
+    </DBO>
+    <DBO name="pbs_MC_SURGERY_{XXX}_Insert" type="P">
+      <Install>
+        IF NOT EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'[dbo].[pbs_MC_SURGERY_{XXX}_Insert]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+        BEGIN
+        CREATE PROCEDURE [dbo].[pbs_MC_SURGERY_{XXX}_Insert]
+        @LINE_NO int output,
+        @PATIENT_CODE varchar(15),
+        @CHECKIN_NO int,
+        @GENCHECK_NO int,
+        @SURGERY_DATE int,
+        @SURGERY_TIME int,
+        @PREOPERATIVE_DIAGNOS nvarchar (2000),
+        @POSTOPERATIVE_DIAGNOS nvarchar (2000),
+        @SURGICAL_TYPE nvarchar (50),
+        @SURGICAL_METHOD nvarchar (50),
+        @SURGEON varchar(15),
+        @ANAESTHETIST varchar(15),
+        @SURGERY_DIAGRAM nvarchar (2000),
+        @OPERATION_STEPS nvarchar (4000),
+        @RESULT nvarchar (2000),
+        @TREATMENT nvarchar (2000),
+        @UPDATED int,
+        @UPDATED_BY varchar(15)
+        AS
+
+        SET NOCOUNT ON
+        INSERT INTO [dbo].[pbs_MC_SURGERY_{XXX}] ([PATIENT_CODE],
+        [CHECKIN_NO],
+        [GENCHECK_NO],
+        [SURGERY_DATE],
+        [SURGERY_TIME],
+        [PREOPERATIVE_DIAGNOS],
+        [POSTOPERATIVE_DIAGNOS],
+        [SURGICAL_TYPE],
+        [SURGICAL_METHOD],
+        [SURGEON],
+        [ANAESTHETIST],
+        [SURGERY_DIAGRAM],
+        [OPERATION_STEPS],
+        [RESULT],
+        [TREATMENT],
+        [UPDATED],
+        [UPDATED_BY])
+        VALUES (@PATIENT_CODE,
+        @CHECKIN_NO,
+        @GENCHECK_NO,
+        @SURGERY_DATE,
+        @SURGERY_TIME,
+        @PREOPERATIVE_DIAGNOS,
+        @POSTOPERATIVE_DIAGNOS,
+        @SURGICAL_TYPE,
+        @SURGICAL_METHOD,
+        @SURGEON,
+        @ANAESTHETIST,
+        @SURGERY_DIAGRAM,
+        @OPERATION_STEPS,
+        @RESULT,
+        @TREATMENT,
+        @UPDATED,
+        @UPDATED_BY)
+
+        SET @LINE_NO = SCOPE_IDENTITY()
+
+        END
+      </Install>
+    </DBO>
+    <DBO name="pbs_MC_SURGERY_{XXX}_Update" type="P">
+      <Install>
+        IF NOT EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'[dbo].[pbs_MC_SURGERY_{XXX}_Update]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+        BEGIN
+        CREATE PROCEDURE [dbo].[pbs_MC_SURGERY_{XXX}_Update]
+        @LINE_NO int,
+        @PATIENT_CODE varchar(15),
+        @CHECKIN_NO int,
+        @GENCHECK_NO int,
+        @SURGERY_DATE int,
+        @SURGERY_TIME int,
+        @PREOPERATIVE_DIAGNOS nvarchar (2000),
+        @POSTOPERATIVE_DIAGNOS nvarchar (2000),
+        @SURGICAL_TYPE nvarchar (50),
+        @SURGICAL_METHOD nvarchar (50),
+        @SURGEON varchar(15),
+        @ANAESTHETIST varchar(15),
+        @SURGERY_DIAGRAM nvarchar (2000),
+        @OPERATION_STEPS nvarchar (4000),
+        @RESULT nvarchar (2000),
+        @TREATMENT nvarchar (2000),
+        @UPDATED int,
+        @UPDATED_BY varchar(15)
+        AS
+
+        SET NOCOUNT ON
+        UPDATE [dbo].[pbs_MC_SURGERY_{XXX}] SET [PATIENT_CODE] = @PATIENT_CODE,
+        [CHECKIN_NO] = @CHECKIN_NO,
+        [GENCHECK_NO] = @GENCHECK_NO,
+        [SURGERY_DATE] = @SURGERY_DATE,
+        [SURGERY_TIME] = @SURGERY_TIME,
+        [PREOPERATIVE_DIAGNOS] = @PREOPERATIVE_DIAGNOS,
+        [POSTOPERATIVE_DIAGNOS] = @POSTOPERATIVE_DIAGNOS,
+        [SURGICAL_TYPE] = @SURGICAL_TYPE,
+        [SURGICAL_METHOD] = @SURGICAL_METHOD,
+        [SURGEON] = @SURGEON,
+        [ANAESTHETIST] = @ANAESTHETIST,
+        [SURGERY_DIAGRAM] = @SURGERY_DIAGRAM,
+        [OPERATION_STEPS] = @OPERATION_STEPS,
+        [RESULT] = @RESULT,
+        [TREATMENT] = @TREATMENT,
+        [UPDATED] = @UPDATED,
+        [UPDATED_BY] = @UPDATED_BY
+        WHERE [LINE_NO] = @LINE_NO
+        END
+      </Install>
+    </DBO>
+
+    <DBO name="pbs_MC_TRANSFER_{XXX}" type="U">
+      <Install>
+        IF NOT EXISTS (SELECT * FROM dbo.sysobjects WHERE id=OBJECT_ID(N'dbo.[pbs_MC_TRANSFER_{XXX}]'))
+        BEGIN
+        CREATE TABLE [dbo].[pbs_MC_TRANSFER_{XXX}](
+        [LINE_NO] [int] IDENTITY(1,1) NOT NULL,
+        [PATIENT_CODE] [varchar](15) NOT NULL,
+        [CHECKIN_NO] [int] NOT NULL,
+        [TRANSFER_GROUP] [varchar](15) NOT NULL,
+        [TRANS_TO_DEPT] [varchar](15) NOT NULL,
+        [TRANS_TIME] [int] NOT NULL,
+        [TRANS_DATE] [int] NOT NULL,
+        [DEPT_TREATMENT_DAYS] [int] NOT NULL,
+        [TRANSFER_TYPE] [varchar](15) NOT NULL,
+        [TRANSFER_TO] [nvarchar](200) NOT NULL,
+        [TRANSFER_REASON] [nvarchar](2000) NOT NULL,
+        [TRANSPORTATION] [nvarchar](50) NOT NULL,
+        [TRANSPORTER] [varchar](15) NOT NULL,
+        [UPDATED] [int] NOT NULL,
+        [UPDATED_BY] [varchar](15) NOT NULL,
+        [TIME_STAMP] [timestamp] NULL,
+        CONSTRAINT [PK_pbs_MC_TRANSFER_{XXX}] PRIMARY KEY CLUSTERED
+        (
+        [LINE_NO] ASC
+        ))
+        END
+      </Install>
+    </DBO>
+    <DBO name="pbs_MC_TRANSFER_{XXX}_Insert" type="P">
+      <Install>
+        IF NOT EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'[dbo].[pbs_MC_TRANSFER_{XXX}_Insert]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+        BEGIN
+        CREATE PROCEDURE [dbo].[pbs_MC_TRANSFER_{XXX}_Insert]
+        @LINE_NO int output,
+        @PATIENT_CODE varchar(15),
+        @CHECKIN_NO int,
+        @TRANSFER_GROUP varchar(15),
+        @TRANS_TO_DEPT varchar(15),
+        @TRANS_TIME int,
+        @TRANS_DATE int,
+        @DEPT_TREATMENT_DAYS int,
+        @TRANSFER_TYPE varchar(15),
+        @TRANSFER_TO nvarchar (200),
+        @TRANSFER_REASON nvarchar (2000),
+        @TRANSPORTATION nvarchar (50),
+        @TRANSPORTER varchar(15),
+        @UPDATED int,
+        @UPDATED_BY varchar(15)
+        AS
+
+        SET NOCOUNT ON
+        INSERT INTO [dbo].[pbs_MC_TRANSFER_{XXX}] ([PATIENT_CODE],
+        [CHECKIN_NO],
+        [TRANSFER_GROUP],
+        [TRANS_TO_DEPT],
+        [TRANS_TIME],
+        [TRANS_DATE],
+        [DEPT_TREATMENT_DAYS],
+        [TRANSFER_TYPE],
+        [TRANSFER_TO],
+        [TRANSFER_REASON],
+        [TRANSPORTATION],
+        [TRANSPORTER],
+        [UPDATED],
+        [UPDATED_BY])
+        VALUES (@PATIENT_CODE,
+        @CHECKIN_NO,
+        @TRANSFER_GROUP,
+        @TRANS_TO_DEPT,
+        @TRANS_TIME,
+        @TRANS_DATE,
+        @DEPT_TREATMENT_DAYS,
+        @TRANSFER_TYPE,
+        @TRANSFER_TO,
+        @TRANSFER_REASON,
+        @TRANSPORTATION,
+        @TRANSPORTER,
+        @UPDATED,
+        @UPDATED_BY)
+
+        SET @LINE_NO = SCOPE_IDENTITY()
+
+        END
+      </Install>
+    </DBO>
+    <DBO name="pbs_MC_TRANSFER_{XXX}_Update" type="P">
+      <Install>
+        IF NOT EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'[dbo].[pbs_MC_TRANSFER_{XXX}_Update]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+        BEGIN
+        CREATE PROCEDURE [dbo].[pbs_MC_TRANSFER_{XXX}_Update]
+        @LINE_NO int,
+        @PATIENT_CODE varchar(15),
+        @CHECKIN_NO int,
+        @TRANSFER_GROUP varchar(15),
+        @TRANS_TO_DEPT varchar(15),
+        @TRANS_TIME int,
+        @TRANS_DATE int,
+        @DEPT_TREATMENT_DAYS int,
+        @TRANSFER_TYPE varchar(15),
+        @TRANSFER_TO nvarchar (200),
+        @TRANSFER_REASON nvarchar (2000),
+        @TRANSPORTATION nvarchar (50),
+        @TRANSPORTER varchar(15),
+        @UPDATED int,
+        @UPDATED_BY varchar(15)
+        AS
+
+        SET NOCOUNT ON
+        UPDATE [dbo].[pbs_MC_TRANSFER_{XXX}] SET [PATIENT_CODE] = @PATIENT_CODE,
+        [CHECKIN_NO] = @CHECKIN_NO,
+        [TRANSFER_GROUP] = @TRANSFER_GROUP,
+        [TRANS_TO_DEPT] = @TRANS_TO_DEPT,
+        [TRANS_TIME] = @TRANS_TIME,
+        [TRANS_DATE] = @TRANS_DATE,
+        [DEPT_TREATMENT_DAYS] = @DEPT_TREATMENT_DAYS,
+        [TRANSFER_TYPE] = @TRANSFER_TYPE,
+        [TRANSFER_TO] = @TRANSFER_TO,
+        [TRANSFER_REASON] = @TRANSFER_REASON,
+        [TRANSPORTATION] = @TRANSPORTATION,
+        [TRANSPORTER] = @TRANSPORTER,
+        [UPDATED] = @UPDATED,
+        [UPDATED_BY] = @UPDATED_BY
+        WHERE [LINE_NO] = @LINE_NO
+
+        END
+      </Install>
+    </DBO>
+
+    <DBO name="pbs_MC_SAMPLE_PRESCRIPTION_{XXX}" type="U">
+      <Install>
+        IF NOT EXISTS (SELECT * FROM dbo.sysobjects WHERE id=OBJECT_ID(N'dbo.[pbs_MC_SAMPLE_PRESCRIPTION_{XXX}]'))
+        BEGIN
+        CREATE TABLE [dbo].[pbs_MC_SAMPLE_PRESCRIPTION_{XXX}](
+        [LINE_NO] [int] IDENTITY(1,1) NOT NULL,
+        [SAMPLE_PRESCRIPTION_CODE] [varchar](15) NOT NULL,
+        [DESCRIPTN] [nvarchar](200) NOT NULL,
+        [ITEM_CODE] [varchar](15) NOT NULL,
+        [ITEM_NAME] [nvarchar](200) NOT NULL,
+        [ACTIVE_INGRENDIENT] [nvarchar](200) NOT NULL,
+        [UNIT] [nvarchar](50) NOT NULL,
+        [DATE_OF_ISSUE] [int] NOT NULL,
+        [MORNING] [int] NOT NULL,
+        [NOON] [int] NOT NULL,
+        [AFTERNOON] [int] NOT NULL,
+        [EVENING] [int] NOT NULL,
+        [QUANTITY] [int] NOT NULL,
+        [BEFORE_BREAKFAST] [char](1) NOT NULL,
+        [BEFORE_LUNCH] [char](1) NOT NULL,
+        [BEFORE_SUPPER] [char](1) NOT NULL,
+        [BEFORE_DINNER] [char](1) NOT NULL,
+        [INSTRUCTION] [nvarchar](2000) NOT NULL,
+        [UPDATED] [int] NOT NULL,
+        [UPDATED_BY] [varchar](15) NOT NULL,
+        [TIME_STAMP] [timestamp] NULL,
+        CONSTRAINT [PK_pbs_MC_SAMPLE_PRESCRIPTION_{XXX}] PRIMARY KEY CLUSTERED
+        (
+        [LINE_NO] ASC
+        ))
+        END
+      </Install>
+    </DBO>
+    <DBO name="pbs_MC_SAMPLE_PRESCRIPTION_{XXX}_Insert" type="P">
+      <Install>
+        IF NOT EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'[dbo].[pbs_MC_SAMPLE_PRESCRIPTION_{XXX}_Insert]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+        BEGIN
+        CREATE PROCEDURE [dbo].[pbs_MC_SAMPLE_PRESCRIPTION_{XXX}_Insert]
+        @LINE_NO int output,
+        @SAMPLE_PRESCRIPTION_CODE varchar(15),
+        @DESCRIPTN nvarchar (200),
+        @ITEM_CODE varchar(15),
+        @ITEM_NAME nvarchar (200),
+        @ACTIVE_INGRENDIENT nvarchar (200),
+        @UNIT nvarchar (50),
+        @DATE_OF_ISSUE int,
+        @MORNING int,
+        @NOON int,
+        @AFTERNOON int,
+        @EVENING int,
+        @QUANTITY int,
+        @BEFORE_BREAKFAST char(1),
+        @BEFORE_LUNCH char(1),
+        @BEFORE_SUPPER char(1),
+        @BEFORE_DINNER char(1),
+        @INSTRUCTION nvarchar (2000),
+        @UPDATED int,
+        @UPDATED_BY varchar(15)
+        AS
+
+        SET NOCOUNT ON
+        INSERT INTO [dbo].[pbs_MC_SAMPLE_PRESCRIPTION_{XXX}] ([SAMPLE_PRESCRIPTION_CODE],
+        [DESCRIPTN],
+        [ITEM_CODE],
+        [ITEM_NAME],
+        [ACTIVE_INGRENDIENT],
+        [UNIT],
+        [DATE_OF_ISSUE],
+        [MORNING],
+        [NOON],
+        [AFTERNOON],
+        [EVENING],
+        [QUANTITY],
+        [BEFORE_BREAKFAST],
+        [BEFORE_LUNCH],
+        [BEFORE_SUPPER],
+        [BEFORE_DINNER],
+        [INSTRUCTION],
+        [UPDATED],
+        [UPDATED_BY])
+        VALUES (@SAMPLE_PRESCRIPTION_CODE,
+        @DESCRIPTN,
+        @ITEM_CODE,
+        @ITEM_NAME,
+        @ACTIVE_INGRENDIENT,
+        @UNIT,
+        @DATE_OF_ISSUE,
+        @MORNING,
+        @NOON,
+        @AFTERNOON,
+        @EVENING,
+        @QUANTITY,
+        @BEFORE_BREAKFAST,
+        @BEFORE_LUNCH,
+        @BEFORE_SUPPER,
+        @BEFORE_DINNER,
+        @INSTRUCTION,
+        @UPDATED,
+        @UPDATED_BY)
+
+        SET @LINE_NO = SCOPE_IDENTITY()
+        END
+      </Install>
+    </DBO>
+    <DBO name="pbs_MC_SAMPLE_PRESCRIPTION_{XXX}_Update" type="P">
+      <Install>
+        IF NOT EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'[dbo].[pbs_MC_SAMPLE_PRESCRIPTION_{XXX}_Update]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+        BEGIN
+        CREATE PROCEDURE [dbo].[pbs_MC_SAMPLE_PRESCRIPTION_{XXX}_Update]
+        @LINE_NO int,
+        @SAMPLE_PRESCRIPTION_CODE varchar(15),
+        @DESCRIPTN nvarchar (200),
+        @ITEM_CODE varchar(15),
+        @ITEM_NAME nvarchar (200),
+        @ACTIVE_INGRENDIENT nvarchar (200),
+        @UNIT nvarchar (50),
+        @DATE_OF_ISSUE int,
+        @MORNING int,
+        @NOON int,
+        @AFTERNOON int,
+        @EVENING int,
+        @QUANTITY int,
+        @BEFORE_BREAKFAST char(1),
+        @BEFORE_LUNCH char(1),
+        @BEFORE_SUPPER char(1),
+        @BEFORE_DINNER char(1),
+        @INSTRUCTION nvarchar (2000),
+        @UPDATED int,
+        @UPDATED_BY varchar(15)
+        AS
+
+        SET NOCOUNT ON
+        UPDATE [dbo].[pbs_MC_SAMPLE_PRESCRIPTION_{XXX}] SET [SAMPLE_PRESCRIPTION_CODE] = @SAMPLE_PRESCRIPTION_CODE,
+        [DESCRIPTN] = @DESCRIPTN,
+        [ITEM_CODE] = @ITEM_CODE,
+        [ITEM_NAME] = @ITEM_NAME,
+        [ACTIVE_INGRENDIENT] = @ACTIVE_INGRENDIENT,
+        [UNIT] = @UNIT,
+        [DATE_OF_ISSUE] = @DATE_OF_ISSUE,
+        [MORNING] = @MORNING,
+        [NOON] = @NOON,
+        [AFTERNOON] = @AFTERNOON,
+        [EVENING] = @EVENING,
+        [QUANTITY] = @QUANTITY,
+        [BEFORE_BREAKFAST] = @BEFORE_BREAKFAST,
+        [BEFORE_LUNCH] = @BEFORE_LUNCH,
+        [BEFORE_SUPPER] = @BEFORE_SUPPER,
+        [BEFORE_DINNER] = @BEFORE_DINNER,
+        [INSTRUCTION] = @INSTRUCTION,
+        [UPDATED] = @UPDATED,
+        [UPDATED_BY] = @UPDATED_BY
+        WHERE [LINE_NO] = @LINE_NO
+        END
+      </Install>
+    </DBO>
+
+    <DBO name="pbs_MC_INVOICE_{XXX}" type="U">
+      <Install>
+        IF NOT EXISTS (SELECT * FROM dbo.sysobjects WHERE id=OBJECT_ID(N'dbo.[pbs_MC_INVOICE_{XXX}]'))
+        BEGIN
+          CREATE TABLE [dbo].[pbs_MC_INVOICE_{XXX}](
+	[DOCUMENT_NO] [varchar](15) NOT NULL,
+	[DOCUMENT_DATE] [int] NOT NULL,
+	[CHECKIN_NO] [int] NOT NULL,
+	[PATIENT_CODE] [nvarchar](100) NOT NULL,
+	[INVOICE_PREFIX] [varchar](15) NOT NULL,
+	[INVOICE_NO] [varchar](15) NOT NULL,
+	[INVOICE_SERIAL] [varchar](15) NOT NULL,
+	[INVOICE_DATE] [int] NOT NULL,
+	[INVOICE_PERIOD] [int] NOT NULL,
+	[INVOICE_TYPE] [char](1) NOT NULL,
+	[CLIENT_ID] [varchar](15) NOT NULL,
+	[PURCH_NAME] [nvarchar](100) NOT NULL,
+	[ADDRESS] [nvarchar](100) NOT NULL,
+	[BANK_CODE] [varchar](15) NOT NULL,
+	[BANK_DETAIL] [nvarchar](100) NOT NULL,
+	[PAY_METHOD] [nvarchar](20) NOT NULL,
+	[TAX_CODE] [varchar](15) NOT NULL,
+	[SALESMAN] [varchar](15) NOT NULL,
+	[CONTRACT_ID] [varchar](15) NOT NULL,
+	[CONV_CODE] [varchar](15) NOT NULL,
+	[CONV_RATE] [decimal](18, 0) NOT NULL,
+	[NOTES] [nvarchar](100) NOT NULL,
+	[STATUS] [varchar](15) NOT NULL,
+	[UPDATED] [int] NOT NULL,
+	[UPDATED_BY] [varchar](15) NOT NULL,
+	[TIME_STAMP] [timestamp] NULL,
+ CONSTRAINT [PK_pbs_MC_INVOICE_{XXX}] PRIMARY KEY CLUSTERED 
+(
+	[DOCUMENT_NO] ASC
+))
+        END
+      </Install>
+    </DBO>
+    <DBO name="pbs_MC_INVOICE_{XXX}_Insert" type="P">
+      <Install>
+        IF NOT EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'[dbo].[pbs_MC_INVOICE_{XXX}_Insert]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+        BEGIN
+        CREATE PROCEDURE [dbo].[pbs_MC_INVOICE_{XXX}_Insert]
+        	@DOCUMENT_NO varchar(15),
+@DOCUMENT_DATE int,
+@CHECKIN_NO int,
+@PATIENT_CODE nvarchar (100),
+@INVOICE_PREFIX varchar(15),
+@INVOICE_NO varchar(15),
+@INVOICE_SERIAL varchar(15),
+@INVOICE_DATE int,
+@INVOICE_PERIOD int,
+@INVOICE_TYPE char(1),
+@CLIENT_ID varchar(15),
+@PURCH_NAME nvarchar (100),
+@ADDRESS nvarchar (100),
+@BANK_CODE varchar(15),
+@BANK_DETAIL nvarchar (100),
+@PAY_METHOD nvarchar (20),
+@TAX_CODE varchar(15),
+@SALESMAN varchar(15),
+@CONTRACT_ID varchar(15),
+@CONV_CODE varchar(15),
+@CONV_RATE decimal(18, 0),
+@NOTES nvarchar (100),
+@STATUS varchar(15),
+@UPDATED int,
+@UPDATED_BY varchar(15)
+        AS
+
+        SET NOCOUNT ON
+        INSERT INTO [dbo].[pbs_MC_INVOICE_{XXX}] ([DOCUMENT_NO],
+[DOCUMENT_DATE],
+[CHECKIN_NO],
+[PATIENT_CODE],
+[INVOICE_PREFIX],
+[INVOICE_NO],
+[INVOICE_SERIAL],
+[INVOICE_DATE],
+[INVOICE_PERIOD],
+[INVOICE_TYPE],
+[CLIENT_ID],
+[PURCH_NAME],
+[ADDRESS],
+[BANK_CODE],
+[BANK_DETAIL],
+[PAY_METHOD],
+[TAX_CODE],
+[SALESMAN],
+[CONTRACT_ID],
+[CONV_CODE],
+[CONV_RATE],
+[NOTES],
+[STATUS],
+[UPDATED],
+[UPDATED_BY]) 
+        VALUES (@DOCUMENT_NO,
+@DOCUMENT_DATE,
+@CHECKIN_NO,
+@PATIENT_CODE,
+@INVOICE_PREFIX,
+@INVOICE_NO,
+@INVOICE_SERIAL,
+@INVOICE_DATE,
+@INVOICE_PERIOD,
+@INVOICE_TYPE,
+@CLIENT_ID,
+@PURCH_NAME,
+@ADDRESS,
+@BANK_CODE,
+@BANK_DETAIL,
+@PAY_METHOD,
+@TAX_CODE,
+@SALESMAN,
+@CONTRACT_ID,
+@CONV_CODE,
+@CONV_RATE,
+@NOTES,
+@STATUS,
+@UPDATED,
+@UPDATED_BY)
+
+        END
+      </Install>
+    </DBO>
+    <DBO name="pbs_MC_INVOICE_{XXX}_Update" type="P">
+      <Install>
+        IF NOT EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'[dbo].[pbs_MC_INVOICE_{XXX}_Update]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+        BEGIN
+        CREATE PROCEDURE [dbo].[pbs_MC_INVOICE_{XXX}_Update]
+        	@DOCUMENT_NO varchar(15),
+@DOCUMENT_DATE int,
+@CHECKIN_NO int,
+@PATIENT_CODE nvarchar (100),
+@INVOICE_PREFIX varchar(15),
+@INVOICE_NO varchar(15),
+@INVOICE_SERIAL varchar(15),
+@INVOICE_DATE int,
+@INVOICE_PERIOD int,
+@INVOICE_TYPE char(1),
+@CLIENT_ID varchar(15),
+@PURCH_NAME nvarchar (100),
+@ADDRESS nvarchar (100),
+@BANK_CODE varchar(15),
+@BANK_DETAIL nvarchar (100),
+@PAY_METHOD nvarchar (20),
+@TAX_CODE varchar(15),
+@SALESMAN varchar(15),
+@CONTRACT_ID varchar(15),
+@CONV_CODE varchar(15),
+@CONV_RATE decimal(18, 0),
+@NOTES nvarchar (100),
+@STATUS varchar(15),
+@UPDATED int,
+@UPDATED_BY varchar(15)
+        AS
+
+        SET NOCOUNT ON
+        UPDATE [dbo].[pbs_MC_INVOICE_{XXX}] SET [DOCUMENT_DATE] = @DOCUMENT_DATE,
+[CHECKIN_NO] = @CHECKIN_NO,
+[PATIENT_CODE] = @PATIENT_CODE,
+[INVOICE_PREFIX] = @INVOICE_PREFIX,
+[INVOICE_NO] = @INVOICE_NO,
+[INVOICE_SERIAL] = @INVOICE_SERIAL,
+[INVOICE_DATE] = @INVOICE_DATE,
+[INVOICE_PERIOD] = @INVOICE_PERIOD,
+[INVOICE_TYPE] = @INVOICE_TYPE,
+[CLIENT_ID] = @CLIENT_ID,
+[PURCH_NAME] = @PURCH_NAME,
+[ADDRESS] = @ADDRESS,
+[BANK_CODE] = @BANK_CODE,
+[BANK_DETAIL] = @BANK_DETAIL,
+[PAY_METHOD] = @PAY_METHOD,
+[TAX_CODE] = @TAX_CODE,
+[SALESMAN] = @SALESMAN,
+[CONTRACT_ID] = @CONTRACT_ID,
+[CONV_CODE] = @CONV_CODE,
+[CONV_RATE] = @CONV_RATE,
+[NOTES] = @NOTES,
+[STATUS] = @STATUS,
+[UPDATED] = @UPDATED,
+[UPDATED_BY] = @UPDATED_BY
+        WHERE [DOCUMENT_NO] = @DOCUMENT_NO
+        
+        END
+      </Install>
+    </DBO>
+  
+    <DBO name="pbs_MC_INVOICE_DET_{XXX}" type="U">
+      <Install>
+        IF NOT EXISTS (SELECT * FROM dbo.sysobjects WHERE id=OBJECT_ID(N'dbo.[pbs_MC_INVOICE_DET_{XXX}]'))
+        BEGIN
+          CREATE TABLE [dbo].[pbs_MC_INVOICE_DET_{XXX}](
+	[LINE_NO] [int] IDENTITY(1,1) NOT NULL,
+	[DOCUMENT_NO] [varchar](15) NOT NULL,
+	[ITEM_CODE] [varchar](15) NOT NULL,
+	[ITEM_GROUP] [varchar](15) NOT NULL,
+	[DESCRIPTN] [nvarchar](100) NOT NULL,
+	[UNIT] [char](5) NOT NULL,
+	[QTY] [numeric](18, 5) NOT NULL,
+	[PRICE] [numeric](18, 2) NOT NULL,
+	[NET] [numeric](18, 2) NOT NULL,
+	[VAT_RATE] [numeric](18, 2) NOT NULL,
+	[VAT] [numeric](18, 2) NOT NULL,
+	[LINE_VALUE] [numeric](18, 2) NOT NULL,
+	[CONV_CODE] [char](5) NOT NULL,
+	[CONV_RATE] [numeric](18, 9) NOT NULL,
+	[BASE_AMOUNT] [numeric](18, 2) NOT NULL,
+	[EXT_DESC1] [nvarchar](100) NOT NULL,
+	[EXT_DESC2] [nvarchar](100) NOT NULL,
+	[EXT_DESC3] [nvarchar](100) NOT NULL,
+	[NC_SI0] [varchar](15) NOT NULL,
+	[NC_SI1] [varchar](15) NOT NULL,
+	[NC_SI2] [varchar](15) NOT NULL,
+	[NC_SI3] [varchar](15) NOT NULL,
+	[NC_SI4] [varchar](15) NOT NULL,
+	[NC_SI5] [varchar](15) NOT NULL,
+	[NC_SI6] [varchar](15) NOT NULL,
+	[NC_SI7] [varchar](15) NOT NULL,
+	[NC_SI8] [varchar](15) NOT NULL,
+	[NC_SI9] [varchar](15) NOT NULL,
+	[COVERED_BY_INSURANCE] [numeric](18, 2) NOT NULL,
+	[DISCOUNT] [numeric](18, 2) NOT NULL,
+	[PAID_BY_PATIENT] [numeric](18, 2) NOT NULL,
+	[UPDATED] [int] NOT NULL,
+	[UPDATED_BY] [varchar](15) NOT NULL,
+	[TIME_STAMP] [timestamp] NULL,
+ CONSTRAINT [PK_pbs_MC_INVOICE_DET_{XXX}] PRIMARY KEY CLUSTERED 
+(
+	[LINE_NO] ASC
+))
+        END
+      </Install>
+    </DBO>
+    <DBO name="pbs_MC_INVOICE_DET_{XXX}_Insert" type="P">
+      <Install>
+        IF NOT EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'[dbo].[pbs_MC_INVOICE_DET_{XXX}_Insert]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+        BEGIN
+        CREATE PROCEDURE [dbo].[pbs_MC_INVOICE_DET_{XXX}_Insert]
+        	@LINE_NO int output,
+@DOCUMENT_NO varchar(15),
+@ITEM_CODE varchar(15),
+@ITEM_GROUP varchar(15),
+@DESCRIPTN nvarchar (100),
+@UNIT char(5),
+@QTY numeric(18, 5),
+@PRICE numeric(18, 2),
+@NET numeric(18, 2),
+@VAT_RATE numeric(18, 2),
+@VAT numeric(18, 2),
+@LINE_VALUE numeric(18, 2),
+@CONV_CODE char(5),
+@CONV_RATE numeric(18, 9),
+@BASE_AMOUNT numeric(18, 2),
+@EXT_DESC1 nvarchar (100),
+@EXT_DESC2 nvarchar (100),
+@EXT_DESC3 nvarchar (100),
+@NC_SI0 varchar(15),
+@NC_SI1 varchar(15),
+@NC_SI2 varchar(15),
+@NC_SI3 varchar(15),
+@NC_SI4 varchar(15),
+@NC_SI5 varchar(15),
+@NC_SI6 varchar(15),
+@NC_SI7 varchar(15),
+@NC_SI8 varchar(15),
+@NC_SI9 varchar(15),
+@COVERED_BY_INSURANCE numeric(18, 2),
+@DISCOUNT numeric(18, 2),
+@PAID_BY_PATIENT numeric(18, 2),
+@UPDATED int,
+@UPDATED_BY varchar(15)
+        AS
+
+        SET NOCOUNT ON
+        INSERT INTO [dbo].[pbs_MC_INVOICE_DET_{XXX}] ([DOCUMENT_NO],
+[ITEM_CODE],
+[ITEM_GROUP],
+[DESCRIPTN],
+[UNIT],
+[QTY],
+[PRICE],
+[NET],
+[VAT_RATE],
+[VAT],
+[LINE_VALUE],
+[CONV_CODE],
+[CONV_RATE],
+[BASE_AMOUNT],
+[EXT_DESC1],
+[EXT_DESC2],
+[EXT_DESC3],
+[NC_SI0],
+[NC_SI1],
+[NC_SI2],
+[NC_SI3],
+[NC_SI4],
+[NC_SI5],
+[NC_SI6],
+[NC_SI7],
+[NC_SI8],
+[NC_SI9],
+[COVERED_BY_INSURANCE],
+[DISCOUNT],
+[PAID_BY_PATIENT],
+[UPDATED],
+[UPDATED_BY]) 
+        VALUES (@DOCUMENT_NO,
+@ITEM_CODE,
+@ITEM_GROUP,
+@DESCRIPTN,
+@UNIT,
+@QTY,
+@PRICE,
+@NET,
+@VAT_RATE,
+@VAT,
+@LINE_VALUE,
+@CONV_CODE,
+@CONV_RATE,
+@BASE_AMOUNT,
+@EXT_DESC1,
+@EXT_DESC2,
+@EXT_DESC3,
+@NC_SI0,
+@NC_SI1,
+@NC_SI2,
+@NC_SI3,
+@NC_SI4,
+@NC_SI5,
+@NC_SI6,
+@NC_SI7,
+@NC_SI8,
+@NC_SI9,
+@COVERED_BY_INSURANCE,
+@DISCOUNT,
+@PAID_BY_PATIENT,
+@UPDATED,
+@UPDATED_BY)
+
+         SET @LINE_NO = SCOPE_IDENTITY()
+        
+        END
+      </Install>
+    </DBO>
+    <DBO name="pbs_MC_INVOICE_DET_{XXX}_Update" type="P">
+      <Install>
+        IF NOT EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'[dbo].[pbs_MC_INVOICE_DET_{XXX}_Update]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+        BEGIN
+                CREATE PROCEDURE [dbo].[pbs_MC_INVOICE_DET_{XXX}_Update]
+        	@LINE_NO int,
+@DOCUMENT_NO varchar(15),
+@ITEM_CODE varchar(15),
+@ITEM_GROUP varchar(15),
+@DESCRIPTN nvarchar (100),
+@UNIT char(5),
+@QTY numeric(18, 5),
+@PRICE numeric(18, 2),
+@NET numeric(18, 2),
+@VAT_RATE numeric(18, 2),
+@VAT numeric(18, 2),
+@LINE_VALUE numeric(18, 2),
+@CONV_CODE char(5),
+@CONV_RATE numeric(18, 9),
+@BASE_AMOUNT numeric(18, 2),
+@EXT_DESC1 nvarchar (100),
+@EXT_DESC2 nvarchar (100),
+@EXT_DESC3 nvarchar (100),
+@NC_SI0 varchar(15),
+@NC_SI1 varchar(15),
+@NC_SI2 varchar(15),
+@NC_SI3 varchar(15),
+@NC_SI4 varchar(15),
+@NC_SI5 varchar(15),
+@NC_SI6 varchar(15),
+@NC_SI7 varchar(15),
+@NC_SI8 varchar(15),
+@NC_SI9 varchar(15),
+@COVERED_BY_INSURANCE numeric(18, 2),
+@DISCOUNT numeric(18, 2),
+@PAID_BY_PATIENT numeric(18, 2),
+@UPDATED int,
+@UPDATED_BY varchar(15)
+        AS
+
+        SET NOCOUNT ON
+        UPDATE [dbo].[pbs_MC_INVOICE_DET_{XXX}] SET [DOCUMENT_NO] = @DOCUMENT_NO,
+[ITEM_CODE] = @ITEM_CODE,
+[ITEM_GROUP] = @ITEM_GROUP,
+[DESCRIPTN] = @DESCRIPTN,
+[UNIT] = @UNIT,
+[QTY] = @QTY,
+[PRICE] = @PRICE,
+[NET] = @NET,
+[VAT_RATE] = @VAT_RATE,
+[VAT] = @VAT,
+[LINE_VALUE] = @LINE_VALUE,
+[CONV_CODE] = @CONV_CODE,
+[CONV_RATE] = @CONV_RATE,
+[BASE_AMOUNT] = @BASE_AMOUNT,
+[EXT_DESC1] = @EXT_DESC1,
+[EXT_DESC2] = @EXT_DESC2,
+[EXT_DESC3] = @EXT_DESC3,
+[NC_SI0] = @NC_SI0,
+[NC_SI1] = @NC_SI1,
+[NC_SI2] = @NC_SI2,
+[NC_SI3] = @NC_SI3,
+[NC_SI4] = @NC_SI4,
+[NC_SI5] = @NC_SI5,
+[NC_SI6] = @NC_SI6,
+[NC_SI7] = @NC_SI7,
+[NC_SI8] = @NC_SI8,
+[NC_SI9] = @NC_SI9,
+[COVERED_BY_INSURANCE] = @COVERED_BY_INSURANCE,
+[DISCOUNT] = @DISCOUNT,
+[PAID_BY_PATIENT] = @PAID_BY_PATIENT,
+[UPDATED] = @UPDATED,
+[UPDATED_BY] = @UPDATED_BY
+        WHERE [LINE_NO] = @LINE_NO
+
+        END
+      </Install>
+    </DBO>
+  
+    <DBO name="pbs_MC_JRNAL_{XXX}" type="U">
+      <Install>
+        IF NOT EXISTS (SELECT * FROM dbo.sysobjects WHERE id=OBJECT_ID(N'dbo.[pbs_MC_JRNAL_{XXX}]'))
+        BEGIN
+          CREATE TABLE [dbo].[pbs_MC_JRNAL_{XXX}](
+	[JRNAL_NO] [int] IDENTITY(1,1) NOT NULL,
+	[TRANS_TYPE] [varchar](15) NOT NULL,
+	[REFERENCE] [varchar](15) NOT NULL,
+	[TRANS_DATE] [int] NOT NULL,
+	[PERIOD] [int] NOT NULL,
+	[DESCRIPTION] [nvarchar](200) NOT NULL,
+	[CANDIDATE_ID] [int] NOT NULL,
+	[PATIENT_CODE] [varchar](15) NOT NULL,
+	[CLINIC] [varchar](15) NOT NULL,
+	[CONV_CODE] [varchar](15) NOT NULL,
+	[CONV_RATE] [numeric](18, 9) NOT NULL,
+	[PAYMENT_REF] [nvarchar](50) NOT NULL,
+	[PAY_METHOD] [varchar](15) NOT NULL,
+	[PAYMENT_DATE] [int] NOT NULL,
+	[PAYMENT_PERIOD] [int] NOT NULL,
+	[DIRECT_INVOICE] [varchar](1) NOT NULL,
+	[INVOICE_INFO] [varchar](15) NOT NULL,
+	[INVOICE_NO] [varchar](15) NOT NULL,
+	[INVOICE_SERIAL] [varchar](15) NOT NULL,
+	[INVOICE_BOOK] [varchar](15) NOT NULL,
+	[INVOICE_DATE] [int] NOT NULL,
+	[INVOICE_PERIOD] [int] NOT NULL,
+	[VAT_RATE] [varchar](15) NOT NULL,
+	[NC_PL0] [varchar](15) NOT NULL,
+	[NC_PL1] [varchar](15) NOT NULL,
+	[NC_PL2] [varchar](15) NOT NULL,
+	[NC_PL3] [varchar](15) NOT NULL,
+	[NC_PL4] [varchar](15) NOT NULL,
+	[NC_PL5] [varchar](15) NOT NULL,
+	[NC_PL6] [varchar](15) NOT NULL,
+	[NC_PL7] [varchar](15) NOT NULL,
+	[NC_PL8] [varchar](15) NOT NULL,
+	[NC_PL9] [varchar](15) NOT NULL,
+	[STATUS] [varchar](15) NOT NULL,
+	[POSTING_DATE] [int] NOT NULL,
+	[POSTED_BY] [varchar](15) NOT NULL,
+	[EXT_DESC1] [nvarchar](100) NOT NULL,
+	[EXT_DESC2] [nvarchar](100) NOT NULL,
+	[EXT_DESC3] [nvarchar](100) NOT NULL,
+	[EXT_DESC4] [nvarchar](100) NOT NULL,
+	[EXT_DESC5] [nvarchar](100) NOT NULL,
+	[EXT_DATE1] [int] NOT NULL,
+	[EXT_DATE2] [int] NOT NULL,
+	[EXT_DATE3] [int] NOT NULL,
+	[EXT_DATE4] [int] NOT NULL,
+	[EXT_DATE5] [int] NOT NULL,
+	[EXT_VAL1] [numeric](18, 3) NOT NULL,
+	[EXT_VAL2] [numeric](18, 3) NOT NULL,
+	[EXT_VAL3] [numeric](18, 3) NOT NULL,
+	[EXT_VAL4] [numeric](18, 3) NOT NULL,
+	[EXT_VAL5] [numeric](18, 3) NOT NULL,
+	[ENTRY_DATE] [int] NOT NULL,
+	[ENTRY_BY] [varchar](15) NOT NULL,
+	[TIME_STAMP] [timestamp] NULL,
+ CONSTRAINT [PK_pbs_MC_JRNAL_{XXX}] PRIMARY KEY CLUSTERED 
+(
+	[JRNAL_NO] ASC
+))
+        END
+      </Install>
+    </DBO>
+    <DBO name="pbs_MC_JRNAL_{XXX}_Insert" type="P">
+      <Install>
+        IF NOT EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'[dbo].[pbs_MC_JRNAL_{XXX}_Insert]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+        BEGIN
+                CREATE PROCEDURE [dbo].[pbs_MC_JRNAL_{XXX}_Insert]
+        	@JRNAL_NO int output,
+@TRANS_TYPE varchar(15),
+@REFERENCE varchar(15),
+@TRANS_DATE int,
+@PERIOD int,
+@DESCRIPTION nvarchar (200),
+@CANDIDATE_ID int,
+@PATIENT_CODE varchar(15),
+@CLINIC varchar(15),
+@CONV_CODE varchar(15),
+@CONV_RATE numeric(18, 9),
+@PAYMENT_REF nvarchar (50),
+@PAY_METHOD varchar(15),
+@PAYMENT_DATE int,
+@PAYMENT_PERIOD int,
+@DIRECT_INVOICE varchar(1),
+@INVOICE_INFO varchar(15),
+@INVOICE_NO varchar(15),
+@INVOICE_SERIAL varchar(15),
+@INVOICE_BOOK varchar(15),
+@INVOICE_DATE int,
+@INVOICE_PERIOD int,
+@VAT_RATE varchar(15),
+@NC_PL0 varchar(15),
+@NC_PL1 varchar(15),
+@NC_PL2 varchar(15),
+@NC_PL3 varchar(15),
+@NC_PL4 varchar(15),
+@NC_PL5 varchar(15),
+@NC_PL6 varchar(15),
+@NC_PL7 varchar(15),
+@NC_PL8 varchar(15),
+@NC_PL9 varchar(15),
+@STATUS varchar(15),
+@POSTING_DATE int,
+@POSTED_BY varchar(15),
+@EXT_DESC1 nvarchar (100),
+@EXT_DESC2 nvarchar (100),
+@EXT_DESC3 nvarchar (100),
+@EXT_DESC4 nvarchar (100),
+@EXT_DESC5 nvarchar (100),
+@EXT_DATE1 int,
+@EXT_DATE2 int,
+@EXT_DATE3 int,
+@EXT_DATE4 int,
+@EXT_DATE5 int,
+@EXT_VAL1 numeric(18, 3),
+@EXT_VAL2 numeric(18, 3),
+@EXT_VAL3 numeric(18, 3),
+@EXT_VAL4 numeric(18, 3),
+@EXT_VAL5 numeric(18, 3),
+@ENTRY_DATE int,
+@ENTRY_BY varchar(15)
+        AS
+
+        SET NOCOUNT ON
+        INSERT INTO [dbo].[pbs_MC_JRNAL_{XXX}] ([TRANS_TYPE],
+[REFERENCE],
+[TRANS_DATE],
+[PERIOD],
+[DESCRIPTION],
+[CANDIDATE_ID],
+[PATIENT_CODE],
+[CLINIC],
+[CONV_CODE],
+[CONV_RATE],
+[PAYMENT_REF],
+[PAY_METHOD],
+[PAYMENT_DATE],
+[PAYMENT_PERIOD],
+[DIRECT_INVOICE],
+[INVOICE_INFO],
+[INVOICE_NO],
+[INVOICE_SERIAL],
+[INVOICE_BOOK],
+[INVOICE_DATE],
+[INVOICE_PERIOD],
+[VAT_RATE],
+[NC_PL0],
+[NC_PL1],
+[NC_PL2],
+[NC_PL3],
+[NC_PL4],
+[NC_PL5],
+[NC_PL6],
+[NC_PL7],
+[NC_PL8],
+[NC_PL9],
+[STATUS],
+[POSTING_DATE],
+[POSTED_BY],
+[EXT_DESC1],
+[EXT_DESC2],
+[EXT_DESC3],
+[EXT_DESC4],
+[EXT_DESC5],
+[EXT_DATE1],
+[EXT_DATE2],
+[EXT_DATE3],
+[EXT_DATE4],
+[EXT_DATE5],
+[EXT_VAL1],
+[EXT_VAL2],
+[EXT_VAL3],
+[EXT_VAL4],
+[EXT_VAL5],
+[ENTRY_DATE],
+[ENTRY_BY]) 
+        VALUES (@TRANS_TYPE,
+@REFERENCE,
+@TRANS_DATE,
+@PERIOD,
+@DESCRIPTION,
+@CANDIDATE_ID,
+@PATIENT_CODE,
+@CLINIC,
+@CONV_CODE,
+@CONV_RATE,
+@PAYMENT_REF,
+@PAY_METHOD,
+@PAYMENT_DATE,
+@PAYMENT_PERIOD,
+@DIRECT_INVOICE,
+@INVOICE_INFO,
+@INVOICE_NO,
+@INVOICE_SERIAL,
+@INVOICE_BOOK,
+@INVOICE_DATE,
+@INVOICE_PERIOD,
+@VAT_RATE,
+@NC_PL0,
+@NC_PL1,
+@NC_PL2,
+@NC_PL3,
+@NC_PL4,
+@NC_PL5,
+@NC_PL6,
+@NC_PL7,
+@NC_PL8,
+@NC_PL9,
+@STATUS,
+@POSTING_DATE,
+@POSTED_BY,
+@EXT_DESC1,
+@EXT_DESC2,
+@EXT_DESC3,
+@EXT_DESC4,
+@EXT_DESC5,
+@EXT_DATE1,
+@EXT_DATE2,
+@EXT_DATE3,
+@EXT_DATE4,
+@EXT_DATE5,
+@EXT_VAL1,
+@EXT_VAL2,
+@EXT_VAL3,
+@EXT_VAL4,
+@EXT_VAL5,
+@ENTRY_DATE,
+@ENTRY_BY)
+
+         SET @JRNAL_NO = SCOPE_IDENTITY()
+
+        END
+      </Install>
+    </DBO>
+    <DBO name="pbs_MC_JRNAL_{XXX}_Update" type="P">
+      <Install>
+        IF NOT EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'[dbo].[pbs_MC_JRNAL_{XXX}_Update]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+        BEGIN
+        CREATE PROCEDURE [dbo].[pbs_MC_JRNAL_{XXX}_Update]
+        	@JRNAL_NO int,
+@TRANS_TYPE varchar(15),
+@REFERENCE varchar(15),
+@TRANS_DATE int,
+@PERIOD int,
+@DESCRIPTION nvarchar (200),
+@CANDIDATE_ID int,
+@PATIENT_CODE varchar(15),
+@CLINIC varchar(15),
+@CONV_CODE varchar(15),
+@CONV_RATE numeric(18, 9),
+@PAYMENT_REF nvarchar (50),
+@PAY_METHOD varchar(15),
+@PAYMENT_DATE int,
+@PAYMENT_PERIOD int,
+@DIRECT_INVOICE varchar(1),
+@INVOICE_INFO varchar(15),
+@INVOICE_NO varchar(15),
+@INVOICE_SERIAL varchar(15),
+@INVOICE_BOOK varchar(15),
+@INVOICE_DATE int,
+@INVOICE_PERIOD int,
+@VAT_RATE varchar(15),
+@NC_PL0 varchar(15),
+@NC_PL1 varchar(15),
+@NC_PL2 varchar(15),
+@NC_PL3 varchar(15),
+@NC_PL4 varchar(15),
+@NC_PL5 varchar(15),
+@NC_PL6 varchar(15),
+@NC_PL7 varchar(15),
+@NC_PL8 varchar(15),
+@NC_PL9 varchar(15),
+@STATUS varchar(15),
+@POSTING_DATE int,
+@POSTED_BY varchar(15),
+@EXT_DESC1 nvarchar (100),
+@EXT_DESC2 nvarchar (100),
+@EXT_DESC3 nvarchar (100),
+@EXT_DESC4 nvarchar (100),
+@EXT_DESC5 nvarchar (100),
+@EXT_DATE1 int,
+@EXT_DATE2 int,
+@EXT_DATE3 int,
+@EXT_DATE4 int,
+@EXT_DATE5 int,
+@EXT_VAL1 numeric(18, 3),
+@EXT_VAL2 numeric(18, 3),
+@EXT_VAL3 numeric(18, 3),
+@EXT_VAL4 numeric(18, 3),
+@EXT_VAL5 numeric(18, 3),
+@ENTRY_DATE int,
+@ENTRY_BY varchar(15)
+        AS
+
+        SET NOCOUNT ON
+        UPDATE [dbo].[pbs_MC_JRNAL_{XXX}] SET [TRANS_TYPE] = @TRANS_TYPE,
+[REFERENCE] = @REFERENCE,
+[TRANS_DATE] = @TRANS_DATE,
+[PERIOD] = @PERIOD,
+[DESCRIPTION] = @DESCRIPTION,
+[CANDIDATE_ID] = @CANDIDATE_ID,
+[PATIENT_CODE] = @PATIENT_CODE,
+[CLINIC] = @CLINIC,
+[CONV_CODE] = @CONV_CODE,
+[CONV_RATE] = @CONV_RATE,
+[PAYMENT_REF] = @PAYMENT_REF,
+[PAY_METHOD] = @PAY_METHOD,
+[PAYMENT_DATE] = @PAYMENT_DATE,
+[PAYMENT_PERIOD] = @PAYMENT_PERIOD,
+[DIRECT_INVOICE] = @DIRECT_INVOICE,
+[INVOICE_INFO] = @INVOICE_INFO,
+[INVOICE_NO] = @INVOICE_NO,
+[INVOICE_SERIAL] = @INVOICE_SERIAL,
+[INVOICE_BOOK] = @INVOICE_BOOK,
+[INVOICE_DATE] = @INVOICE_DATE,
+[INVOICE_PERIOD] = @INVOICE_PERIOD,
+[VAT_RATE] = @VAT_RATE,
+[NC_PL0] = @NC_PL0,
+[NC_PL1] = @NC_PL1,
+[NC_PL2] = @NC_PL2,
+[NC_PL3] = @NC_PL3,
+[NC_PL4] = @NC_PL4,
+[NC_PL5] = @NC_PL5,
+[NC_PL6] = @NC_PL6,
+[NC_PL7] = @NC_PL7,
+[NC_PL8] = @NC_PL8,
+[NC_PL9] = @NC_PL9,
+[STATUS] = @STATUS,
+[POSTING_DATE] = @POSTING_DATE,
+[POSTED_BY] = @POSTED_BY,
+[EXT_DESC1] = @EXT_DESC1,
+[EXT_DESC2] = @EXT_DESC2,
+[EXT_DESC3] = @EXT_DESC3,
+[EXT_DESC4] = @EXT_DESC4,
+[EXT_DESC5] = @EXT_DESC5,
+[EXT_DATE1] = @EXT_DATE1,
+[EXT_DATE2] = @EXT_DATE2,
+[EXT_DATE3] = @EXT_DATE3,
+[EXT_DATE4] = @EXT_DATE4,
+[EXT_DATE5] = @EXT_DATE5,
+[EXT_VAL1] = @EXT_VAL1,
+[EXT_VAL2] = @EXT_VAL2,
+[EXT_VAL3] = @EXT_VAL3,
+[EXT_VAL4] = @EXT_VAL4,
+[EXT_VAL5] = @EXT_VAL5,
+[ENTRY_DATE] = @ENTRY_DATE,
+[ENTRY_BY] = @ENTRY_BY
+        WHERE [JRNAL_NO] = @JRNAL_NO
+        
+        END
+      </Install>
+    </DBO>
+
+    <DBO name="pbs_MC_LEDGER_{XXX}" type="U">
+      <Install>
+        IF NOT EXISTS (SELECT * FROM dbo.sysobjects WHERE id=OBJECT_ID(N'dbo.[pbs_MC_LEDGER_{XXX}]'))
+        BEGIN
+          CREATE TABLE [dbo].[pbs_MC_LEDGER_{XXX}](
+	[LINE_NO] [int] IDENTITY(1,1) NOT NULL,
+	[REFERENCE] [varchar](15) NOT NULL,
+	[TRANS_TYPE] [varchar](15) NOT NULL,
+	[TRANS_DATE] [int] NOT NULL,
+	[PERIOD] [int] NOT NULL,
+	[CANDIDATE_ID] [int] NOT NULL,
+	[PATIENT_CODE] [varchar](15) NOT NULL,
+	[CLINIC] [varchar](15) NOT NULL,
+	[ITEM_CODE] [varchar](15) NOT NULL,
+	[DESCRIPTION] [nvarchar](200) NOT NULL,
+	[QUANTITY] [numeric](18, 3) NOT NULL,
+	[UNIT_CODE] [varchar](15) NOT NULL,
+	[UNIT_PRICE] [numeric](18, 5) NOT NULL,
+	[TRANS_AMT] [numeric](18, 3) NOT NULL,
+	[CONV_CODE] [varchar](15) NOT NULL,
+	[CONV_RATE] [numeric](18, 9) NOT NULL,
+	[AMOUNT] [numeric](18, 3) NOT NULL,
+	[D_C] [varchar](1) NOT NULL,
+	[PAYMENT_REF] [nvarchar](50) NOT NULL,
+	[PAY_METHOD] [varchar](15) NOT NULL,
+	[PAYMENT_DATE] [int] NOT NULL,
+	[PAYMENT_PERIOD] [int] NOT NULL,
+	[DIRECT_INVOICE] [varchar](1) NOT NULL,
+	[INVOICE_INFO] [varchar](15) NOT NULL,
+	[INVOICE_NO] [varchar](15) NOT NULL,
+	[INVOICE_SERIAL] [varchar](15) NOT NULL,
+	[INVOICE_BOOK] [varchar](15) NOT NULL,
+	[INVOICE_DATE] [int] NOT NULL,
+	[INVOICE_PERIOD] [int] NOT NULL,
+	[VAT_RATE] [varchar](15) NOT NULL,
+	[VAT_AMOUNT] [numeric](18, 3) NOT NULL,
+	[NC_PL0] [varchar](15) NOT NULL,
+	[NC_PL1] [varchar](15) NOT NULL,
+	[NC_PL2] [varchar](15) NOT NULL,
+	[NC_PL3] [varchar](15) NOT NULL,
+	[NC_PL4] [varchar](15) NOT NULL,
+	[NC_PL5] [varchar](15) NOT NULL,
+	[NC_PL6] [varchar](15) NOT NULL,
+	[NC_PL7] [varchar](15) NOT NULL,
+	[NC_PL8] [varchar](15) NOT NULL,
+	[NC_PL9] [varchar](15) NOT NULL,
+	[ALLOCATION] [varchar](1) NOT NULL,
+	[ALLOC_REF] [int] NOT NULL,
+	[ALLOC_DATE] [int] NOT NULL,
+	[ALLOC_PERIOD] [int] NOT NULL,
+	[STATUS] [varchar](15) NOT NULL,
+	[LOCK_FLAG] [varchar](1) NOT NULL,
+	[POSTING_DATE] [int] NOT NULL,
+	[POSTED_BY] [varchar](15) NOT NULL,
+	[HOLD_OP_ID] [varchar](15) NOT NULL,
+	[BPH_NO] [int] NOT NULL,
+	[PFD_NO] [int] NOT NULL,
+	[EXT_DESC1] [nvarchar](100) NOT NULL,
+	[EXT_DESC2] [nvarchar](100) NOT NULL,
+	[EXT_DESC3] [nvarchar](100) NOT NULL,
+	[EXT_DESC4] [nvarchar](100) NOT NULL,
+	[EXT_DESC5] [nvarchar](100) NOT NULL,
+	[EXT_DATE1] [int] NOT NULL,
+	[EXT_DATE2] [int] NOT NULL,
+	[EXT_DATE3] [int] NOT NULL,
+	[EXT_DATE4] [int] NOT NULL,
+	[EXT_DATE5] [int] NOT NULL,
+	[EXT_VAL1] [numeric](18, 3) NOT NULL,
+	[EXT_VAL2] [numeric](18, 3) NOT NULL,
+	[EXT_VAL3] [numeric](18, 3) NOT NULL,
+	[EXT_VAL4] [numeric](18, 3) NOT NULL,
+	[EXT_VAL5] [numeric](18, 3) NOT NULL,
+	[TIME_STAMP] [timestamp] NULL,
+ CONSTRAINT [PK_pbs_MC_RECEIVABLES_{XXX}] PRIMARY KEY CLUSTERED 
+(
+	[LINE_NO] ASC
+))
+        END
+      </Install>
+    </DBO>
+    <DBO name="pbs_MC_LEDGER_{XXX}_Insert" type="P">
+      <Install>
+        IF NOT EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'[dbo].[pbs_MC_LEDGER_{XXX}_Insert]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+        BEGIN
+        CREATE PROCEDURE [dbo].[pbs_MC_LEDGER_{XXX}_Insert]
+        	@LINE_NO int output,
+@REFERENCE varchar(15),
+@TRANS_TYPE varchar(15),
+@TRANS_DATE int,
+@PERIOD int,
+@CANDIDATE_ID int,
+@PATIENT_CODE varchar(15),
+@CLINIC varchar(15),
+@ITEM_CODE varchar(15),
+@DESCRIPTION nvarchar (200),
+@QUANTITY numeric(18, 3),
+@UNIT_CODE varchar(15),
+@UNIT_PRICE numeric(18, 5),
+@TRANS_AMT numeric(18, 3),
+@CONV_CODE varchar(15),
+@CONV_RATE numeric(18, 9),
+@AMOUNT numeric(18, 3),
+@D_C varchar(1),
+@PAYMENT_REF nvarchar (50),
+@PAY_METHOD varchar(15),
+@PAYMENT_DATE int,
+@PAYMENT_PERIOD int,
+@DIRECT_INVOICE varchar(1),
+@INVOICE_INFO varchar(15),
+@INVOICE_NO varchar(15),
+@INVOICE_SERIAL varchar(15),
+@INVOICE_BOOK varchar(15),
+@INVOICE_DATE int,
+@INVOICE_PERIOD int,
+@VAT_RATE varchar(15),
+@VAT_AMOUNT numeric(18, 3),
+@NC_PL0 varchar(15),
+@NC_PL1 varchar(15),
+@NC_PL2 varchar(15),
+@NC_PL3 varchar(15),
+@NC_PL4 varchar(15),
+@NC_PL5 varchar(15),
+@NC_PL6 varchar(15),
+@NC_PL7 varchar(15),
+@NC_PL8 varchar(15),
+@NC_PL9 varchar(15),
+@ALLOCATION varchar(1),
+@ALLOC_REF int,
+@ALLOC_DATE int,
+@ALLOC_PERIOD int,
+@STATUS varchar(15),
+@LOCK_FLAG varchar(1),
+@POSTING_DATE int,
+@POSTED_BY varchar(15),
+@HOLD_OP_ID varchar(15),
+@BPH_NO int,
+@PFD_NO int,
+@EXT_DESC1 nvarchar (100),
+@EXT_DESC2 nvarchar (100),
+@EXT_DESC3 nvarchar (100),
+@EXT_DESC4 nvarchar (100),
+@EXT_DESC5 nvarchar (100),
+@EXT_DATE1 int,
+@EXT_DATE2 int,
+@EXT_DATE3 int,
+@EXT_DATE4 int,
+@EXT_DATE5 int,
+@EXT_VAL1 numeric(18, 3),
+@EXT_VAL2 numeric(18, 3),
+@EXT_VAL3 numeric(18, 3),
+@EXT_VAL4 numeric(18, 3),
+@EXT_VAL5 numeric(18, 3)
+        AS
+
+        SET NOCOUNT ON
+        INSERT INTO [dbo].[pbs_MC_LEDGER_{XXX}] ([REFERENCE],
+[TRANS_TYPE],
+[TRANS_DATE],
+[PERIOD],
+[CANDIDATE_ID],
+[PATIENT_CODE],
+[CLINIC],
+[ITEM_CODE],
+[DESCRIPTION],
+[QUANTITY],
+[UNIT_CODE],
+[UNIT_PRICE],
+[TRANS_AMT],
+[CONV_CODE],
+[CONV_RATE],
+[AMOUNT],
+[D_C],
+[PAYMENT_REF],
+[PAY_METHOD],
+[PAYMENT_DATE],
+[PAYMENT_PERIOD],
+[DIRECT_INVOICE],
+[INVOICE_INFO],
+[INVOICE_NO],
+[INVOICE_SERIAL],
+[INVOICE_BOOK],
+[INVOICE_DATE],
+[INVOICE_PERIOD],
+[VAT_RATE],
+[VAT_AMOUNT],
+[NC_PL0],
+[NC_PL1],
+[NC_PL2],
+[NC_PL3],
+[NC_PL4],
+[NC_PL5],
+[NC_PL6],
+[NC_PL7],
+[NC_PL8],
+[NC_PL9],
+[ALLOCATION],
+[ALLOC_REF],
+[ALLOC_DATE],
+[ALLOC_PERIOD],
+[STATUS],
+[LOCK_FLAG],
+[POSTING_DATE],
+[POSTED_BY],
+[HOLD_OP_ID],
+[BPH_NO],
+[PFD_NO],
+[EXT_DESC1],
+[EXT_DESC2],
+[EXT_DESC3],
+[EXT_DESC4],
+[EXT_DESC5],
+[EXT_DATE1],
+[EXT_DATE2],
+[EXT_DATE3],
+[EXT_DATE4],
+[EXT_DATE5],
+[EXT_VAL1],
+[EXT_VAL2],
+[EXT_VAL3],
+[EXT_VAL4],
+[EXT_VAL5]) 
+        VALUES (@REFERENCE,
+@TRANS_TYPE,
+@TRANS_DATE,
+@PERIOD,
+@CANDIDATE_ID,
+@PATIENT_CODE,
+@CLINIC,
+@ITEM_CODE,
+@DESCRIPTION,
+@QUANTITY,
+@UNIT_CODE,
+@UNIT_PRICE,
+@TRANS_AMT,
+@CONV_CODE,
+@CONV_RATE,
+@AMOUNT,
+@D_C,
+@PAYMENT_REF,
+@PAY_METHOD,
+@PAYMENT_DATE,
+@PAYMENT_PERIOD,
+@DIRECT_INVOICE,
+@INVOICE_INFO,
+@INVOICE_NO,
+@INVOICE_SERIAL,
+@INVOICE_BOOK,
+@INVOICE_DATE,
+@INVOICE_PERIOD,
+@VAT_RATE,
+@VAT_AMOUNT,
+@NC_PL0,
+@NC_PL1,
+@NC_PL2,
+@NC_PL3,
+@NC_PL4,
+@NC_PL5,
+@NC_PL6,
+@NC_PL7,
+@NC_PL8,
+@NC_PL9,
+@ALLOCATION,
+@ALLOC_REF,
+@ALLOC_DATE,
+@ALLOC_PERIOD,
+@STATUS,
+@LOCK_FLAG,
+@POSTING_DATE,
+@POSTED_BY,
+@HOLD_OP_ID,
+@BPH_NO,
+@PFD_NO,
+@EXT_DESC1,
+@EXT_DESC2,
+@EXT_DESC3,
+@EXT_DESC4,
+@EXT_DESC5,
+@EXT_DATE1,
+@EXT_DATE2,
+@EXT_DATE3,
+@EXT_DATE4,
+@EXT_DATE5,
+@EXT_VAL1,
+@EXT_VAL2,
+@EXT_VAL3,
+@EXT_VAL4,
+@EXT_VAL5)
+
+         SET @LINE_NO = SCOPE_IDENTITY()
+        
+        END
+      </Install>
+    </DBO>
+    <DBO name="pbs_MC_LEDGER_{XXX}_Update" type="P">
+      <Install>
+        IF NOT EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'[dbo].[pbs_MC_LEDGER_{XXX}_Update]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+        BEGIN
+        CREATE PROCEDURE [dbo].[pbs_MC_LEDGER_{XXX}_Update]
+        	@LINE_NO int,
+@REFERENCE varchar(15),
+@TRANS_TYPE varchar(15),
+@TRANS_DATE int,
+@PERIOD int,
+@CANDIDATE_ID int,
+@PATIENT_CODE varchar(15),
+@CLINIC varchar(15),
+@ITEM_CODE varchar(15),
+@DESCRIPTION nvarchar (200),
+@QUANTITY numeric(18, 3),
+@UNIT_CODE varchar(15),
+@UNIT_PRICE numeric(18, 5),
+@TRANS_AMT numeric(18, 3),
+@CONV_CODE varchar(15),
+@CONV_RATE numeric(18, 9),
+@AMOUNT numeric(18, 3),
+@D_C varchar(1),
+@PAYMENT_REF nvarchar (50),
+@PAY_METHOD varchar(15),
+@PAYMENT_DATE int,
+@PAYMENT_PERIOD int,
+@DIRECT_INVOICE varchar(1),
+@INVOICE_INFO varchar(15),
+@INVOICE_NO varchar(15),
+@INVOICE_SERIAL varchar(15),
+@INVOICE_BOOK varchar(15),
+@INVOICE_DATE int,
+@INVOICE_PERIOD int,
+@VAT_RATE varchar(15),
+@VAT_AMOUNT numeric(18, 3),
+@NC_PL0 varchar(15),
+@NC_PL1 varchar(15),
+@NC_PL2 varchar(15),
+@NC_PL3 varchar(15),
+@NC_PL4 varchar(15),
+@NC_PL5 varchar(15),
+@NC_PL6 varchar(15),
+@NC_PL7 varchar(15),
+@NC_PL8 varchar(15),
+@NC_PL9 varchar(15),
+@ALLOCATION varchar(1),
+@ALLOC_REF int,
+@ALLOC_DATE int,
+@ALLOC_PERIOD int,
+@STATUS varchar(15),
+@LOCK_FLAG varchar(1),
+@POSTING_DATE int,
+@POSTED_BY varchar(15),
+@HOLD_OP_ID varchar(15),
+@BPH_NO int,
+@PFD_NO int,
+@EXT_DESC1 nvarchar (100),
+@EXT_DESC2 nvarchar (100),
+@EXT_DESC3 nvarchar (100),
+@EXT_DESC4 nvarchar (100),
+@EXT_DESC5 nvarchar (100),
+@EXT_DATE1 int,
+@EXT_DATE2 int,
+@EXT_DATE3 int,
+@EXT_DATE4 int,
+@EXT_DATE5 int,
+@EXT_VAL1 numeric(18, 3),
+@EXT_VAL2 numeric(18, 3),
+@EXT_VAL3 numeric(18, 3),
+@EXT_VAL4 numeric(18, 3),
+@EXT_VAL5 numeric(18, 3)
+        AS
+
+        SET NOCOUNT ON
+        UPDATE [dbo].[pbs_MC_LEDGER_{XXX}] SET [REFERENCE] = @REFERENCE,
+[TRANS_TYPE] = @TRANS_TYPE,
+[TRANS_DATE] = @TRANS_DATE,
+[PERIOD] = @PERIOD,
+[CANDIDATE_ID] = @CANDIDATE_ID,
+[PATIENT_CODE] = @PATIENT_CODE,
+[CLINIC] = @CLINIC,
+[ITEM_CODE] = @ITEM_CODE,
+[DESCRIPTION] = @DESCRIPTION,
+[QUANTITY] = @QUANTITY,
+[UNIT_CODE] = @UNIT_CODE,
+[UNIT_PRICE] = @UNIT_PRICE,
+[TRANS_AMT] = @TRANS_AMT,
+[CONV_CODE] = @CONV_CODE,
+[CONV_RATE] = @CONV_RATE,
+[AMOUNT] = @AMOUNT,
+[D_C] = @D_C,
+[PAYMENT_REF] = @PAYMENT_REF,
+[PAY_METHOD] = @PAY_METHOD,
+[PAYMENT_DATE] = @PAYMENT_DATE,
+[PAYMENT_PERIOD] = @PAYMENT_PERIOD,
+[DIRECT_INVOICE] = @DIRECT_INVOICE,
+[INVOICE_INFO] = @INVOICE_INFO,
+[INVOICE_NO] = @INVOICE_NO,
+[INVOICE_SERIAL] = @INVOICE_SERIAL,
+[INVOICE_BOOK] = @INVOICE_BOOK,
+[INVOICE_DATE] = @INVOICE_DATE,
+[INVOICE_PERIOD] = @INVOICE_PERIOD,
+[VAT_RATE] = @VAT_RATE,
+[VAT_AMOUNT] = @VAT_AMOUNT,
+[NC_PL0] = @NC_PL0,
+[NC_PL1] = @NC_PL1,
+[NC_PL2] = @NC_PL2,
+[NC_PL3] = @NC_PL3,
+[NC_PL4] = @NC_PL4,
+[NC_PL5] = @NC_PL5,
+[NC_PL6] = @NC_PL6,
+[NC_PL7] = @NC_PL7,
+[NC_PL8] = @NC_PL8,
+[NC_PL9] = @NC_PL9,
+[ALLOCATION] = @ALLOCATION,
+[ALLOC_REF] = @ALLOC_REF,
+[ALLOC_DATE] = @ALLOC_DATE,
+[ALLOC_PERIOD] = @ALLOC_PERIOD,
+[STATUS] = @STATUS,
+[LOCK_FLAG] = @LOCK_FLAG,
+[POSTING_DATE] = @POSTING_DATE,
+[POSTED_BY] = @POSTED_BY,
+[HOLD_OP_ID] = @HOLD_OP_ID,
+[BPH_NO] = @BPH_NO,
+[PFD_NO] = @PFD_NO,
+[EXT_DESC1] = @EXT_DESC1,
+[EXT_DESC2] = @EXT_DESC2,
+[EXT_DESC3] = @EXT_DESC3,
+[EXT_DESC4] = @EXT_DESC4,
+[EXT_DESC5] = @EXT_DESC5,
+[EXT_DATE1] = @EXT_DATE1,
+[EXT_DATE2] = @EXT_DATE2,
+[EXT_DATE3] = @EXT_DATE3,
+[EXT_DATE4] = @EXT_DATE4,
+[EXT_DATE5] = @EXT_DATE5,
+[EXT_VAL1] = @EXT_VAL1,
+[EXT_VAL2] = @EXT_VAL2,
+[EXT_VAL3] = @EXT_VAL3,
+[EXT_VAL4] = @EXT_VAL4,
+[EXT_VAL5] = @EXT_VAL5
+        WHERE [LINE_NO] = @LINE_NO
+        
+        END
+      </Install>
+    </DBO>
+
+  </Reference>
+</Root>
+    
