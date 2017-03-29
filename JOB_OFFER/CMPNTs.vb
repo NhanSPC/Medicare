@@ -16,7 +16,8 @@ Namespace HR
 
         Protected Overrides Function AddNewCore() As Object
             If _parent IsNot Nothing Then
-                Dim theNewLine = CMPNT.NewCMPNT(_parent.LineNo.ToString)
+                Dim theNewLine = CMPNT.NewCMPNTChild(_parent.LineNo.ToString)
+
                 AddNewLine(theNewLine)
                 theNewLine.CheckRules()
                 Return theNewLine
@@ -35,8 +36,8 @@ Namespace HR
                 nextnumber = allNumbers.Max + 1
             End If
 
-            '_line.{LINE_NO} = String.Format("{0:00000}", nextnumber)
             pline._lineNo = nextnumber
+            pline._effectiveDate.Text = _parent.EffectiveDate
 
             'Populate _line with info from parent here
             Me.Add(pline)

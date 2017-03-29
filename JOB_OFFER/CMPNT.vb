@@ -91,6 +91,7 @@ Namespace HR
 
         Private _cmpntCode As String = String.Empty
         <CellInfo(GroupName:="Component", Tips:="Enter Component code")>
+        <Rule(Required:=True)>
         Public Property CmpntCode() As String
             Get
                 Return _cmpntCode
@@ -105,7 +106,7 @@ Namespace HR
             End Set
         End Property
 
-        Private _effectiveDate As pbs.Helper.SmartDate = New pbs.Helper.SmartDate()
+        Friend _effectiveDate As pbs.Helper.SmartDate = New pbs.Helper.SmartDate()
         <CellInfo(GroupName:="Component", Tips:="Enter effective date")>
         Public Property EffectiveDate() As String
             Get
@@ -216,6 +217,22 @@ Namespace HR
             End Set
         End Property
 
+        Private _amount As pbs.Helper.SmartFloat = New pbs.Helper.SmartFloat(0)
+        <CellInfo(GroupName:="Component", Tips:="Enter currency code")>
+        Public Property Amount() As String
+            Get
+                Return _amount.Text
+            End Get
+            Set(ByVal value As String)
+                CanWriteProperty("Amount", True)
+                If value Is Nothing Then value = String.Empty
+                If Not _amount.Equals(value) Then
+                    _amount.Text = value
+                    PropertyHasChanged("Amount")
+                End If
+            End Set
+        End Property
+
         Private _updated As pbs.Helper.SmartDate = New pbs.Helper.SmartDate()
         <CellInfo(GroupName:="System", Hidden:=True)>
         Public Property Updated() As String
@@ -310,6 +327,7 @@ Namespace HR
 
         Private Sub New()
             _DTB = Context.CurrentBECode
+
         End Sub
 
         Public Shared Function BlankCMPNT() As CMPNT
@@ -415,6 +433,7 @@ Namespace HR
             _frequency = dr.GetString("FREQUENCY").TrimEnd
             _currencyCode = dr.GetString("CURRENCY_CODE").TrimEnd
             _cash = dr.GetString("CASH").TrimEnd
+            _amount.Text = dr.GetDecimal("AMOUNT")
             _updated.Text = dr.GetInt32("UPDATED")
             _updatedBy = dr.GetString("UPDATED_BY").TrimEnd
 
@@ -453,6 +472,7 @@ Namespace HR
             cm.Parameters.AddWithValue("@FREQUENCY", _frequency.Trim)
             cm.Parameters.AddWithValue("@CURRENCY_CODE", _currencyCode.Trim)
             cm.Parameters.AddWithValue("@CASH", _cash.Trim)
+            cm.Parameters.AddWithValue("@AMOUNT", _amount.DBValue)
             cm.Parameters.AddWithValue("@UPDATED", ToDay.ToSunDate)
             cm.Parameters.AddWithValue("@UPDATED_BY", Context.CurrentUserCode)
         End Sub
@@ -553,6 +573,13 @@ Namespace HR
 #End Region
 
 #Region "Child"
+        Shared Function NewCMPNTChild(pParentID As String) As CMPNT
+            Dim ret = New CMPNT
+            ret.OfferNo = pParentID
+            ret.MarkAsChild()
+            Return ret
+        End Function
+
         Shared Function GetChildCMPNT(dr As SafeDataReader)
             Dim child = New CMPNT
             child.FetchObject(dr)

@@ -28,34 +28,37 @@ Namespace HR
         End Sub
 
         Private Sub BO_PropertyChanged(sender As Object, e As ComponentModel.PropertyChangedEventArgs) Handles Me.PropertyChanged
-            'Select Case e.PropertyName
+            Select e.PropertyName
 
-            '    Case "OrderType"
-            '        If Not Me.GetOrderTypeInfo.ManualRef Then
-            '            Me._orderNo = POH.AutoReference
-            '        End If
+                Case "EffectiveDate "
 
-            '    Case "OrderDate"
-            '        If String.IsNullOrEmpty(Me.OrderPrd) Then Me._orderPrd.Text = Me._orderDate.Date.ToSunPeriod
 
-            '    Case "SuppCode"
-            '        For Each line In Lines
-            '            line._suppCode = Me.SuppCode
-            '        Next
+                    '    Case "OrderType"
+                    '        If Not Me.GetOrderTypeInfo.ManualRef Then
+                    '            Me._orderNo = POH.AutoReference
+                    '        End If
 
-            '    Case "ConvCode"
-            '        If String.IsNullOrEmpty(Me.ConvCode) Then
-            '            _convRate.Float = 0
-            '        Else
-            '            Dim conv = pbs.BO.LA.CVInfoList.GetConverter(Me.ConvCode, _orderPrd, String.Empty)
-            '            If conv IsNot Nothing Then
-            '                _convRate.Float = conv.DefaultRate
-            '            End If
-            '        End If
+                    '    Case "OrderDate"
+                    '        If String.IsNullOrEmpty(Me.OrderPrd) Then Me._orderPrd.Text = Me._orderDate.Date.ToSunPeriod
 
-            '    Case Else
+                    '    Case "SuppCode"
+                    '        For Each line In Lines
+                    '            line._suppCode = Me.SuppCode
+                    '        Next
 
-            'End Select
+                    '    Case "ConvCode"
+                    '        If String.IsNullOrEmpty(Me.ConvCode) Then
+                    '            _convRate.Float = 0
+                    '        Else
+                    '            Dim conv = pbs.BO.LA.CVInfoList.GetConverter(Me.ConvCode, _orderPrd, String.Empty)
+                    '            If conv IsNot Nothing Then
+                    '                _convRate.Float = conv.DefaultRate
+                    '            End If
+                    '        End If
+
+                    '    Case Else
+
+            End Select
 
             pbs.BO.Rules.CalculationRules.Calculator(sender, e)
         End Sub
@@ -370,8 +373,10 @@ Namespace HR
 
 #Region " Factory Methods "
 
-        Private Sub New()
+        Friend Sub New()
             _DTB = Context.CurrentBECode
+            _issueDate.Text = ToDay.ToSunDate
+            _effectiveDate.Text = ToDay.ToSunDate
         End Sub
 
         Public Shared Function BlankOFFTYPE() As OFFTYPE

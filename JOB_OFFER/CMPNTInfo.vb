@@ -90,6 +90,13 @@ Namespace HR
             End Get
         End Property
 
+        Private _amount As pbs.Helper.SmartFloat = New SmartFloat(0)
+        Public ReadOnly Property Amount() As String
+            Get
+                Return _amount.Text
+            End Get
+        End Property
+
         Private _updated As pbs.Helper.SmartDate = New pbs.Helper.SmartDate()
         Public ReadOnly Property Updated() As String
             Get
@@ -170,6 +177,7 @@ Namespace HR
             _frequency = dr.GetString("FREQUENCY").TrimEnd
             _currencyCode = dr.GetString("CURRENCY_CODE").TrimEnd
             _cash = dr.GetString("CASH").TrimEnd
+            _amount.Text = dr.GetDecimal("AMOUNT")
             _updated.Text = dr.GetInt32("UPDATED")
             _updatedBy = dr.GetString("UPDATED_BY").TrimEnd
 

@@ -150,6 +150,7 @@
         [FREQUENCY] [varchar](15) NOT NULL,
         [CURRENCY_CODE] [varchar](15) NOT NULL,
         [CASH] [varchar](1) NOT NULL,
+        [AMOUNT] [numeric](18, 2) NOT NULL,
         [UPDATED] [int] NOT NULL,
         [UPDATED_BY] [varchar](15) NOT NULL,
         [TIME_STAMP] [timestamp] NULL,
@@ -177,6 +178,7 @@
         @FREQUENCY varchar(15),
         @CURRENCY_CODE varchar(15),
         @CASH varchar(1),
+        @AMOUNT numeric(18, 2),
         @UPDATED int,
         @UPDATED_BY varchar(15)
         AS
@@ -191,6 +193,7 @@
         [FREQUENCY],
         [CURRENCY_CODE],
         [CASH],
+        [AMOUNT],
         [UPDATED],
         [UPDATED_BY])
         VALUES (@OFFER_NO,
@@ -202,10 +205,13 @@
         @FREQUENCY,
         @CURRENCY_CODE,
         @CASH,
+        @AMOUNT,
         @UPDATED,
         @UPDATED_BY)
 
         SET @LINE_NO = SCOPE_IDENTITY()
+
+        '
         END
       </Install>
     </DBO>
@@ -225,6 +231,7 @@
         @FREQUENCY varchar(15),
         @CURRENCY_CODE varchar(15),
         @CASH varchar(1),
+        @AMOUNT numeric(18, 2),
         @UPDATED int,
         @UPDATED_BY varchar(15)
         AS
@@ -239,9 +246,11 @@
         [FREQUENCY] = @FREQUENCY,
         [CURRENCY_CODE] = @CURRENCY_CODE,
         [CASH] = @CASH,
+        [AMOUNT] = @AMOUNT,
         [UPDATED] = @UPDATED,
         [UPDATED_BY] = @UPDATED_BY
         WHERE [LINE_NO] = @LINE_NO
+        '
         END
       </Install>
     </DBO>
