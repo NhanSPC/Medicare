@@ -1,0 +1,249 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Root>
+  <Reference>
+    <DBO name="pbs_BO_HR_OFFTYPE_{XXX}" type ="U">
+      <Install>
+        IF NOT EXISTS (SELECT * FROM dbo.sysobjects WHERE id=OBJECT_ID(N'dbo.[pbs_BO_HR_OFFTYPE_{XXX}]'))
+        BEGIN
+        CREATE TABLE [dbo].[pbs_HR_OFF_TYPE_{XXX}](
+        [LINE_NO] [int] IDENTITY(1,1) NOT NULL,
+        [CANDIDATE_ID] [int] NOT NULL,
+        [OFFER_TYPE] [varchar](15) NOT NULL,
+        [EFFECTIVE_DATE] [int] NOT NULL,
+        [ISSUE_DATE] [int] NOT NULL,
+        [STATUS] [varchar](15) NOT NULL,
+        [DESCRIPTN] [nvarchar](100) NOT NULL,
+        [POSITION] [varchar](15) NOT NULL,
+        [WORKING_LOCATION] [varchar](15) NOT NULL,
+        [EXTDESC5] [nvarchar](100) NOT NULL,
+        [EXTDESC4] [nvarchar](100) NOT NULL,
+        [EXTDESC3] [nvarchar](100) NOT NULL,
+        [EXTDESC2] [nvarchar](100) NOT NULL,
+        [EXTDESC1] [nvarchar](100) NOT NULL,
+        [UPDATED] [int] NOT NULL,
+        [UPDATED_BY] [varchar](15) NOT NULL,
+        [TIME_STAMP] [timestamp] NULL,
+        CONSTRAINT [PK_pbs_HR_OFF_TYPE_{XXX}] PRIMARY KEY CLUSTERED
+        (
+        [LINE_NO] ASC
+        ))
+        END
+      </Install>
+    </DBO>
+    <DBO name="pbs_HR_OFF_TYPE_{XXX}_Insert" type="P">
+      <Install>
+        IF NOT EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'[dbo].[pbs_HR_OFF_TYPE_{XXX}_Insert]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+        BEGIN
+        EXEC dbo.sp_executesql @statement = N'
+        CREATE PROCEDURE [dbo].[pbs_HR_OFF_TYPE_{XXX}_Insert]
+        @LINE_NO int output,
+        @CANDIDATE_ID int,
+        @OFFER_TYPE varchar(15),
+        @EFFECTIVE_DATE int,
+        @ISSUE_DATE int,
+        @STATUS varchar(15),
+        @DESCRIPTN nvarchar (100),
+        @POSITION varchar(15),
+        @WORKING_LOCATION varchar(15),
+        @EXTDESC5 nvarchar (100),
+        @EXTDESC4 nvarchar (100),
+        @EXTDESC3 nvarchar (100),
+        @EXTDESC2 nvarchar (100),
+        @EXTDESC1 nvarchar (100),
+        @UPDATED int,
+        @UPDATED_BY varchar(15)
+        AS
+
+        SET NOCOUNT ON
+        INSERT INTO [dbo].[pbs_HR_OFF_TYPE_{XXX}] ([CANDIDATE_ID],
+        [OFFER_TYPE],
+        [EFFECTIVE_DATE],
+        [ISSUE_DATE],
+        [STATUS],
+        [DESCRIPTN],
+        [POSITION],
+        [WORKING_LOCATION],
+        [EXTDESC5],
+        [EXTDESC4],
+        [EXTDESC3],
+        [EXTDESC2],
+        [EXTDESC1],
+        [UPDATED],
+        [UPDATED_BY])
+        VALUES (@CANDIDATE_ID,
+        @OFFER_TYPE,
+        @EFFECTIVE_DATE,
+        @ISSUE_DATE,
+        @STATUS,
+        @DESCRIPTN,
+        @POSITION,
+        @WORKING_LOCATION,
+        @EXTDESC5,
+        @EXTDESC4,
+        @EXTDESC3,
+        @EXTDESC2,
+        @EXTDESC1,
+        @UPDATED,
+        @UPDATED_BY)
+
+        SET @LINE_NO = SCOPE_IDENTITY()
+        END
+      </Install>
+    </DBO>
+    <DBO name="pbs_HR_OFF_TYPE_{XXX}_Update" type="P">
+      <Install>
+        IF NOT EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'[dbo].[pbs_HR_OFF_TYPE_{XXX}_Update]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+        BEGIN
+        EXEC dbo.sp_executesql @statement = N'
+        CREATE PROCEDURE [dbo].[pbs_HR_OFF_TYPE_{XXX}_Update]
+        @LINE_NO int,
+        @CANDIDATE_ID int,
+        @OFFER_TYPE varchar(15),
+        @EFFECTIVE_DATE int,
+        @ISSUE_DATE int,
+        @STATUS varchar(15),
+        @DESCRIPTN nvarchar (100),
+        @POSITION varchar(15),
+        @WORKING_LOCATION varchar(15),
+        @EXTDESC5 nvarchar (100),
+        @EXTDESC4 nvarchar (100),
+        @EXTDESC3 nvarchar (100),
+        @EXTDESC2 nvarchar (100),
+        @EXTDESC1 nvarchar (100),
+        @UPDATED int,
+        @UPDATED_BY varchar(15)
+        AS
+
+        SET NOCOUNT ON
+        UPDATE [dbo].[pbs_HR_OFF_TYPE_{XXX}] SET [CANDIDATE_ID] = @CANDIDATE_ID,
+        [OFFER_TYPE] = @OFFER_TYPE,
+        [EFFECTIVE_DATE] = @EFFECTIVE_DATE,
+        [ISSUE_DATE] = @ISSUE_DATE,
+        [STATUS] = @STATUS,
+        [DESCRIPTN] = @DESCRIPTN,
+        [POSITION] = @POSITION,
+        [WORKING_LOCATION] = @WORKING_LOCATION,
+        [EXTDESC5] = @EXTDESC5,
+        [EXTDESC4] = @EXTDESC4,
+        [EXTDESC3] = @EXTDESC3,
+        [EXTDESC2] = @EXTDESC2,
+        [EXTDESC1] = @EXTDESC1,
+        [UPDATED] = @UPDATED,
+        [UPDATED_BY] = @UPDATED_BY
+        WHERE [LINE_NO] = @LINE_NO
+        END
+      </Install>
+    </DBO>
+
+    <DBO name="pbs_HR_OFF_CMPNT_{XXX}" type ="U">
+      <Install>
+        IF NOT EXISTS (SELECT * FROM dbo.sysobjects WHERE id=OBJECT_ID(N'dbo.[pbs_HR_OFF_CMPNT_{XXX}]'))
+        BEGIN
+        CREATE TABLE [dbo].[pbs_HR_OFF_CMPNT_{XXX}](
+        [LINE_NO] [int] IDENTITY(1,1) NOT NULL,
+        [OFFER_NO] [int] NOT NULL,
+        [CMPNT_CODE] [varchar](15) NOT NULL,
+        [EFFECTIVE_DATE] [int] NOT NULL,
+        [STATUS] [varchar](15) NOT NULL,
+        [DESCRIPTION] [nvarchar](100) NOT NULL,
+        [OFFER_TYPE] [varchar](15) NOT NULL,
+        [FREQUENCY] [varchar](15) NOT NULL,
+        [CURRENCY_CODE] [varchar](15) NOT NULL,
+        [CASH] [varchar](1) NOT NULL,
+        [UPDATED] [int] NOT NULL,
+        [UPDATED_BY] [varchar](15) NOT NULL,
+        [TIME_STAMP] [timestamp] NULL,
+        CONSTRAINT [PK_pbs_HR_OFF_CMPNT_{XXX}] PRIMARY KEY CLUSTERED
+        (
+        [LINE_NO] ASC
+        )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+        ) ON [PRIMARY]
+        END
+      </Install>
+    </DBO>
+    <DBO name="pbs_HR_OFF_CMPNT_{XXX}_Insert" type="P">
+      <Install>
+        IF NOT EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'[dbo].[pbs_HR_OFF_CMPNT_{XXX}_Insert]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+        BEGIN
+        EXEC dbo.sp_executesql @statement = N'
+        CREATE PROCEDURE [dbo].[pbs_HR_OFF_CMPNT_{XXX}_Insert]
+        @LINE_NO int output,
+        @OFFER_NO int,
+        @CMPNT_CODE varchar(15),
+        @EFFECTIVE_DATE int,
+        @STATUS varchar(15),
+        @DESCRIPTION nvarchar (100),
+        @OFFER_TYPE varchar(15),
+        @FREQUENCY varchar(15),
+        @CURRENCY_CODE varchar(15),
+        @CASH varchar(1),
+        @UPDATED int,
+        @UPDATED_BY varchar(15)
+        AS
+
+        SET NOCOUNT ON
+        INSERT INTO [dbo].[pbs_HR_OFF_CMPNT_{XXX}] ([OFFER_NO],
+        [CMPNT_CODE],
+        [EFFECTIVE_DATE],
+        [STATUS],
+        [DESCRIPTION],
+        [OFFER_TYPE],
+        [FREQUENCY],
+        [CURRENCY_CODE],
+        [CASH],
+        [UPDATED],
+        [UPDATED_BY])
+        VALUES (@OFFER_NO,
+        @CMPNT_CODE,
+        @EFFECTIVE_DATE,
+        @STATUS,
+        @DESCRIPTION,
+        @OFFER_TYPE,
+        @FREQUENCY,
+        @CURRENCY_CODE,
+        @CASH,
+        @UPDATED,
+        @UPDATED_BY)
+
+        SET @LINE_NO = SCOPE_IDENTITY()
+        END
+      </Install>
+    </DBO>
+    <DBO name="pbs_HR_OFF_CMPNT_{XXX}_Update" type="P">
+      <Install>
+        IF NOT EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'[dbo].[pbs_HR_OFF_CMPNT_{XXX}_Update]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
+        BEGIN
+        EXEC dbo.sp_executesql @statement = N'
+        CREATE PROCEDURE [dbo].[pbs_HR_OFF_CMPNT_{XXX}_Update]
+        @LINE_NO int,
+        @OFFER_NO int,
+        @CMPNT_CODE varchar(15),
+        @EFFECTIVE_DATE int,
+        @STATUS varchar(15),
+        @DESCRIPTION nvarchar (100),
+        @OFFER_TYPE varchar(15),
+        @FREQUENCY varchar(15),
+        @CURRENCY_CODE varchar(15),
+        @CASH varchar(1),
+        @UPDATED int,
+        @UPDATED_BY varchar(15)
+        AS
+
+        SET NOCOUNT ON
+        UPDATE [dbo].[pbs_HR_OFF_CMPNT_{XXX}] SET [OFFER_NO] = @OFFER_NO,
+        [CMPNT_CODE] = @CMPNT_CODE,
+        [EFFECTIVE_DATE] = @EFFECTIVE_DATE,
+        [STATUS] = @STATUS,
+        [DESCRIPTION] = @DESCRIPTION,
+        [OFFER_TYPE] = @OFFER_TYPE,
+        [FREQUENCY] = @FREQUENCY,
+        [CURRENCY_CODE] = @CURRENCY_CODE,
+        [CASH] = @CASH,
+        [UPDATED] = @UPDATED,
+        [UPDATED_BY] = @UPDATED_BY
+        WHERE [LINE_NO] = @LINE_NO
+        END
+      </Install>
+    </DBO>
+  </Reference>
+</Root>
