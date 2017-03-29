@@ -708,6 +708,13 @@ Namespace MC
 #End Region
 
 #Region "Child"
+
+        Shared Function NewPrescriptionDetailChild(pParentId As String) As PrescriptionDetail
+            Dim ret = New PrescriptionDetail
+            ret.PrescriptionNo = pParentId
+            ret.MarkAsChild()
+            Return ret
+        End Function
         Shared Function GetChildPrescriptionDetail(dr As SafeDataReader) As Object
             Dim child = New PrescriptionDetail
             child.FetchObject(dr)

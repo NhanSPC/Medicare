@@ -16,7 +16,7 @@ Namespace MC
 
         Protected Overrides Function AddNewCore() As Object
             If _parent IsNot Nothing Then
-                Dim theNewLine = PrescriptionDetail.NewPrescriptionDetail(_parent.LineNo)
+                Dim theNewLine = PrescriptionDetail.NewPrescriptionDetailChild(_parent.LineNo)
                 AddNewLine(theNewLine)
                 theNewLine.CheckRules()
                 Return theNewLine
