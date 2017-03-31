@@ -474,7 +474,7 @@ Namespace MC
 
         Public Shared Function NewAPPOINTMENT(ByVal pLineNo As String) As APPOINTMENT
             'If KeyDuplicated(pLineNo) Then ExceptionThower.BusinessRuleStop(String.Format(ResStr(ResStrConst.NOACCESS), ResStr("APPOINTMENT")))
-            Return DataPortal.Create(Of APPOINTMENT)(New Criteria(pLineNo))
+            Return DataPortal.Create(Of APPOINTMENT)(New Criteria(pLineNo.ToInteger))
         End Function
 
         Public Shared Function NewBO(ByVal ID As String) As APPOINTMENT
@@ -484,7 +484,7 @@ Namespace MC
         End Function
 
         Public Shared Function GetAPPOINTMENT(ByVal pLineNo As String) As APPOINTMENT
-            Return DataPortal.Fetch(Of APPOINTMENT)(New Criteria(pLineNo))
+            Return DataPortal.Fetch(Of APPOINTMENT)(New Criteria(pLineNo.ToInteger))
         End Function
 
         Public Shared Function GetBO(ByVal ID As String) As APPOINTMENT
@@ -494,7 +494,7 @@ Namespace MC
         End Function
 
         Public Shared Sub DeleteAPPOINTMENT(ByVal pLineNo As String)
-            DataPortal.Delete(New Criteria(pLineNo))
+            DataPortal.Delete(New Criteria(pLineNo.ToInteger))
         End Sub
 
         Public Overrides Function Save() As APPOINTMENT

@@ -17,7 +17,7 @@ Namespace MC
 
         Protected Overrides Function AddNewCore() As Object
             If _parent IsNot Nothing Then
-                Dim theNewLine = LABDET.NewLABDET(_parent.LineNo)
+                Dim theNewLine = LABDET.NewLABDETChild(_parent.LineNo)
                 AddNewLine(theNewLine)
                 theNewLine.CheckRules()
                 Return theNewLine

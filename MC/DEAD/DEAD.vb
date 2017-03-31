@@ -31,8 +31,22 @@ Namespace MC
 
                 Case "MainReasonCode"
                     For Each itm In LOOKUPInfoList.GetLOOKUPInfoList_ByCategory("ICD-10", True)
-                        If MainReasonCode = itm.Code Then
-                            MainReason = itm.Descriptn1
+                        If _mainReasonCode = itm.Code Then
+                            _mainReason = itm.Descriptn1
+                        End If
+                    Next
+
+                Case "CheckinNo"
+                    For Each itm In CHECKINInfoList.GetCHECKINInfoList
+                        If _checkinNo = itm.LineNo Then
+                            _patientCode = itm.PatientCode
+                        End If
+                    Next
+
+                Case "AutopsyResultCode"
+                    For Each itm In LOOKUPInfoList.GetLOOKUPInfoList_ByCategory("ICD-10", True)
+                        If _autopsyResultCode = itm.Code Then
+                            _autopsyResult = itm.Descriptn1
                         End If
                     Next
 
@@ -71,9 +85,9 @@ Namespace MC
         Private _DTB As String = String.Empty
 
 
-        Private _lineNo As String = String.Empty
+        Private _lineNo As Integer
         <System.ComponentModel.DataObjectField(True, True)>
-        Public ReadOnly Property LineNo() As String
+        Public ReadOnly Property LineNo() As Integer
             Get
                 Return _lineNo
             End Get
@@ -112,7 +126,7 @@ Namespace MC
         End Property
 
         Private _deadTime As pbs.Helper.SmartTime = New pbs.Helper.SmartTime()
-        <CellInfo(GroupName:="Dead info", Tips:="Enter dead time")>
+        <CellInfo("HOUR", GroupName:="Dead info", Tips:="Enter dead time")>
         Public Property DeadTime() As String
             Get
                 Return _deadTime.Text
@@ -240,33 +254,33 @@ Namespace MC
         End Property
 
         Private _updated As pbs.Helper.SmartDate = New pbs.Helper.SmartDate()
-        Public Property Updated() As String
+        Public ReadOnly Property Updated() As String
             Get
                 Return _updated.Text
             End Get
-            Set(ByVal value As String)
-                CanWriteProperty("Updated", True)
-                If value Is Nothing Then value = String.Empty
-                If Not _updated.Equals(value) Then
-                    _updated.Text = value
-                    PropertyHasChanged("Updated")
-                End If
-            End Set
+            'Set(ByVal value As String)
+            '    CanWriteProperty("Updated", True)
+            '    If value Is Nothing Then value = String.Empty
+            '    If Not _updated.Equals(value) Then
+            '        _updated.Text = value
+            '        PropertyHasChanged("Updated")
+            '    End If
+            'End Set
         End Property
 
         Private _updatedBy As String = String.Empty
-        Public Property UpdatedBy() As String
+        Public ReadOnly Property UpdatedBy() As String
             Get
                 Return _updatedBy
             End Get
-            Set(ByVal value As String)
-                CanWriteProperty("UpdatedBy", True)
-                If value Is Nothing Then value = String.Empty
-                If Not _updatedBy.Equals(value) Then
-                    _updatedBy = value
-                    PropertyHasChanged("UpdatedBy")
-                End If
-            End Set
+            'Set(ByVal value As String)
+            '    CanWriteProperty("UpdatedBy", True)
+            '    If value Is Nothing Then value = String.Empty
+            '    If Not _updatedBy.Equals(value) Then
+            '        _updatedBy = value
+            '        PropertyHasChanged("UpdatedBy")
+            '    End If
+            'End Set
         End Property
 
 
@@ -278,7 +292,7 @@ Namespace MC
         'IComparable
         Public Function CompareTo(ByVal IDObject) As Integer Implements System.IComparable.CompareTo
             Dim ID = IDObject.ToString
-            Dim pLineNo As String = ID.Trim
+            Dim pLineNo As Integer = ID.Trim.ToInteger
             If _lineNo < pLineNo Then Return -1
             If _lineNo > pLineNo Then Return 1
             Return 0
@@ -334,8 +348,8 @@ Namespace MC
         End Function
 
         Public Shared Function NewDEAD(ByVal pLineNo As String) As DEAD
-            If KeyDuplicated(pLineNo) Then ExceptionThower.BusinessRuleStop(String.Format(ResStr(ResStrConst.NOACCESS), ResStr("DEAD")))
-            Return DataPortal.Create(Of DEAD)(New Criteria(pLineNo))
+            'If KeyDuplicated(pLineNo) Then ExceptionThower.BusinessRuleStop(String.Format(ResStr(ResStrConst.NOACCESS), ResStr("DEAD")))
+            Return DataPortal.Create(Of DEAD)(New Criteria(pLineNo.ToInteger))
         End Function
 
         Public Shared Function NewBO(ByVal ID As String) As DEAD
@@ -345,7 +359,7 @@ Namespace MC
         End Function
 
         Public Shared Function GetDEAD(ByVal pLineNo As String) As DEAD
-            Return DataPortal.Fetch(Of DEAD)(New Criteria(pLineNo))
+            Return DataPortal.Fetch(Of DEAD)(New Criteria(pLineNo.ToInteger))
         End Function
 
         Public Shared Function GetBO(ByVal ID As String) As DEAD
@@ -355,7 +369,7 @@ Namespace MC
         End Function
 
         Public Shared Sub DeleteDEAD(ByVal pLineNo As String)
-            DataPortal.Delete(New Criteria(pLineNo))
+            DataPortal.Delete(New Criteria(pLineNo.ToInteger))
         End Sub
 
         Public Overrides Function Save() As DEAD
@@ -369,10 +383,11 @@ Namespace MC
 
         Public Function CloneDEAD(ByVal pLineNo As String) As DEAD
 
-            If DEAD.KeyDuplicated(pLineNo) Then ExceptionThower.BusinessRuleStop(ResStr(ResStrConst.CreateAlreadyExists), Me.GetType.ToString.Leaf.Translate)
+            'If DEAD.KeyDuplicated(pLineNo) Then ExceptionThower.BusinessRuleStop(ResStr(ResStrConst.CreateAlreadyExists), Me.GetType.ToString.Leaf.Translate)
 
             Dim cloningDEAD As DEAD = MyBase.Clone
-            cloningDEAD._lineNo = pLineNo
+            cloningDEAD._lineNo = 0
+            cloningDEAD._DTB = Context.CurrentBECode
 
             'Todo:Remember to reset status of the new object here 
             cloningDEAD.MarkNew()
@@ -389,10 +404,10 @@ Namespace MC
 
         <Serializable()>
         Private Class Criteria
-            Public _lineNo As String = String.Empty
+            Public _lineNo As Integer
 
             Public Sub New(ByVal pLineNo As String)
-                _lineNo = pLineNo
+                _lineNo = pLineNo.ToInteger
 
             End Sub
         End Class
@@ -408,7 +423,7 @@ Namespace MC
             Using ctx = ConnectionManager.GetManager
                 Using cm = ctx.Connection.CreateCommand()
                     cm.CommandType = CommandType.Text
-                    cm.CommandText = <SqlText>SELECT * FROM pbs_MC_DEAD_<%= _DTB %> WHERE LINE_NO= '<%= criteria._lineNo %>' </SqlText>.Value.Trim
+                    cm.CommandText = <SqlText>SELECT * FROM pbs_MC_DEAD_<%= _DTB %> WHERE LINE_NO= <%= criteria._lineNo %></SqlText>.Value.Trim
 
                     Using dr As New SafeDataReader(cm.ExecuteReader)
                         If dr.Read Then
@@ -447,7 +462,7 @@ Namespace MC
                         cm.CommandType = CommandType.StoredProcedure
                         cm.CommandText = String.Format("pbs_MC_DEAD_{0}_Insert", _DTB)
 
-                        cm.Parameters.AddWithValue("@LINE_NO", _lineNo.Trim.ToInteger).Direction = ParameterDirection.Output
+                        cm.Parameters.AddWithValue("@LINE_NO", _lineNo).Direction = ParameterDirection.Output
                         AddInsertParameters(cm)
                         cm.ExecuteNonQuery()
 
@@ -469,8 +484,8 @@ Namespace MC
             cm.Parameters.AddWithValue("@AUTOPSY", _autopsy.Trim)
             cm.Parameters.AddWithValue("@AUTOPSY_RESULT", _autopsyResult.Trim)
             cm.Parameters.AddWithValue("@AUTOPSY_RESULT_CODE", _autopsyResultCode.Trim)
-            cm.Parameters.AddWithValue("@UPDATED", _updated.DBValue)
-            cm.Parameters.AddWithValue("@UPDATED_BY", _updatedBy.Trim)
+            cm.Parameters.AddWithValue("@UPDATED", ToDay.ToSunDate)
+            cm.Parameters.AddWithValue("@UPDATED_BY", Context.CurrentBECode)
         End Sub
 
 
@@ -482,7 +497,7 @@ Namespace MC
                         cm.CommandType = CommandType.StoredProcedure
                         cm.CommandText = String.Format("pbs_MC_DEAD_{0}_Update", _DTB)
 
-                        cm.Parameters.AddWithValue("@LINE_NO", _lineNo.Trim)
+                        cm.Parameters.AddWithValue("@LINE_NO", _lineNo)
                         AddInsertParameters(cm)
                         cm.ExecuteNonQuery()
 
@@ -501,7 +516,7 @@ Namespace MC
                 Using cm = ctx.Connection.CreateCommand()
 
                     cm.CommandType = CommandType.Text
-                    cm.CommandText = <SqlText>DELETE pbs_MC_DEAD_<%= _DTB %> WHERE LINE_NO= '<%= criteria._lineNo %>' </SqlText>.Value.Trim
+                    cm.CommandText = <SqlText>DELETE pbs_MC_DEAD_<%= _DTB %> WHERE LINE_NO= <%= criteria._lineNo %></SqlText>.Value.Trim
                     cm.ExecuteNonQuery()
 
                 End Using
@@ -509,11 +524,11 @@ Namespace MC
 
         End Sub
 
-        Protected Overrides Sub DataPortal_OnDataPortalInvokeComplete(ByVal e As Csla.DataPortalEventArgs)
-            If Csla.ApplicationContext.ExecutionLocation = ExecutionLocations.Server Then
-                DEADInfoList.InvalidateCache()
-            End If
-        End Sub
+        'Protected Overrides Sub DataPortal_OnDataPortalInvokeComplete(ByVal e As Csla.DataPortalEventArgs)
+        '    If Csla.ApplicationContext.ExecutionLocation = ExecutionLocations.Server Then
+        '        DEADInfoList.InvalidateCache()
+        '    End If
+        'End Sub
 
 
 #End Region 'Data Access                           
@@ -523,10 +538,10 @@ Namespace MC
             Return DEADInfoList.ContainsCode(pLineNo)
         End Function
 
-        Public Shared Function KeyDuplicated(ByVal pLineNo As String) As Boolean
-            Dim SqlText = <SqlText>SELECT COUNT(*) FROM pbs_MC_DEAD_<%= Context.CurrentBECode %> WHERE LINE_NO= '<%= pLineNo %>'</SqlText>.Value.Trim
-            Return SQLCommander.GetScalarInteger(SqlText) > 0
-        End Function
+        'Public Shared Function KeyDuplicated(ByVal pLineNo As String) As Boolean
+        '    Dim SqlText = <SqlText>SELECT COUNT(*) FROM pbs_MC_DEAD_<%= Context.CurrentBECode %> WHERE LINE_NO= '<%= pLineNo %>'</SqlText>.Value.Trim
+        '    Return SQLCommander.GetScalarInteger(SqlText) > 0
+        'End Function
 #End Region
 
 #Region " IGenpart "

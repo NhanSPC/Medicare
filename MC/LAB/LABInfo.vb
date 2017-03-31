@@ -20,8 +20,8 @@ Namespace MC
 #Region " Business Properties and Methods "
 
 
-        Private _lineNo As String = String.Empty
-        Public ReadOnly Property LineNo() As String
+        Private _lineNo As Integer
+        Public ReadOnly Property LineNo() As Integer
             Get
                 Return _lineNo
             End Get
@@ -72,7 +72,7 @@ Namespace MC
         Private _analysisDate As pbs.Helper.SmartDate = New pbs.Helper.SmartDate()
         Public ReadOnly Property AnalysisDate() As String
             Get
-                Return _analysisDate.Text
+                Return _analysisDate.DateViewFormat
             End Get
         End Property
 
@@ -203,7 +203,7 @@ Namespace MC
         'IComparable
         Public Function CompareTo(ByVal IDObject) As Integer Implements System.IComparable.CompareTo
             Dim ID = IDObject.ToString
-            Dim pLineNo As String = ID.Trim
+            Dim pLineNo As Integer = ID.Trim.ToInteger
             If _lineNo < pLineNo Then Return -1
             If _lineNo > pLineNo Then Return 1
             Return 0
@@ -217,7 +217,7 @@ Namespace MC
 
         Public ReadOnly Property LookUp As String Implements IInfo.LookUp
             Get
-                Return _lineNo
+                Return _patientCode
             End Get
         End Property
 
@@ -244,7 +244,7 @@ Namespace MC
         Friend Shared Function EmptyLABInfo(Optional ByVal pLineNo As String = "") As LABInfo
             Dim info As LABInfo = New LABInfo
             With info
-                ._lineNo = pLineNo
+                ._lineNo = pLineNo.ToInteger
 
             End With
             Return info

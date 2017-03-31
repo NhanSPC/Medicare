@@ -16,7 +16,7 @@ Namespace MC
 
         Protected Overrides Function AddNewCore() As Object
             If _parent IsNot Nothing Then
-                Dim theNewLine = SID.NewSID(_parent.DocumentNo)
+                Dim theNewLine = SID.NewSIDChild(_parent.DocumentNo)
                 theNewLine._percentCover.Text = _parent.CalculateInsurance
                 AddNewLine(theNewLine)
                 theNewLine.CheckRules()

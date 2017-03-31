@@ -161,7 +161,7 @@ Namespace MC
         End Property
 
         Private _documentDate As pbs.Helper.SmartDate = New pbs.Helper.SmartDate()
-        <CellInfo(GroupName:="General Info", Tips:="Enter document date")>
+        <CellInfo("CALENDAR", GroupName:="General Info", Tips:="Enter document date")>
         Public Property DocumentDate() As String
             Get
                 Return _documentDate.Text
@@ -258,7 +258,7 @@ Namespace MC
         End Property
 
         Private _invoiceDate As pbs.Helper.SmartDate = New pbs.Helper.SmartDate()
-        <CellInfo(GroupName:="Invoice Info", Tips:="Enter invoice date")>
+        <CellInfo("CALENDAR", GroupName:="Invoice Info", Tips:="Enter invoice date")>
         Public Property InvoiceDate() As String
             Get
                 Return _invoiceDate.Text
@@ -274,7 +274,7 @@ Namespace MC
         End Property
 
         Private _invoicePeriod As SmartPeriod = New pbs.Helper.SmartPeriod()
-        <CellInfo(GroupName:="Invoice Info", Tips:="Enter invoice period")>
+        <CellInfo(LinkCode.Period, GroupName:="Invoice Info", Tips:="Enter invoice period")>
         Public Property InvoicePeriod() As String
             Get
                 Return _invoicePeriod.Text
@@ -515,34 +515,34 @@ Namespace MC
 
         Private _updated As pbs.Helper.SmartDate = New pbs.Helper.SmartDate()
         <CellInfo(GroupName:="System")>
-        Public Property Updated() As String
+        Public ReadOnly Property Updated() As String
             Get
                 Return _updated.Text
             End Get
-            Set(ByVal value As String)
-                CanWriteProperty("Updated", True)
-                If value Is Nothing Then value = String.Empty
-                If Not _updated.Equals(value) Then
-                    _updated.Text = value
-                    PropertyHasChanged("Updated")
-                End If
-            End Set
+            'Set(ByVal value As String)
+            '    CanWriteProperty("Updated", True)
+            '    If value Is Nothing Then value = String.Empty
+            '    If Not _updated.Equals(value) Then
+            '        _updated.Text = value
+            '        PropertyHasChanged("Updated")
+            '    End If
+            'End Set
         End Property
 
         Private _updatedBy As String = String.Empty
         <CellInfo(GroupName:="System")>
-        Public Property UpdatedBy() As String
+        Public ReadOnly Property UpdatedBy() As String
             Get
                 Return _updatedBy
             End Get
-            Set(ByVal value As String)
-                CanWriteProperty("UpdatedBy", True)
-                If value Is Nothing Then value = String.Empty
-                If Not _updatedBy.Equals(value) Then
-                    _updatedBy = value
-                    PropertyHasChanged("UpdatedBy")
-                End If
-            End Set
+            'Set(ByVal value As String)
+            '    CanWriteProperty("UpdatedBy", True)
+            '    If value Is Nothing Then value = String.Empty
+            '    If Not _updatedBy.Equals(value) Then
+            '        _updatedBy = value
+            '        PropertyHasChanged("UpdatedBy")
+            '    End If
+            'End Set
         End Property
 
         Private _patientType As String = String.Empty
@@ -731,8 +731,8 @@ Namespace MC
             If SI.KeyDuplicated(pDocumentNo) Then ExceptionThower.BusinessRuleStop(ResStr(ResStrConst.CreateAlreadyExists), Me.GetType.ToString.Leaf.Translate)
 
             Dim cloningSI As SI = MyBase.Clone
-            cloningSI._documentNo = pDocumentNo
-
+            cloningSI._documentNo = String.Empty
+            cloningSI._DTB = Context.CurrentBECode
             'Todo:Remember to reset status of the new object here 
             cloningSI.MarkNew()
             cloningSI.ApplyEdit()
@@ -907,11 +907,11 @@ Namespace MC
 
         End Sub
 
-        Protected Overrides Sub DataPortal_OnDataPortalInvokeComplete(ByVal e As Csla.DataPortalEventArgs)
-            If Csla.ApplicationContext.ExecutionLocation = ExecutionLocations.Server Then
-                SIInfoList.InvalidateCache()
-            End If
-        End Sub
+        'Protected Overrides Sub DataPortal_OnDataPortalInvokeComplete(ByVal e As Csla.DataPortalEventArgs)
+        '    If Csla.ApplicationContext.ExecutionLocation = ExecutionLocations.Server Then
+        '        SIInfoList.InvalidateCache()
+        '    End If
+        'End Sub
 
 
 #End Region 'Data Access                           

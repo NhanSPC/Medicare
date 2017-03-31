@@ -29,16 +29,17 @@ Namespace MC
 
                 Case "CheckinNo"
                     For Each ci In CHECKINInfoList.GetCHECKINInfoList
-                        If CheckinNo = ci.LineNo Then
-                            PatientCode = ci.PatientCode
-                            DoctorAppointed = ci.Doctor
+                        If _checkinNo = ci.LineNo Then
+                            _patientCode = ci.PatientCode
+                            _doctorAppointed = ci.Doctor
                         End If
                     Next
+                    PropertyHasChanged("PatientCode")
 
                 Case "LabPackageCode"
                     For Each itm In LOOKUPInfoList.GetLOOKUPInfoList_ByCategory("LAB_SET", True)
-                        If LabPackageCode = itm.Code Then
-                            LabName = itm.Descriptn
+                        If _labPackageCode = itm.Code Then
+                            _labName = itm.Descriptn
 
                         End If
                     Next
@@ -81,53 +82,53 @@ Namespace MC
                 If pbs.Helper.UIServices.ConfirmService.Confirm("This lab already contains details. Update this list?") Then
                     Details.Clear()
 
-                    For Each itm In LABTESTInfoList.GetLABTESTInfoList()
-                        If itm.LabCode = LabPackageCode Then
-                            Dim newLabDet = Details.AddNew
+                    'For Each itm In LABTESTInfoList.GetLABTESTInfoList()
+                    '    If itm.LabCode = LabPackageCode Then
+                    '        Dim newLabDet = Details.AddNew
 
-                            newLabDet.LabCode = itm.LabCode
-                            newLabDet.TestCode = itm.Code
-                            newLabDet.TestName = itm.Descriptn
-                            newLabDet.Unit = itm.Unit
-                            newLabDet.Value = String.Empty
-                            newLabDet.MinValue = itm.MinValue
-                            newLabDet.MaxValue = itm.MaxValue
-                            newLabDet.MinValueFemale = itm.MinValueFemale
-                            newLabDet.MaxValueFemale = itm.MaxValueFemale
-                            newLabDet.MinValueMale = itm.MinValueMale
-                            newLabDet.MaxValueMale = itm.MaxValueMale
-                            newLabDet.Interpretation = String.Empty
-
-                        End If
-
-                        'newLabDet.LabId = itm.LookupAlt
-                        'newLabDet.LabName = String.Format("{0}.{1}", itm.Code, itm.Descriptn)
-                    Next
+                    '        newLabDet.LabCode = itm.LabCode
+                    '        newLabDet.TestCode = itm.Code
+                    '        newLabDet.TestName = itm.Descriptn
+                    '        newLabDet.Unit = itm.Unit
+                    '        newLabDet.Value = String.Empty
+                    '        newLabDet.MinValue = itm.MinValue
+                    '        newLabDet.MaxValue = itm.MaxValue
+                    '        newLabDet.MinValueFemale = itm.MinValueFemale
+                    '        newLabDet.MaxValueFemale = itm.MaxValueFemale
+                    '        newLabDet.MinValueMale = itm.MinValueMale
+                    '        newLabDet.MaxValueMale = itm.MaxValueMale
+                    '        newLabDet.Interpretation = String.Empty
 
                 End If
-            Else
 
-                For Each itm In LABTESTInfoList.GetLABTESTInfoList()
-                    If itm.LabCode = LabPackageCode Then
-                        Dim newLabDet = Details.AddNew
-
-                        newLabDet.LabCode = itm.LabCode
-                        newLabDet.TestCode = itm.TestCode
-                        newLabDet.TestName = itm.Descriptn
-                        newLabDet.Unit = itm.Unit
-                        newLabDet.Value = String.Empty
-                        newLabDet.MinValue = itm.MinValue
-                        newLabDet.MaxValue = itm.MaxValue
-                        newLabDet.MinValueFemale = itm.MinValueFemale
-                        newLabDet.MaxValueFemale = itm.MaxValueFemale
-                        newLabDet.MinValueMale = itm.MinValueMale
-                        newLabDet.MaxValueMale = itm.MaxValueMale
-                        newLabDet.Interpretation = String.Empty
-
-                    End If
-                Next
+                ''newLabDet.LabId = itm.LookupAlt
+                ''newLabDet.LabName = String.Format("{0}.{1}", itm.Code, itm.Descriptn)
+                '    Next
 
             End If
+            'Else
+
+            For Each itm In LABTESTInfoList.GetLABTESTInfoList()
+                If itm.LabCode = LabPackageCode Then
+                    Dim newLabDet = Details.AddNew
+
+                    newLabDet.LabCode = itm.LabCode
+                    newLabDet.TestCode = itm.TestCode
+                    newLabDet.TestName = itm.Descriptn
+                    newLabDet.Unit = itm.Unit
+                    newLabDet.Value = String.Empty
+                    newLabDet.MinValue = itm.MinValue
+                    newLabDet.MaxValue = itm.MaxValue
+                    newLabDet.MinValueFemale = itm.MinValueFemale
+                    newLabDet.MaxValueFemale = itm.MaxValueFemale
+                    newLabDet.MinValueMale = itm.MinValueMale
+                    newLabDet.MaxValueMale = itm.MaxValueMale
+                    newLabDet.Interpretation = String.Empty
+
+                End If
+            Next
+
+            'End If
 
 
         End Sub
@@ -136,9 +137,9 @@ Namespace MC
         Friend _DTB As String = String.Empty
 
 
-        Private _lineNo As String = String.Empty
+        Private _lineNo As Integer
         <System.ComponentModel.DataObjectField(True, True)>
-        Public ReadOnly Property LineNo() As String
+        Public ReadOnly Property LineNo() As Integer
             Get
                 Return _lineNo
             End Get
@@ -243,7 +244,7 @@ Namespace MC
         End Property
 
         Private _analysisDate As pbs.Helper.SmartDate = New pbs.Helper.SmartDate()
-        <CellInfo(GroupName:="Lab Info", Tips:="Nhập ngày xét nghiệm")>
+        <CellInfo("CALENDAR", GroupName:="Lab Info", Tips:="Nhập ngày xét nghiệm")>
         Public Property AnalysisDate() As String
             Get
                 Return _analysisDate.Text
@@ -259,7 +260,7 @@ Namespace MC
         End Property
 
         Private _analysisTime As pbs.Helper.SmartTime = New pbs.Helper.SmartTime()
-        <CellInfo(GroupName:="Lab Info", Tips:="Nhập thời gian xét nghiệm")>
+        <CellInfo("HOUR", GroupName:="Lab Info", Tips:="Nhập thời gian xét nghiệm")>
         Public Property AnalysisTime() As String
             Get
                 Return _analysisTime.Text
@@ -275,7 +276,7 @@ Namespace MC
         End Property
 
         Private _doctorAppointed As String = String.Empty
-        <CellInfo(GroupName:="Lab Info", Tips:="Tên BS. chỉ định")>
+        <CellInfo("pbs.BO.HR.EMP", GroupName:="Lab Info", Tips:="Tên BS. chỉ định")>
         Public Property DoctorAppointed() As String
             Get
                 Return _doctorAppointed
@@ -489,33 +490,33 @@ Namespace MC
         End Property
 
         Private _updated As pbs.Helper.SmartDate = New pbs.Helper.SmartDate()
-        Public Property Updated() As String
+        Public ReadOnly Property Updated() As String
             Get
                 Return _updated.Text
             End Get
-            Set(ByVal value As String)
-                CanWriteProperty("Updated", True)
-                If value Is Nothing Then value = String.Empty
-                If Not _updated.Equals(value) Then
-                    _updated.Text = value
-                    PropertyHasChanged("Updated")
-                End If
-            End Set
+            'Set(ByVal value As String)
+            '    CanWriteProperty("Updated", True)
+            '    If value Is Nothing Then value = String.Empty
+            '    If Not _updated.Equals(value) Then
+            '        _updated.Text = value
+            '        PropertyHasChanged("Updated")
+            '    End If
+            'End Set
         End Property
 
         Private _updatedBy As String = String.Empty
-        Public Property UpdatedBy() As String
+        Public ReadOnly Property UpdatedBy() As String
             Get
                 Return _updatedBy
             End Get
-            Set(ByVal value As String)
-                CanWriteProperty("UpdatedBy", True)
-                If value Is Nothing Then value = String.Empty
-                If Not _updatedBy.Equals(value) Then
-                    _updatedBy = value
-                    PropertyHasChanged("UpdatedBy")
-                End If
-            End Set
+            'Set(ByVal value As String)
+            '    CanWriteProperty("UpdatedBy", True)
+            '    If value Is Nothing Then value = String.Empty
+            '    If Not _updatedBy.Equals(value) Then
+            '        _updatedBy = value
+            '        PropertyHasChanged("UpdatedBy")
+            '    End If
+            'End Set
         End Property
 
 
@@ -527,7 +528,7 @@ Namespace MC
         'IComparable
         Public Function CompareTo(ByVal IDObject) As Integer Implements System.IComparable.CompareTo
             Dim ID = IDObject.ToString
-            Dim pLineNo As String = ID.Trim
+            Dim pLineNo As Integer = ID.Trim.ToInteger
             If _lineNo < pLineNo Then Return -1
             If _lineNo > pLineNo Then Return 1
             Return 0
@@ -586,7 +587,7 @@ Namespace MC
         End Function
 
         Public Shared Function NewLAB(ByVal pLineNo As String) As LAB
-            Dim ret = DataPortal.Create(Of LAB)(New Criteria(pLineNo))
+            Dim ret = DataPortal.Create(Of LAB)(New Criteria(pLineNo.ToInteger))
             Return ret
         End Function
 
@@ -597,7 +598,7 @@ Namespace MC
         End Function
 
         Public Shared Function GetLAB(ByVal pLineNo As String) As LAB
-            Return DataPortal.Fetch(Of LAB)(New Criteria(pLineNo))
+            Return DataPortal.Fetch(Of LAB)(New Criteria(pLineNo.ToInteger))
         End Function
 
         Public Shared Function GetBO(ByVal ID As String) As LAB
@@ -607,7 +608,7 @@ Namespace MC
         End Function
 
         Public Shared Sub DeleteLAB(ByVal pLineNo As String)
-            DataPortal.Delete(New Criteria(pLineNo))
+            DataPortal.Delete(New Criteria(pLineNo.ToInteger))
         End Sub
 
         Public Overrides Function Save() As LAB
@@ -641,10 +642,10 @@ Namespace MC
 
         <Serializable()>
         Private Class Criteria
-            Public _lineNo As String = String.Empty
+            Public _lineNo As Integer
 
             Public Sub New(ByVal pLineNo As String)
-                _lineNo = pLineNo
+                _lineNo = pLineNo.ToInteger
 
             End Sub
         End Class
@@ -660,8 +661,8 @@ Namespace MC
             Using ctx = ConnectionManager.GetManager
                 Using cm = ctx.Connection.CreateCommand()
                     cm.CommandType = CommandType.Text
-                    cm.CommandText = <SqlText>SELECT * FROM pbs_MC_LAB_<%= _DTB %> WHERE LINE_NO= '<%= criteria._lineNo %>' 
-                                              SELECT * FROM pbs_MC_LAB_DETAIL_<%= _DTB %> WHERE LAB_ID = '<%= criteria._lineNo %>'
+                    cm.CommandText = <SqlText>SELECT * FROM pbs_MC_LAB_<%= _DTB %> WHERE LINE_NO= <%= criteria._lineNo %> 
+                                              SELECT * FROM pbs_MC_LAB_DETAIL_<%= _DTB %> WHERE LAB_ID = <%= criteria._lineNo %>
                                      </SqlText>.Value.Trim
 
                     Using dr As New SafeDataReader(cm.ExecuteReader)
@@ -718,7 +719,7 @@ Namespace MC
                         cm.CommandType = CommandType.StoredProcedure
                         cm.CommandText = String.Format("pbs_MC_LAB_{0}_Insert", _DTB)
 
-                        cm.Parameters.AddWithValue("@LINE_NO", _lineNo.Trim.ToInteger).Direction = ParameterDirection.Output
+                        cm.Parameters.AddWithValue("@LINE_NO", _lineNo).Direction = ParameterDirection.Output
                         AddInsertParameters(cm)
                         cm.ExecuteNonQuery()
 
@@ -754,8 +755,8 @@ Namespace MC
             cm.Parameters.AddWithValue("@NC_LB2", _ncLb2.Trim)
             cm.Parameters.AddWithValue("@NC_LB1", _ncLb1.Trim)
             cm.Parameters.AddWithValue("@NC_LB0", _ncLb0.Trim)
-            cm.Parameters.AddWithValue("@UPDATED", _updated.DBValue)
-            cm.Parameters.AddWithValue("@UPDATED_BY", _updatedBy.Trim)
+            cm.Parameters.AddWithValue("@UPDATED", ToDay.ToSunDate)
+            cm.Parameters.AddWithValue("@UPDATED_BY", Context.CurrentBECode)
         End Sub
 
 
@@ -767,7 +768,7 @@ Namespace MC
                         cm.CommandType = CommandType.StoredProcedure
                         cm.CommandText = String.Format("pbs_MC_LAB_{0}_Update", _DTB)
 
-                        cm.Parameters.AddWithValue("@LINE_NO", _lineNo.Trim)
+                        cm.Parameters.AddWithValue("@LINE_NO", _lineNo)
                         AddInsertParameters(cm)
                         cm.ExecuteNonQuery()
 
@@ -788,7 +789,7 @@ Namespace MC
                 Using cm = ctx.Connection.CreateCommand()
 
                     cm.CommandType = CommandType.Text
-                    cm.CommandText = <SqlText>DELETE pbs_MC_LAB_<%= _DTB %> WHERE LINE_NO= '<%= criteria._lineNo %>' </SqlText>.Value.Trim
+                    cm.CommandText = <SqlText>DELETE pbs_MC_LAB_<%= _DTB %> WHERE LINE_NO= <%= criteria._lineNo %></SqlText>.Value.Trim
                     cm.ExecuteNonQuery()
 
                 End Using
@@ -796,11 +797,11 @@ Namespace MC
 
         End Sub
 
-        Protected Overrides Sub DataPortal_OnDataPortalInvokeComplete(ByVal e As Csla.DataPortalEventArgs)
-            If Csla.ApplicationContext.ExecutionLocation = ExecutionLocations.Server Then
-                LABInfoList.InvalidateCache()
-            End If
-        End Sub
+        'Protected Overrides Sub DataPortal_OnDataPortalInvokeComplete(ByVal e As Csla.DataPortalEventArgs)
+        '    If Csla.ApplicationContext.ExecutionLocation = ExecutionLocations.Server Then
+        '        LABInfoList.InvalidateCache()
+        '    End If
+        'End Sub
 
 
 #End Region 'Data Access                           

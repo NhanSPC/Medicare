@@ -20,8 +20,8 @@ Namespace MC
 #Region " Business Properties and Methods "
 
 
-        Private _lineNo As String = String.Empty
-        Public ReadOnly Property LineNo() As String
+        Private _lineNo As Integer
+        Public ReadOnly Property LineNo() As Integer
             Get
                 Return _lineNo
             End Get
@@ -107,7 +107,7 @@ Namespace MC
         Private _deptCheckinDate As pbs.Helper.SmartDate = New pbs.Helper.SmartDate()
         Public ReadOnly Property DeptCheckinDate() As String
             Get
-                Return _deptCheckinDate.Text
+                Return _deptCheckinDate.DateViewFormat
             End Get
         End Property
 
@@ -128,7 +128,7 @@ Namespace MC
         Private _checkoutDate As pbs.Helper.SmartDate = New pbs.Helper.SmartDate()
         Public ReadOnly Property CheckoutDate() As String
             Get
-                Return _checkoutDate.Text
+                Return _checkoutDate.DateViewFormat
             End Get
         End Property
 
@@ -366,7 +366,7 @@ Namespace MC
         Private _updated As pbs.Helper.SmartDate = New pbs.Helper.SmartDate()
         Public ReadOnly Property Updated() As String
             Get
-                Return _updated.Text
+                Return _updated.DateViewFormat
             End Get
         End Property
 
@@ -434,7 +434,7 @@ Namespace MC
         'IComparable
         Public Function CompareTo(ByVal IDObject) As Integer Implements System.IComparable.CompareTo
             Dim ID = IDObject.ToString
-            Dim pLineNo As String = ID.Trim
+            Dim pLineNo As Integer = ID.Trim.ToInteger
             If _lineNo < pLineNo Then Return -1
             If _lineNo > pLineNo Then Return 1
             Return 0
@@ -442,7 +442,7 @@ Namespace MC
 
         Public ReadOnly Property Code As String Implements IInfo.Code
             Get
-                Return _lineNo.ToString
+                Return _lineNo
             End Get
         End Property
 
@@ -481,7 +481,7 @@ Namespace MC
         Friend Shared Function EmptyCHECKINInfo(Optional ByVal pLineNo As String = "") As CHECKINInfo
             Dim info As CHECKINInfo = New CHECKINInfo
             With info
-                ._lineNo = pLineNo
+                ._lineNo = pLineNo.ToInteger
 
             End With
             Return info

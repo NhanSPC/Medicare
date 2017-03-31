@@ -20,8 +20,8 @@ Namespace MC
 #Region " Business Properties and Methods "
 
 
-        Private _lineNo As String = String.Empty
-        Public ReadOnly Property LineNo() As String
+        Private _lineNo As Integer
+        Public ReadOnly Property LineNo() As Integer
             Get
                 Return _lineNo
             End Get
@@ -51,7 +51,7 @@ Namespace MC
         Private _deadDate As pbs.Helper.SmartDate = New pbs.Helper.SmartDate()
         Public ReadOnly Property DeadDate() As String
             Get
-                Return _deadDate.Text
+                Return _deadDate.DateViewFormat
             End Get
         End Property
 
@@ -100,7 +100,7 @@ Namespace MC
         Private _updated As pbs.Helper.SmartDate = New pbs.Helper.SmartDate()
         Public ReadOnly Property Updated() As String
             Get
-                Return _updated.Text
+                Return _updated.DateViewFormat
             End Get
         End Property
 
@@ -119,7 +119,7 @@ Namespace MC
         'IComparable
         Public Function CompareTo(ByVal IDObject) As Integer Implements System.IComparable.CompareTo
             Dim ID = IDObject.ToString
-            Dim pLineNo As String = ID.Trim
+            Dim pLineNo As Integer = ID.Trim.ToInteger
             If _lineNo < pLineNo Then Return -1
             If _lineNo > pLineNo Then Return 1
             Return 0
@@ -160,7 +160,7 @@ Namespace MC
         Friend Shared Function EmptyDEADInfo(Optional ByVal pLineNo As String = "") As DEADInfo
             Dim info As DEADInfo = New DEADInfo
             With info
-                ._lineNo = pLineNo
+                ._lineNo = 0
 
             End With
             Return info
