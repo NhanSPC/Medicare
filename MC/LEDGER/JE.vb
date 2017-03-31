@@ -543,7 +543,7 @@ Namespace MC
         End Property
 
         Private _invoiceDate As pbs.Helper.SmartDate = New pbs.Helper.SmartDate()
-        <CellInfo(GroupName:="Billing")>
+        <CellInfo(LinkCode.Calendar, GroupName:="Billing")>
         Public Property InvoiceDate() As String
             Get
                 Return _invoiceDate.Text
@@ -564,7 +564,7 @@ Namespace MC
         End Property
 
         Private _invoicePeriod As SmartPeriod = New pbs.Helper.SmartPeriod()
-        <CellInfo(GroupName:="Billing")>
+        <CellInfo(LinkCode.Period, GroupName:="Billing")>
         Public Property InvoicePeriod() As String
             Get
                 Return _invoicePeriod.Text
@@ -1010,7 +1010,7 @@ Namespace MC
         End Property
 
         Private _entryDate As pbs.Helper.SmartDate = New pbs.Helper.SmartDate()
-        <CellInfo(GroupName:="System", Hidden:=True)>
+        <CellInfo(LinkCode.Calendar, GroupName:="System", Hidden:=True)>
         Public ReadOnly Property EntryDate() As String
             Get
                 Return _entryDate.Text

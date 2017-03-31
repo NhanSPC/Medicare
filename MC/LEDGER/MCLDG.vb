@@ -1536,7 +1536,7 @@ Namespace MC
         End Function
 
         Public Shared Function NewMCLDG(ByVal pLineNo As String) As MCLDG
-            Return DataPortal.Create(Of MCLDG)(New Criteria(pLineNo))
+            Return DataPortal.Create(Of MCLDG)(New Criteria(pLineNo.ToInteger))
         End Function
 
         Public Shared Function NewBO(ByVal ID As String) As MCLDG
@@ -1546,7 +1546,7 @@ Namespace MC
         End Function
 
         Public Shared Function GetMCLDG(ByVal pLineNo As String) As MCLDG
-            Return DataPortal.Fetch(Of MCLDG)(New Criteria(pLineNo))
+            Return DataPortal.Fetch(Of MCLDG)(New Criteria(pLineNo.ToInteger))
         End Function
 
         Public Shared Function GetBO(ByVal ID As String) As MCLDG
@@ -1556,7 +1556,7 @@ Namespace MC
         End Function
 
         Public Shared Sub DeleteMCLDG(ByVal pLineNo As String)
-            DataPortal.Delete(New Criteria(pLineNo))
+            DataPortal.Delete(New Criteria(pLineNo.ToInteger))
         End Sub
 
         Public Overrides Function Save() As MCLDG
