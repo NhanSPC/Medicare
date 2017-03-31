@@ -62,10 +62,10 @@ Namespace MC
             End Get
         End Property
 
-        Private _dob As pbs.Helper.SmartInt32 = New pbs.Helper.SmartInt32(0)
+        Private _dob As pbs.Helper.SmartDate = New pbs.Helper.SmartDate()
         Public ReadOnly Property Dob() As String
             Get
-                Return _dob.Text
+                Return _dob.DateViewFormat
             End Get
         End Property
 
@@ -256,7 +256,7 @@ Namespace MC
         Private _updated As pbs.Helper.SmartDate = New pbs.Helper.SmartDate()
         Public ReadOnly Property Updated() As String
             Get
-                Return _updated.Text
+                Return _updated.DateViewFormat
             End Get
         End Property
 
@@ -275,7 +275,7 @@ Namespace MC
         'IComparable
         Public Function CompareTo(ByVal IDObject) As Integer Implements System.IComparable.CompareTo
             Dim ID = IDObject.ToString
-            Dim pPatientCode As String = ID.Trim
+            Dim pPatientCode As Integer = ID.Trim.ToInteger
             If _patientCode.Trim < pPatientCode Then Return -1
             If _patientCode.Trim > pPatientCode Then Return 1
             Return 0
@@ -318,7 +318,7 @@ Namespace MC
         Friend Shared Function EmptyPATIENTInfo(Optional ByVal pPatientCode As String = "") As PATIENTInfo
             Dim info As PATIENTInfo = New PATIENTInfo
             With info
-                ._patientCode = pPatientCode
+                ._patientCode = String.Empty
 
             End With
             Return info

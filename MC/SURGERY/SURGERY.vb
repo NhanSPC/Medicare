@@ -75,9 +75,9 @@ Namespace MC
         Private _DTB As String = String.Empty
 
 
-        Private _lineNo As String = String.Empty
+        Private _lineNo As Integer
         <System.ComponentModel.DataObjectField(True, True)>
-        Public ReadOnly Property LineNo() As String
+        Public ReadOnly Property LineNo() As Integer
             Get
                 Return _lineNo
             End Get
@@ -229,7 +229,7 @@ Namespace MC
         End Property
 
         Private _surgeon As String = String.Empty
-        <CellInfo(GroupName:="Doctor Info", Tips:="Enter surgeon code")>
+        <CellInfo("pbs.BO.HR.EMP", GroupName:="Doctor Info", Tips:="Enter surgeon code")>
         Public Property Surgeon() As String
             Get
                 Return _surgeon
@@ -245,7 +245,7 @@ Namespace MC
         End Property
 
         Private _anaesthetist As String = String.Empty
-        <CellInfo(GroupName:="Doctor Info", Tips:="Enter anaesthetists code")>
+        <CellInfo("pbs.BO.HR.EMP", GroupName:="Doctor Info", Tips:="Enter anaesthetists code")>
         Public Property Anaesthetist() As String
             Get
                 Return _anaesthetist
@@ -325,33 +325,33 @@ Namespace MC
         End Property
 
         Private _updated As pbs.Helper.SmartDate = New pbs.Helper.SmartDate()
-        Public Property Updated() As String
+        Public ReadOnly Property Updated() As String
             Get
                 Return _updated.Text
             End Get
-            Set(ByVal value As String)
-                CanWriteProperty("Updated", True)
-                If value Is Nothing Then value = String.Empty
-                If Not _updated.Equals(value) Then
-                    _updated.Text = value
-                    PropertyHasChanged("Updated")
-                End If
-            End Set
+            'Set(ByVal value As String)
+            '    CanWriteProperty("Updated", True)
+            '    If value Is Nothing Then value = String.Empty
+            '    If Not _updated.Equals(value) Then
+            '        _updated.Text = value
+            '        PropertyHasChanged("Updated")
+            '    End If
+            'End Set
         End Property
 
         Private _updatedBy As String = String.Empty
-        Public Property UpdatedBy() As String
+        Public ReadOnly Property UpdatedBy() As String
             Get
                 Return _updatedBy
             End Get
-            Set(ByVal value As String)
-                CanWriteProperty("UpdatedBy", True)
-                If value Is Nothing Then value = String.Empty
-                If Not _updatedBy.Equals(value) Then
-                    _updatedBy = value
-                    PropertyHasChanged("UpdatedBy")
-                End If
-            End Set
+            'Set(ByVal value As String)
+            '    CanWriteProperty("UpdatedBy", True)
+            '    If value Is Nothing Then value = String.Empty
+            '    If Not _updatedBy.Equals(value) Then
+            '        _updatedBy = value
+            '        PropertyHasChanged("UpdatedBy")
+            '    End If
+            'End Set
         End Property
 
 
@@ -363,7 +363,7 @@ Namespace MC
         'IComparable
         Public Function CompareTo(ByVal IDObject) As Integer Implements System.IComparable.CompareTo
             Dim ID = IDObject.ToString
-            Dim pLineNo As String = ID.Trim
+            Dim pLineNo As Integer = ID.Trim.ToInteger
             If _lineNo < pLineNo Then Return -1
             If _lineNo > pLineNo Then Return 1
             Return 0
@@ -419,8 +419,8 @@ Namespace MC
         End Function
 
         Public Shared Function NewSURGERY(ByVal pLineNo As String) As SURGERY
-            If KeyDuplicated(pLineNo) Then ExceptionThower.BusinessRuleStop(String.Format(ResStr(ResStrConst.NOACCESS), ResStr("SURGERY")))
-            Return DataPortal.Create(Of SURGERY)(New Criteria(pLineNo))
+            'If KeyDuplicated(pLineNo) Then ExceptionThower.BusinessRuleStop(String.Format(ResStr(ResStrConst.NOACCESS), ResStr("SURGERY")))
+            Return DataPortal.Create(Of SURGERY)(New Criteria(pLineNo.ToInteger))
         End Function
 
         Public Shared Function NewBO(ByVal ID As String) As SURGERY
@@ -430,7 +430,7 @@ Namespace MC
         End Function
 
         Public Shared Function GetSURGERY(ByVal pLineNo As String) As SURGERY
-            Return DataPortal.Fetch(Of SURGERY)(New Criteria(pLineNo))
+            Return DataPortal.Fetch(Of SURGERY)(New Criteria(pLineNo.ToInteger))
         End Function
 
         Public Shared Function GetBO(ByVal ID As String) As SURGERY
@@ -440,7 +440,7 @@ Namespace MC
         End Function
 
         Public Shared Sub DeleteSURGERY(ByVal pLineNo As String)
-            DataPortal.Delete(New Criteria(pLineNo))
+            DataPortal.Delete(New Criteria(pLineNo.ToInteger))
         End Sub
 
         Public Overrides Function Save() As SURGERY
@@ -454,10 +454,11 @@ Namespace MC
 
         Public Function CloneSURGERY(ByVal pLineNo As String) As SURGERY
 
-            If SURGERY.KeyDuplicated(pLineNo) Then ExceptionThower.BusinessRuleStop(ResStr(ResStrConst.CreateAlreadyExists), Me.GetType.ToString.Leaf.Translate)
+            'If SURGERY.KeyDuplicated(pLineNo) Then ExceptionThower.BusinessRuleStop(ResStr(ResStrConst.CreateAlreadyExists), Me.GetType.ToString.Leaf.Translate)
 
             Dim cloningSURGERY As SURGERY = MyBase.Clone
-            cloningSURGERY._lineNo = pLineNo
+            cloningSURGERY._lineNo = 0
+            cloningSURGERY._DTB = Context.CurrentBECode
 
             'Todo:Remember to reset status of the new object here 
             cloningSURGERY.MarkNew()
@@ -474,10 +475,10 @@ Namespace MC
 
         <Serializable()>
         Private Class Criteria
-            Public _lineNo As String = String.Empty
+            Public _lineNo As Integer
 
             Public Sub New(ByVal pLineNo As String)
-                _lineNo = pLineNo
+                _lineNo = pLineNo.ToInteger
 
             End Sub
         End Class
@@ -493,7 +494,7 @@ Namespace MC
             Using ctx = ConnectionManager.GetManager
                 Using cm = ctx.Connection.CreateCommand()
                     cm.CommandType = CommandType.Text
-                    cm.CommandText = <SqlText>SELECT * FROM pbs_MC_SURGERY_<%= _DTB %> WHERE LINE_NO= '<%= criteria._lineNo %>' </SqlText>.Value.Trim
+                    cm.CommandText = <SqlText>SELECT * FROM pbs_MC_SURGERY_<%= _DTB %> WHERE LINE_NO= <%= criteria._lineNo %></SqlText>.Value.Trim
 
                     Using dr As New SafeDataReader(cm.ExecuteReader)
                         If dr.Read Then
@@ -537,7 +538,7 @@ Namespace MC
                         cm.CommandType = CommandType.StoredProcedure
                         cm.CommandText = String.Format("pbs_MC_SURGERY_{0}_Insert", _DTB)
 
-                        cm.Parameters.AddWithValue("@LINE_NO", _lineNo.Trim.ToInteger).Direction = ParameterDirection.Output
+                        cm.Parameters.AddWithValue("@LINE_NO", _lineNo).Direction = ParameterDirection.Output
                         AddInsertParameters(cm)
                         cm.ExecuteNonQuery()
 
@@ -577,7 +578,7 @@ Namespace MC
                         cm.CommandType = CommandType.StoredProcedure
                         cm.CommandText = String.Format("pbs_MC_SURGERY_{0}_Update", _DTB)
 
-                        cm.Parameters.AddWithValue("@LINE_NO", _lineNo.Trim)
+                        cm.Parameters.AddWithValue("@LINE_NO", _lineNo)
                         AddInsertParameters(cm)
                         cm.ExecuteNonQuery()
 
@@ -596,7 +597,7 @@ Namespace MC
                 Using cm = ctx.Connection.CreateCommand()
 
                     cm.CommandType = CommandType.Text
-                    cm.CommandText = <SqlText>DELETE pbs_MC_SURGERY_<%= _DTB %> WHERE LINE_NO= '<%= criteria._lineNo %>' </SqlText>.Value.Trim
+                    cm.CommandText = <SqlText>DELETE pbs_MC_SURGERY_<%= _DTB %> WHERE LINE_NO= <%= criteria._lineNo %></SqlText>.Value.Trim
                     cm.ExecuteNonQuery()
 
                 End Using
@@ -604,11 +605,11 @@ Namespace MC
 
         End Sub
 
-        Protected Overrides Sub DataPortal_OnDataPortalInvokeComplete(ByVal e As Csla.DataPortalEventArgs)
-            If Csla.ApplicationContext.ExecutionLocation = ExecutionLocations.Server Then
-                SURGERYInfoList.InvalidateCache()
-            End If
-        End Sub
+        'Protected Overrides Sub DataPortal_OnDataPortalInvokeComplete(ByVal e As Csla.DataPortalEventArgs)
+        '    If Csla.ApplicationContext.ExecutionLocation = ExecutionLocations.Server Then
+        '        SURGERYInfoList.InvalidateCache()
+        '    End If
+        'End Sub
 
 
 #End Region 'Data Access                           

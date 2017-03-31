@@ -72,9 +72,9 @@ Namespace MC
         Private _DTB As String = String.Empty
 
 
-        Private _lineNo As String = String.Empty
+        Private _lineNo As Integer
         <System.ComponentModel.DataObjectField(True, True)>
-        Public ReadOnly Property LineNo() As String
+        Public ReadOnly Property LineNo() As Integer
             Get
                 Return _lineNo
             End Get
@@ -275,33 +275,33 @@ Namespace MC
         End Property
 
         Private _updated As pbs.Helper.SmartDate = New pbs.Helper.SmartDate()
-        Public Property Updated() As String
+        Public ReadOnly Property Updated() As String
             Get
                 Return _updated.Text
             End Get
-            Set(ByVal value As String)
-                CanWriteProperty("Updated", True)
-                If value Is Nothing Then value = String.Empty
-                If Not _updated.Equals(value) Then
-                    _updated.Text = value
-                    PropertyHasChanged("Updated")
-                End If
-            End Set
+            'Set(ByVal value As String)
+            '    CanWriteProperty("Updated", True)
+            '    If value Is Nothing Then value = String.Empty
+            '    If Not _updated.Equals(value) Then
+            '        _updated.Text = value
+            '        PropertyHasChanged("Updated")
+            '    End If
+            'End Set
         End Property
 
         Private _updatedBy As String = String.Empty
-        Public Property UpdatedBy() As String
+        Public ReadOnly Property UpdatedBy() As String
             Get
                 Return _updatedBy
             End Get
-            Set(ByVal value As String)
-                CanWriteProperty("UpdatedBy", True)
-                If value Is Nothing Then value = String.Empty
-                If Not _updatedBy.Equals(value) Then
-                    _updatedBy = value
-                    PropertyHasChanged("UpdatedBy")
-                End If
-            End Set
+            'Set(ByVal value As String)
+            '    CanWriteProperty("UpdatedBy", True)
+            '    If value Is Nothing Then value = String.Empty
+            '    If Not _updatedBy.Equals(value) Then
+            '        _updatedBy = value
+            '        PropertyHasChanged("UpdatedBy")
+            '    End If
+            'End Set
         End Property
 
 
@@ -313,7 +313,7 @@ Namespace MC
         'IComparable
         Public Function CompareTo(ByVal IDObject) As Integer Implements System.IComparable.CompareTo
             Dim ID = IDObject.ToString
-            Dim pLineNo As String = ID.Trim
+            Dim pLineNo As Integer = ID.Trim.ToInteger
             If _lineNo < pLineNo Then Return -1
             If _lineNo > pLineNo Then Return 1
             Return 0
@@ -369,8 +369,8 @@ Namespace MC
         End Function
 
         Public Shared Function NewTRANSFER(ByVal pLineNo As String) As TRANSFER
-            If KeyDuplicated(pLineNo) Then ExceptionThower.BusinessRuleStop(String.Format(ResStr(ResStrConst.NOACCESS), ResStr("TRANSFER")))
-            Return DataPortal.Create(Of TRANSFER)(New Criteria(pLineNo))
+            'If KeyDuplicated(pLineNo) Then ExceptionThower.BusinessRuleStop(String.Format(ResStr(ResStrConst.NOACCESS), ResStr("TRANSFER")))
+            Return DataPortal.Create(Of TRANSFER)(New Criteria(pLineNo.ToInteger))
         End Function
 
         Public Shared Function NewBO(ByVal ID As String) As TRANSFER
@@ -380,7 +380,7 @@ Namespace MC
         End Function
 
         Public Shared Function GetTRANSFER(ByVal pLineNo As String) As TRANSFER
-            Return DataPortal.Fetch(Of TRANSFER)(New Criteria(pLineNo))
+            Return DataPortal.Fetch(Of TRANSFER)(New Criteria(pLineNo.ToInteger))
         End Function
 
         Public Shared Function GetBO(ByVal ID As String) As TRANSFER
@@ -390,7 +390,7 @@ Namespace MC
         End Function
 
         Public Shared Sub DeleteTRANSFER(ByVal pLineNo As String)
-            DataPortal.Delete(New Criteria(pLineNo))
+            DataPortal.Delete(New Criteria(pLineNo.ToInteger))
         End Sub
 
         Public Overrides Function Save() As TRANSFER
@@ -404,10 +404,11 @@ Namespace MC
 
         Public Function CloneTRANSFER(ByVal pLineNo As String) As TRANSFER
 
-            If TRANSFER.KeyDuplicated(pLineNo) Then ExceptionThower.BusinessRuleStop(ResStr(ResStrConst.CreateAlreadyExists), Me.GetType.ToString.Leaf.Translate)
+            'If TRANSFER.KeyDuplicated(pLineNo) Then ExceptionThower.BusinessRuleStop(ResStr(ResStrConst.CreateAlreadyExists), Me.GetType.ToString.Leaf.Translate)
 
             Dim cloningTRANSFER As TRANSFER = MyBase.Clone
-            cloningTRANSFER._lineNo = pLineNo
+            cloningTRANSFER._lineNo = 0
+            cloningTRANSFER._DTB = Context.CurrentBECode
 
             'Todo:Remember to reset status of the new object here 
             cloningTRANSFER.MarkNew()
@@ -424,10 +425,10 @@ Namespace MC
 
         <Serializable()>
         Private Class Criteria
-            Public _lineNo As String = String.Empty
+            Public _lineNo As Integer
 
             Public Sub New(ByVal pLineNo As String)
-                _lineNo = pLineNo
+                _lineNo = pLineNo.ToInteger
 
             End Sub
         End Class
@@ -443,7 +444,7 @@ Namespace MC
             Using ctx = ConnectionManager.GetManager
                 Using cm = ctx.Connection.CreateCommand()
                     cm.CommandType = CommandType.Text
-                    cm.CommandText = <SqlText>SELECT * FROM pbs_MC_TRANSFER_<%= _DTB %> WHERE LINE_NO= '<%= criteria._lineNo %>' </SqlText>.Value.Trim
+                    cm.CommandText = <SqlText>SELECT * FROM pbs_MC_TRANSFER_<%= _DTB %> WHERE LINE_NO= <%= criteria._lineNo %></SqlText>.Value.Trim
 
                     Using dr As New SafeDataReader(cm.ExecuteReader)
                         If dr.Read Then
@@ -484,7 +485,7 @@ Namespace MC
                         cm.CommandType = CommandType.StoredProcedure
                         cm.CommandText = String.Format("pbs_MC_TRANSFER_{0}_Insert", _DTB)
 
-                        cm.Parameters.AddWithValue("@LINE_NO", _lineNo.Trim.ToInteger).Direction = ParameterDirection.Output
+                        cm.Parameters.AddWithValue("@LINE_NO", _lineNo).Direction = ParameterDirection.Output
                         AddInsertParameters(cm)
                         cm.ExecuteNonQuery()
 
@@ -521,7 +522,7 @@ Namespace MC
                         cm.CommandType = CommandType.StoredProcedure
                         cm.CommandText = String.Format("pbs_MC_TRANSFER_{0}_Update", _DTB)
 
-                        cm.Parameters.AddWithValue("@LINE_NO", _lineNo.Trim)
+                        cm.Parameters.AddWithValue("@LINE_NO", _lineNo)
                         AddInsertParameters(cm)
                         cm.ExecuteNonQuery()
 
@@ -540,7 +541,7 @@ Namespace MC
                 Using cm = ctx.Connection.CreateCommand()
 
                     cm.CommandType = CommandType.Text
-                    cm.CommandText = <SqlText>DELETE pbs_MC_TRANSFER_<%= _DTB %> WHERE LINE_NO= '<%= criteria._lineNo %>' </SqlText>.Value.Trim
+                    cm.CommandText = <SqlText>DELETE pbs_MC_TRANSFER_<%= _DTB %> WHERE LINE_NO= <%= criteria._lineNo %></SqlText>.Value.Trim
                     cm.ExecuteNonQuery()
 
                 End Using
@@ -562,10 +563,10 @@ Namespace MC
             Return TRANSFERInfoList.ContainsCode(pLineNo)
         End Function
 
-        Public Shared Function KeyDuplicated(ByVal pLineNo As String) As Boolean
-            Dim SqlText = <SqlText>SELECT COUNT(*) FROM pbs_MC_TRANSFER_<%= Context.CurrentBECode %> WHERE LINE_NO= '<%= pLineNo %>'</SqlText>.Value.Trim
-            Return SQLCommander.GetScalarInteger(SqlText) > 0
-        End Function
+        'Public Shared Function KeyDuplicated(ByVal pLineNo As String) As Boolean
+        '    Dim SqlText = <SqlText>SELECT COUNT(*) FROM pbs_MC_TRANSFER_<%= Context.CurrentBECode %> WHERE LINE_NO= '<%= pLineNo %>'</SqlText>.Value.Trim
+        '    Return SQLCommander.GetScalarInteger(SqlText) > 0
+        'End Function
 #End Region
 
 #Region " IGenpart "

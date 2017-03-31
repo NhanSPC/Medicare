@@ -709,7 +709,8 @@ Private _ncPt9 As String  = String.Empty
             If PATIENT.KeyDuplicated(pPatientCode) Then ExceptionThower.BusinessRuleStop(ResStr(ResStrConst.CreateAlreadyExists), Me.GetType.ToString.Leaf.Translate)
 
             Dim cloningPATIENT As PATIENT = MyBase.Clone
-            cloningPATIENT._patientCode = pPatientCode
+            'cloningPATIENT._patientCode = String.Empty
+            cloningPATIENT._DTB = Context.CurrentBECode
 
             'Todo:Remember to reset status of the new object here 
             cloningPATIENT.MarkNew()

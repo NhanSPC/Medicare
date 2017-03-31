@@ -124,7 +124,7 @@ Namespace MC
         Friend _DTB As String = String.Empty
 
 
-        Friend _lineNo As String = String.Empty
+        Friend _lineNo As Integer
         <System.ComponentModel.DataObjectField(True, True)>
         Public ReadOnly Property LineNo() As String
             Get
@@ -483,7 +483,7 @@ Namespace MC
 
         Public Shared Function NewPrescriptionDetail(ByVal pLineNo As String) As PrescriptionDetail
             'If KeyDuplicated(pLineNo) Then ExceptionThower.BusinessRuleStop(String.Format(ResStr(ResStrConst.NOACCESS), ResStr("PrescriptionDetail")))
-            Return DataPortal.Create(Of PrescriptionDetail)(New Criteria(pLineNo))
+            Return DataPortal.Create(Of PrescriptionDetail)(New Criteria(pLineNo.ToInteger))
         End Function
 
         Public Shared Function NewBO(ByVal ID As String) As PrescriptionDetail
@@ -493,7 +493,7 @@ Namespace MC
         End Function
 
         Public Shared Function GetPrescriptionDetail(ByVal pLineNo As String) As PrescriptionDetail
-            Return DataPortal.Fetch(Of PrescriptionDetail)(New Criteria(pLineNo))
+            Return DataPortal.Fetch(Of PrescriptionDetail)(New Criteria(pLineNo.ToInteger))
         End Function
 
         Public Shared Function GetBO(ByVal ID As String) As PrescriptionDetail
@@ -503,7 +503,7 @@ Namespace MC
         End Function
 
         Public Shared Sub DeletePrescriptionDetail(ByVal pLineNo As String)
-            DataPortal.Delete(New Criteria(pLineNo))
+            DataPortal.Delete(New Criteria(pLineNo.ToInteger))
         End Sub
 
         Public Overrides Function Save() As PrescriptionDetail
@@ -520,7 +520,8 @@ Namespace MC
             If PrescriptionDetail.KeyDuplicated(pLineNo) Then ExceptionThower.BusinessRuleStop(ResStr(ResStrConst.CreateAlreadyExists), Me.GetType.ToString.Leaf.Translate)
 
             Dim cloningPrescriptionDetail As PrescriptionDetail = MyBase.Clone
-            cloningPrescriptionDetail._lineNo = pLineNo
+            cloningPrescriptionDetail._lineNo = 0
+            cloningPrescriptionDetail._DTB = Context.CurrentBECode
 
             'Todo:Remember to reset status of the new object here 
             cloningPrescriptionDetail.MarkNew()
@@ -537,10 +538,10 @@ Namespace MC
 
         <Serializable()>
         Private Class Criteria
-            Public _lineNo As String = String.Empty
+            Public _lineNo As Integer
 
             Public Sub New(ByVal pLineNo As String)
-                _lineNo = pLineNo
+                _lineNo = pLineNo.ToInteger
 
             End Sub
         End Class
@@ -556,7 +557,7 @@ Namespace MC
             Using ctx = ConnectionManager.GetManager
                 Using cm = ctx.Connection.CreateCommand()
                     cm.CommandType = CommandType.Text
-                    cm.CommandText = <SqlText>SELECT * FROM pbs_MC_PRESCRIPTION_DETAIL_<%= _DTB %> WHERE LINE_NO = '<%= criteria._lineNo %>' 
+                    cm.CommandText = <SqlText>SELECT * FROM pbs_MC_PRESCRIPTION_DETAIL_<%= _DTB %> WHERE LINE_NO = <%= criteria._lineNo %>
                                      </SqlText>.Value.Trim
 
                     Using dr As New SafeDataReader(cm.ExecuteReader)
@@ -642,7 +643,7 @@ Namespace MC
                 Using cm = ctx.Connection.CreateCommand()
 
                     cm.CommandType = CommandType.Text
-                    cm.CommandText = <SqlText>DELETE pbs_MC_PRESCRIPTION_DETAIL_<%= _DTB %> WHERE LINE_NO= '<%= criteria._lineNo %>' </SqlText>.Value.Trim
+                    cm.CommandText = <SqlText>DELETE pbs_MC_PRESCRIPTION_DETAIL_<%= _DTB %> WHERE LINE_NO= <%= criteria._lineNo %></SqlText>.Value.Trim
                     cm.ExecuteNonQuery()
 
                 End Using
@@ -650,11 +651,11 @@ Namespace MC
 
         End Sub
 
-        Protected Overrides Sub DataPortal_OnDataPortalInvokeComplete(ByVal e As Csla.DataPortalEventArgs)
-            If Csla.ApplicationContext.ExecutionLocation = ExecutionLocations.Server Then
-                PrescriptionDetailInfoList.InvalidateCache()
-            End If
-        End Sub
+        'Protected Overrides Sub DataPortal_OnDataPortalInvokeComplete(ByVal e As Csla.DataPortalEventArgs)
+        '    If Csla.ApplicationContext.ExecutionLocation = ExecutionLocations.Server Then
+        '        PrescriptionDetailInfoList.InvalidateCache()
+        '    End If
+        'End Sub
 
 
 #End Region 'Data Access                           
@@ -737,7 +738,7 @@ Namespace MC
                 cm.CommandType = CommandType.StoredProcedure
                 cm.CommandText = String.Format("pbs_MC_Prescription_Detail_{0}_Insert", _DTB)
 
-                cm.Parameters.AddWithValue("@LINE_NO", _lineNo.Trim.ToInteger).Direction = ParameterDirection.Output
+                cm.Parameters.AddWithValue("@LINE_NO", _lineNo).Direction = ParameterDirection.Output
                 AddInsertParameters(cm)
                 cm.ExecuteNonQuery()
 
@@ -752,7 +753,7 @@ Namespace MC
                 cm.CommandType = CommandType.StoredProcedure
                 cm.CommandText = String.Format("pbs_MC_Prescription_Detail_{0}_Update", _DTB)
 
-                cm.Parameters.AddWithValue("@LINE_NO", _lineNo.Trim)
+                cm.Parameters.AddWithValue("@LINE_NO", _lineNo)
                 AddInsertParameters(cm)
                 cm.ExecuteNonQuery()
 
