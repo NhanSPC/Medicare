@@ -38,70 +38,72 @@
       <Install>
         IF NOT EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'[dbo].[pbs_MC_APPOINTMENT_{XXX}_Insert]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
         BEGIN
+        EXEC dbo.sp_executesql @statement = N'
         CREATE PROCEDURE [dbo].[pbs_MC_APPOINTMENT_{XXX}_Insert]
-        	@LINE_NO int output,
-@CLINIC_CODE varchar(15),
-@PATIENT_CODE varchar(15),
-@NAME nvarchar (50),
-@DOB int,
-@GENDER char(1),
-@PHONE varchar(20),
-@EMAIL varchar(200),
-@ADDRESS nvarchar (50),
-@WARD varchar(15),
-@DISTRICT varchar(15),
-@CITY varchar(15),
-@STATUS nvarchar (50),
-@CREATE_DATE int,
-@APPOINTMENT_DATE int,
-@APPOINTMENT_TYPE nvarchar (50),
-@REMINDER_DATE int,
-@NOTES nvarchar (2000),
-@UPDATED int,
-@UPDATED_BY varchar(15)
+        @LINE_NO int output,
+        @CLINIC_CODE varchar(15),
+        @PATIENT_CODE varchar(15),
+        @NAME nvarchar (50),
+        @DOB int,
+        @GENDER char(1),
+        @PHONE varchar(20),
+        @EMAIL varchar(200),
+        @ADDRESS nvarchar (50),
+        @WARD varchar(15),
+        @DISTRICT varchar(15),
+        @CITY varchar(15),
+        @STATUS nvarchar (50),
+        @CREATE_DATE int,
+        @APPOINTMENT_DATE int,
+        @APPOINTMENT_TYPE nvarchar (50),
+        @REMINDER_DATE int,
+        @NOTES nvarchar (2000),
+        @UPDATED int,
+        @UPDATED_BY varchar(15)
         AS
 
         SET NOCOUNT ON
         INSERT INTO [dbo].[pbs_MC_APPOINTMENT_{XXX}] ([CLINIC_CODE],
-[PATIENT_CODE],
-[NAME],
-[DOB],
-[GENDER],
-[PHONE],
-[EMAIL],
-[ADDRESS],
-[WARD],
-[DISTRICT],
-[CITY],
-[STATUS],
-[CREATE_DATE],
-[APPOINTMENT_DATE],
-[APPOINTMENT_TYPE],
-[REMINDER_DATE],
-[NOTES],
-[UPDATED],
-[UPDATED_BY]) 
+        [PATIENT_CODE],
+        [NAME],
+        [DOB],
+        [GENDER],
+        [PHONE],
+        [EMAIL],
+        [ADDRESS],
+        [WARD],
+        [DISTRICT],
+        [CITY],
+        [STATUS],
+        [CREATE_DATE],
+        [APPOINTMENT_DATE],
+        [APPOINTMENT_TYPE],
+        [REMINDER_DATE],
+        [NOTES],
+        [UPDATED],
+        [UPDATED_BY])
         VALUES (@CLINIC_CODE,
-@PATIENT_CODE,
-@NAME,
-@DOB,
-@GENDER,
-@PHONE,
-@EMAIL,
-@ADDRESS,
-@WARD,
-@DISTRICT,
-@CITY,
-@STATUS,
-@CREATE_DATE,
-@APPOINTMENT_DATE,
-@APPOINTMENT_TYPE,
-@REMINDER_DATE,
-@NOTES,
-@UPDATED,
-@UPDATED_BY)
+        @PATIENT_CODE,
+        @NAME,
+        @DOB,
+        @GENDER,
+        @PHONE,
+        @EMAIL,
+        @ADDRESS,
+        @WARD,
+        @DISTRICT,
+        @CITY,
+        @STATUS,
+        @CREATE_DATE,
+        @APPOINTMENT_DATE,
+        @APPOINTMENT_TYPE,
+        @REMINDER_DATE,
+        @NOTES,
+        @UPDATED,
+        @UPDATED_BY)
 
-         SET @LINE_NO = SCOPE_IDENTITY()
+        SET @LINE_NO = SCOPE_IDENTITY()
+        '
         END
       </Install>
     </DBO>
@@ -109,50 +111,52 @@
       <Install>
         IF NOT EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'[dbo].[pbs_MC_APPOINTMENT_{XXX}_Update]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
         BEGIN
+        EXEC dbo.sp_executesql @statement = N'
         CREATE PROCEDURE [dbo].[pbs_MC_APPOINTMENT_{XXX}_Update]
-        	@LINE_NO int,
-@CLINIC_CODE varchar(15),
-@PATIENT_CODE varchar(15),
-@NAME nvarchar (50),
-@DOB int,
-@GENDER char(1),
-@PHONE varchar(20),
-@EMAIL varchar(200),
-@ADDRESS nvarchar (50),
-@WARD varchar(15),
-@DISTRICT varchar(15),
-@CITY varchar(15),
-@STATUS nvarchar (50),
-@CREATE_DATE int,
-@APPOINTMENT_DATE int,
-@APPOINTMENT_TYPE nvarchar (50),
-@REMINDER_DATE int,
-@NOTES nvarchar (2000),
-@UPDATED int,
-@UPDATED_BY varchar(15)
+        @LINE_NO int,
+        @CLINIC_CODE varchar(15),
+        @PATIENT_CODE varchar(15),
+        @NAME nvarchar (50),
+        @DOB int,
+        @GENDER char(1),
+        @PHONE varchar(20),
+        @EMAIL varchar(200),
+        @ADDRESS nvarchar (50),
+        @WARD varchar(15),
+        @DISTRICT varchar(15),
+        @CITY varchar(15),
+        @STATUS nvarchar (50),
+        @CREATE_DATE int,
+        @APPOINTMENT_DATE int,
+        @APPOINTMENT_TYPE nvarchar (50),
+        @REMINDER_DATE int,
+        @NOTES nvarchar (2000),
+        @UPDATED int,
+        @UPDATED_BY varchar(15)
         AS
 
         SET NOCOUNT ON
         UPDATE [dbo].[pbs_MC_APPOINTMENT_{XXX}] SET [CLINIC_CODE] = @CLINIC_CODE,
-[PATIENT_CODE] = @PATIENT_CODE,
-[NAME] = @NAME,
-[DOB] = @DOB,
-[GENDER] = @GENDER,
-[PHONE] = @PHONE,
-[EMAIL] = @EMAIL,
-[ADDRESS] = @ADDRESS,
-[WARD] = @WARD,
-[DISTRICT] = @DISTRICT,
-[CITY] = @CITY,
-[STATUS] = @STATUS,
-[CREATE_DATE] = @CREATE_DATE,
-[APPOINTMENT_DATE] = @APPOINTMENT_DATE,
-[APPOINTMENT_TYPE] = @APPOINTMENT_TYPE,
-[REMINDER_DATE] = @REMINDER_DATE,
-[NOTES] = @NOTES,
-[UPDATED] = @UPDATED,
-[UPDATED_BY] = @UPDATED_BY
+        [PATIENT_CODE] = @PATIENT_CODE,
+        [NAME] = @NAME,
+        [DOB] = @DOB,
+        [GENDER] = @GENDER,
+        [PHONE] = @PHONE,
+        [EMAIL] = @EMAIL,
+        [ADDRESS] = @ADDRESS,
+        [WARD] = @WARD,
+        [DISTRICT] = @DISTRICT,
+        [CITY] = @CITY,
+        [STATUS] = @STATUS,
+        [CREATE_DATE] = @CREATE_DATE,
+        [APPOINTMENT_DATE] = @APPOINTMENT_DATE,
+        [APPOINTMENT_TYPE] = @APPOINTMENT_TYPE,
+        [REMINDER_DATE] = @REMINDER_DATE,
+        [NOTES] = @NOTES,
+        [UPDATED] = @UPDATED,
+        [UPDATED_BY] = @UPDATED_BY
         WHERE [LINE_NO] = @LINE_NO
+        '
         END
       </Install>
     </DBO>
@@ -226,6 +230,7 @@
       <Install>
         IF NOT EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'[dbo].[pbs_MC_CHECKIN_{XXX}_Insert]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
         BEGIN
+        EXEC dbo.sp_executesql @statement = N'
         CREATE PROCEDURE [dbo].[pbs_MC_CHECKIN_{XXX}_Insert]
         @LINE_NO int output,
         @APPOINTMENT_NO int,
@@ -383,7 +388,7 @@
         @UPDATED_BY)
 
         SET @LINE_NO = SCOPE_IDENTITY()
-
+        '
         END
       </Install>
     </DBO>
@@ -391,6 +396,7 @@
       <Install>
         IF NOT EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'[dbo].[pbs_MC_CHECKIN_{XXX}_Update]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
         BEGIN
+        EXEC dbo.sp_executesql @statement = N'
         CREATE PROCEDURE [dbo].[pbs_MC_CHECKIN_{XXX}_Update]
         @LINE_NO int,
         @APPOINTMENT_NO int,
@@ -497,6 +503,7 @@
         [UPDATED] = @UPDATED,
         [UPDATED_BY] = @UPDATED_BY
         WHERE [LINE_NO] = @LINE_NO
+        '
         END
       </Install>
     </DBO>
@@ -532,6 +539,7 @@
       <Install>
         IF NOT EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'[dbo].[pbs_MC_DEAD_{XXX}_Insert]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
         BEGIN
+        EXEC dbo.sp_executesql @statement = N'
         CREATE PROCEDURE [dbo].[pbs_MC_DEAD_{XXX}_Insert]
         @LINE_NO int output,
         @CHECKIN_NO int,
@@ -575,6 +583,7 @@
         @UPDATED_BY)
 
         SET @LINE_NO = SCOPE_IDENTITY()
+        '
         END
       </Install>
     </DBO>
@@ -582,6 +591,7 @@
       <Install>
         IF NOT EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'[dbo].[pbs_MC_DEAD_{XXX}_Update]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
         BEGIN
+        EXEC dbo.sp_executesql @statement = N'
         CREATE PROCEDURE [dbo].[pbs_MC_DEAD_{XXX}_Update]
         @LINE_NO int,
         @CHECKIN_NO int,
@@ -612,6 +622,7 @@
         [UPDATED] = @UPDATED,
         [UPDATED_BY] = @UPDATED_BY
         WHERE [LINE_NO] = @LINE_NO
+        '
         END
       </Install>
     </DBO>
@@ -621,36 +632,36 @@
         IF NOT EXISTS (SELECT * FROM dbo.sysobjects WHERE id=OBJECT_ID(N'dbo.[pbs_MC_GENCHECK_{XXX}]'))
         BEGIN
         CREATE TABLE [dbo].[pbs_MC_GENCHECK_{XXX}](
-	[LINE_NO] [int] IDENTITY(1,1) NOT NULL,
-	[CHECK_DATE] [int] NOT NULL,
-	[CHECK_BY] [nvarchar](50) NOT NULL,
-	[PATIENT_CODE] [varchar](15) NOT NULL,
-	[CHECKIN_NO] [int] NOT NULL,
-	[WAITING_NUMBER] [int] NOT NULL,
-	[PULSE] [int] NOT NULL,
-	[TEMPERATURE] [decimal](18, 3) NOT NULL,
-	[BLOOD_PRESSURE] [varchar](15) NOT NULL,
-	[BREATHING_RATE] [int] NOT NULL,
-	[WEIGHT] [decimal](18, 3) NOT NULL,
-	[HEIGHT] [decimal](18, 3) NOT NULL,
-	[BLOOD_GROUP] [varchar](5) NOT NULL,
-	[EXT_DECS5] [nvarchar](15) NOT NULL,
-	[EXT_DECS4] [nvarchar](15) NOT NULL,
-	[EXT_DECS3] [nvarchar](15) NOT NULL,
-	[EXT_DECS2] [nvarchar](15) NOT NULL,
-	[EXT_DECS1] [nvarchar](15) NOT NULL,
-	[EXT_VAL5] [decimal](18, 3) NOT NULL,
-	[EXT_VAL4] [decimal](18, 3) NOT NULL,
-	[EXT_VAL3] [decimal](18, 3) NOT NULL,
-	[EXT_VAL2] [decimal](18, 3) NOT NULL,
-	[EXT_VAL1] [decimal](18, 3) NOT NULL,
-	[UPDATED] [int] NOT NULL,
-	[UPDATED_BY] [varchar](15) NOT NULL,
-	[TIME_STAMP] [timestamp] NULL,
- CONSTRAINT [PK_pbs_MC_GENERAL_CHECK_{XXX}] PRIMARY KEY CLUSTERED 
-(
-	[LINE_NO] ASC
-))
+        [LINE_NO] [int] IDENTITY(1,1) NOT NULL,
+        [CHECK_DATE] [int] NOT NULL,
+        [CHECK_BY] [nvarchar](50) NOT NULL,
+        [PATIENT_CODE] [varchar](15) NOT NULL,
+        [CHECKIN_NO] [int] NOT NULL,
+        [WAITING_NUMBER] [int] NOT NULL,
+        [PULSE] [int] NOT NULL,
+        [TEMPERATURE] [decimal](18, 3) NOT NULL,
+        [BLOOD_PRESSURE] [varchar](15) NOT NULL,
+        [BREATHING_RATE] [int] NOT NULL,
+        [WEIGHT] [decimal](18, 3) NOT NULL,
+        [HEIGHT] [decimal](18, 3) NOT NULL,
+        [BLOOD_GROUP] [varchar](5) NOT NULL,
+        [EXT_DECS5] [nvarchar](100) NOT NULL,
+        [EXT_DECS4] [nvarchar](100) NOT NULL,
+        [EXT_DECS3] [nvarchar](100) NOT NULL,
+        [EXT_DECS2] [nvarchar](100) NOT NULL,
+        [EXT_DECS1] [nvarchar](100) NOT NULL,
+        [EXT_VAL5] [decimal](18, 3) NOT NULL,
+        [EXT_VAL4] [decimal](18, 3) NOT NULL,
+        [EXT_VAL3] [decimal](18, 3) NOT NULL,
+        [EXT_VAL2] [decimal](18, 3) NOT NULL,
+        [EXT_VAL1] [decimal](18, 3) NOT NULL,
+        [UPDATED] [int] NOT NULL,
+        [UPDATED_BY] [varchar](15) NOT NULL,
+        [TIME_STAMP] [timestamp] NULL,
+        CONSTRAINT [PK_pbs_MC_GENERAL_CHECK_{XXX}] PRIMARY KEY CLUSTERED
+        (
+        [LINE_NO] ASC
+        ))
         END
       </Install>
     </DBO>
@@ -658,86 +669,87 @@
       <Install>
         IF NOT EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'[dbo].[pbs_MC_GENCHECK_{XXX}_Insert]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
         BEGIN
+        EXEC dbo.sp_executesql @statement = N'
         CREATE PROCEDURE [dbo].[pbs_MC_GENCHECK_{XXX}_Insert]
-        	@LINE_NO int output,
-@CHECK_DATE int,
-@CHECK_BY nvarchar (50),
-@PATIENT_CODE varchar(15),
-@CHECKIN_NO int,
-@WAITING_NUMBER int,
-@PULSE int,
-@TEMPERATURE decimal(18, 3),
-@BLOOD_PRESSURE varchar(15),
-@BREATHING_RATE int,
-@WEIGHT decimal(18, 3),
-@HEIGHT decimal(18, 3),
-@BLOOD_GROUP varchar(5),
-@EXT_DECS5 nvarchar (15),
-@EXT_DECS4 nvarchar (15),
-@EXT_DECS3 nvarchar (15),
-@EXT_DECS2 nvarchar (15),
-@EXT_DECS1 nvarchar (15),
-@EXT_VAL5 decimal(18, 3),
-@EXT_VAL4 decimal(18, 3),
-@EXT_VAL3 decimal(18, 3),
-@EXT_VAL2 decimal(18, 3),
-@EXT_VAL1 decimal(18, 3),
-@UPDATED int,
-@UPDATED_BY varchar(15)
+        @LINE_NO int output,
+        @CHECK_DATE int,
+        @CHECK_BY nvarchar (50),
+        @PATIENT_CODE varchar(15),
+        @CHECKIN_NO int,
+        @WAITING_NUMBER int,
+        @PULSE int,
+        @TEMPERATURE decimal(18, 3),
+        @BLOOD_PRESSURE varchar(15),
+        @BREATHING_RATE int,
+        @WEIGHT decimal(18, 3),
+        @HEIGHT decimal(18, 3),
+        @BLOOD_GROUP varchar(5),
+        @EXT_DECS5 nvarchar (100),
+        @EXT_DECS4 nvarchar (100),
+        @EXT_DECS3 nvarchar (100),
+        @EXT_DECS2 nvarchar (100),
+        @EXT_DECS1 nvarchar (100),
+        @EXT_VAL5 decimal(18, 3),
+        @EXT_VAL4 decimal(18, 3),
+        @EXT_VAL3 decimal(18, 3),
+        @EXT_VAL2 decimal(18, 3),
+        @EXT_VAL1 decimal(18, 3),
+        @UPDATED int,
+        @UPDATED_BY varchar(15)
         AS
 
         SET NOCOUNT ON
         INSERT INTO [dbo].[pbs_MC_GENCHECK_{XXX}] ([CHECK_DATE],
-[CHECK_BY],
-[PATIENT_CODE],
-[CHECKIN_NO],
-[WAITING_NUMBER],
-[PULSE],
-[TEMPERATURE],
-[BLOOD_PRESSURE],
-[BREATHING_RATE],
-[WEIGHT],
-[HEIGHT],
-[BLOOD_GROUP],
-[EXT_DECS5],
-[EXT_DECS4],
-[EXT_DECS3],
-[EXT_DECS2],
-[EXT_DECS1],
-[EXT_VAL5],
-[EXT_VAL4],
-[EXT_VAL3],
-[EXT_VAL2],
-[EXT_VAL1],
-[UPDATED],
-[UPDATED_BY]) 
+        [CHECK_BY],
+        [PATIENT_CODE],
+        [CHECKIN_NO],
+        [WAITING_NUMBER],
+        [PULSE],
+        [TEMPERATURE],
+        [BLOOD_PRESSURE],
+        [BREATHING_RATE],
+        [WEIGHT],
+        [HEIGHT],
+        [BLOOD_GROUP],
+        [EXT_DECS5],
+        [EXT_DECS4],
+        [EXT_DECS3],
+        [EXT_DECS2],
+        [EXT_DECS1],
+        [EXT_VAL5],
+        [EXT_VAL4],
+        [EXT_VAL3],
+        [EXT_VAL2],
+        [EXT_VAL1],
+        [UPDATED],
+        [UPDATED_BY])
         VALUES (@CHECK_DATE,
-@CHECK_BY,
-@PATIENT_CODE,
-@CHECKIN_NO,
-@WAITING_NUMBER,
-@PULSE,
-@TEMPERATURE,
-@BLOOD_PRESSURE,
-@BREATHING_RATE,
-@WEIGHT,
-@HEIGHT,
-@BLOOD_GROUP,
-@EXT_DECS5,
-@EXT_DECS4,
-@EXT_DECS3,
-@EXT_DECS2,
-@EXT_DECS1,
-@EXT_VAL5,
-@EXT_VAL4,
-@EXT_VAL3,
-@EXT_VAL2,
-@EXT_VAL1,
-@UPDATED,
-@UPDATED_BY)
+        @CHECK_BY,
+        @PATIENT_CODE,
+        @CHECKIN_NO,
+        @WAITING_NUMBER,
+        @PULSE,
+        @TEMPERATURE,
+        @BLOOD_PRESSURE,
+        @BREATHING_RATE,
+        @WEIGHT,
+        @HEIGHT,
+        @BLOOD_GROUP,
+        @EXT_DECS5,
+        @EXT_DECS4,
+        @EXT_DECS3,
+        @EXT_DECS2,
+        @EXT_DECS1,
+        @EXT_VAL5,
+        @EXT_VAL4,
+        @EXT_VAL3,
+        @EXT_VAL2,
+        @EXT_VAL1,
+        @UPDATED,
+        @UPDATED_BY)
 
-         SET @LINE_NO = SCOPE_IDENTITY()
-
+        SET @LINE_NO = SCOPE_IDENTITY()
+        '
         END
       </Install>
     </DBO>
@@ -745,60 +757,62 @@
       <Install>
         IF NOT EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'[dbo].[pbs_MC_GENCHECK_{XXX}_Update]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
         BEGIN
+        EXEC dbo.sp_executesql @statement = N'
         CREATE PROCEDURE [dbo].[pbs_MC_GENCHECK_{XXX}_Update]
-        	@LINE_NO int,
-@CHECK_DATE int,
-@CHECK_BY nvarchar (50),
-@PATIENT_CODE varchar(15),
-@CHECKIN_NO int,
-@WAITING_NUMBER int,
-@PULSE int,
-@TEMPERATURE decimal(18, 3),
-@BLOOD_PRESSURE varchar(15),
-@BREATHING_RATE int,
-@WEIGHT decimal(18, 3),
-@HEIGHT decimal(18, 3),
-@BLOOD_GROUP varchar(5),
-@EXT_DECS5 nvarchar (15),
-@EXT_DECS4 nvarchar (15),
-@EXT_DECS3 nvarchar (15),
-@EXT_DECS2 nvarchar (15),
-@EXT_DECS1 nvarchar (15),
-@EXT_VAL5 decimal(18, 3),
-@EXT_VAL4 decimal(18, 3),
-@EXT_VAL3 decimal(18, 3),
-@EXT_VAL2 decimal(18, 3),
-@EXT_VAL1 decimal(18, 3),
-@UPDATED int,
-@UPDATED_BY varchar(15)
+        @LINE_NO int,
+        @CHECK_DATE int,
+        @CHECK_BY nvarchar (50),
+        @PATIENT_CODE varchar(15),
+        @CHECKIN_NO int,
+        @WAITING_NUMBER int,
+        @PULSE int,
+        @TEMPERATURE decimal(18, 3),
+        @BLOOD_PRESSURE varchar(15),
+        @BREATHING_RATE int,
+        @WEIGHT decimal(18, 3),
+        @HEIGHT decimal(18, 3),
+        @BLOOD_GROUP varchar(5),
+        @EXT_DECS5 nvarchar (100),
+        @EXT_DECS4 nvarchar (100),
+        @EXT_DECS3 nvarchar (100),
+        @EXT_DECS2 nvarchar (100),
+        @EXT_DECS1 nvarchar (100),
+        @EXT_VAL5 decimal(18, 3),
+        @EXT_VAL4 decimal(18, 3),
+        @EXT_VAL3 decimal(18, 3),
+        @EXT_VAL2 decimal(18, 3),
+        @EXT_VAL1 decimal(18, 3),
+        @UPDATED int,
+        @UPDATED_BY varchar(15)
         AS
 
         SET NOCOUNT ON
         UPDATE [dbo].[pbs_MC_GENCHECK_{XXX}] SET [CHECK_DATE] = @CHECK_DATE,
-[CHECK_BY] = @CHECK_BY,
-[PATIENT_CODE] = @PATIENT_CODE,
-[CHECKIN_NO] = @CHECKIN_NO,
-[WAITING_NUMBER] = @WAITING_NUMBER,
-[PULSE] = @PULSE,
-[TEMPERATURE] = @TEMPERATURE,
-[BLOOD_PRESSURE] = @BLOOD_PRESSURE,
-[BREATHING_RATE] = @BREATHING_RATE,
-[WEIGHT] = @WEIGHT,
-[HEIGHT] = @HEIGHT,
-[BLOOD_GROUP] = @BLOOD_GROUP,
-[EXT_DECS5] = @EXT_DECS5,
-[EXT_DECS4] = @EXT_DECS4,
-[EXT_DECS3] = @EXT_DECS3,
-[EXT_DECS2] = @EXT_DECS2,
-[EXT_DECS1] = @EXT_DECS1,
-[EXT_VAL5] = @EXT_VAL5,
-[EXT_VAL4] = @EXT_VAL4,
-[EXT_VAL3] = @EXT_VAL3,
-[EXT_VAL2] = @EXT_VAL2,
-[EXT_VAL1] = @EXT_VAL1,
-[UPDATED] = @UPDATED,
-[UPDATED_BY] = @UPDATED_BY
+        [CHECK_BY] = @CHECK_BY,
+        [PATIENT_CODE] = @PATIENT_CODE,
+        [CHECKIN_NO] = @CHECKIN_NO,
+        [WAITING_NUMBER] = @WAITING_NUMBER,
+        [PULSE] = @PULSE,
+        [TEMPERATURE] = @TEMPERATURE,
+        [BLOOD_PRESSURE] = @BLOOD_PRESSURE,
+        [BREATHING_RATE] = @BREATHING_RATE,
+        [WEIGHT] = @WEIGHT,
+        [HEIGHT] = @HEIGHT,
+        [BLOOD_GROUP] = @BLOOD_GROUP,
+        [EXT_DECS5] = @EXT_DECS5,
+        [EXT_DECS4] = @EXT_DECS4,
+        [EXT_DECS3] = @EXT_DECS3,
+        [EXT_DECS2] = @EXT_DECS2,
+        [EXT_DECS1] = @EXT_DECS1,
+        [EXT_VAL5] = @EXT_VAL5,
+        [EXT_VAL4] = @EXT_VAL4,
+        [EXT_VAL3] = @EXT_VAL3,
+        [EXT_VAL2] = @EXT_VAL2,
+        [EXT_VAL1] = @EXT_VAL1,
+        [UPDATED] = @UPDATED,
+        [UPDATED_BY] = @UPDATED_BY
         WHERE [LINE_NO] = @LINE_NO
+        '
         END
       </Install>
     </DBO>
@@ -846,6 +860,7 @@
       <Install>
         IF NOT EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'[dbo].[pbs_MC_LAB_{XXX}_Insert]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
         BEGIN
+        EXEC dbo.sp_executesql @statement = N'
         CREATE PROCEDURE [dbo].[pbs_MC_LAB_{XXX}_Insert]
         @LINE_NO int output,
         @PATIENT_CODE varchar(15),
@@ -925,7 +940,7 @@
         @UPDATED_BY)
 
         SET @LINE_NO = SCOPE_IDENTITY()
-
+        '
         END
       </Install>
     </DBO>
@@ -933,6 +948,7 @@
       <Install>
         IF NOT EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'[dbo].[pbs_MC_LAB_{XXX}_Update]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
         BEGIN
+        EXEC dbo.sp_executesql @statement = N'
         CREATE PROCEDURE [dbo].[pbs_MC_LAB_{XXX}_Update]
         @LINE_NO int,
         @PATIENT_CODE varchar(15),
@@ -987,7 +1003,7 @@
         [UPDATED] = @UPDATED,
         [UPDATED_BY] = @UPDATED_BY
         WHERE [LINE_NO] = @LINE_NO
-
+        '
         END
       </Install>
     </DBO>
@@ -1026,6 +1042,7 @@
       <Install>
         IF NOT EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'[dbo].[pbs_MC_LAB_DETAIL_{XXX}_Insert]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
         BEGIN
+        EXEC dbo.sp_executesql @statement = N'
         CREATE PROCEDURE [dbo].[pbs_MC_LAB_DETAIL_{XXX}_Insert]
         @LINE_NO int output,
         @LAB_ID int,
@@ -1078,7 +1095,7 @@
         @UPDATED_BY)
 
         SET @LINE_NO = SCOPE_IDENTITY()
-
+        '
 
         END
       </Install>
@@ -1087,6 +1104,7 @@
       <Install>
         IF NOT EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'[dbo].[pbs_MC_LAB_DETAIL_{XXX}_Update]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
         BEGIN
+        EXEC dbo.sp_executesql @statement = N'
         CREATE PROCEDURE [dbo].[pbs_MC_LAB_DETAIL_{XXX}_Update]
         @LINE_NO int,
         @LAB_ID int,
@@ -1123,7 +1141,7 @@
         [UPDATED] = @UPDATED,
         [UPDATED_BY] = @UPDATED_BY
         WHERE [LINE_NO] = @LINE_NO
-
+        '
         END
       </Install>
     </DBO>
@@ -1159,6 +1177,7 @@
       <Install>
         IF NOT EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'[dbo].[pbs_MC_LAB_TEST_{XXX}_Insert]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
         BEGIN
+        EXEC dbo.sp_executesql @statement = N'
         CREATE PROCEDURE [dbo].[pbs_MC_LAB_TEST_{XXX}_Insert]
         @LINE_NO int output,
         @LAB_CODE varchar(15),
@@ -1205,7 +1224,7 @@
         @UPDATED_BY)
 
         SET @LINE_NO = SCOPE_IDENTITY()
-
+        '
         END
       </Install>
     </DBO>
@@ -1213,6 +1232,7 @@
       <Install>
         IF NOT EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'[dbo].[pbs_MC_LAB_TEST_{XXX}_Update]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
         BEGIN
+        EXEC dbo.sp_executesql @statement = N'
         CREATE PROCEDURE [dbo].[pbs_MC_LAB_TEST_{XXX}_Update]
         @LINE_NO int,
         @LAB_CODE varchar(15),
@@ -1245,7 +1265,7 @@
         [UPDATED] = @UPDATED,
         [UPDATED_BY] = @UPDATED_BY
         WHERE [LINE_NO] = @LINE_NO
-
+        '
 
         END
       </Install>
@@ -1303,6 +1323,7 @@
       <Install>
         IF NOT EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'[dbo].[pbs_MC_PATIENT_{XXX}_Insert]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
         BEGIN
+        EXEC dbo.sp_executesql @statement = N'
         CREATE PROCEDURE [dbo].[pbs_MC_PATIENT_{XXX}_InsertUpdate]
         @PATIENT_CODE varchar(15),
         @FIRST_NAME nvarchar (20),
@@ -1457,7 +1478,7 @@
         @UPDATED,
         @UPDATED_BY
         )
-        END
+        END'
         END
       </Install>
     </DBO>
@@ -1487,6 +1508,7 @@
       <Install>
         IF NOT EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'[dbo].[pbs_MC_PRESCRIPTION_{XXX}_Insert]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
         BEGIN
+        EXEC dbo.sp_executesql @statement = N'
         CREATE PROCEDURE [dbo].[pbs_MC_PRESCRIPTION_{XXX}_Insert]
         @LINE_NO int output,
         @PATIENT_CODE varchar(15),
@@ -1515,7 +1537,7 @@
         @UPDATED_BY)
 
         SET @LINE_NO = SCOPE_IDENTITY()
-
+        '
         END
       </Install>
     </DBO>
@@ -1523,6 +1545,7 @@
       <Install>
         IF NOT EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'[dbo].[pbs_MC_PRESCRIPTION_{XXX}_Update]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
         BEGIN
+        EXEC dbo.sp_executesql @statement = N'
         CREATE PROCEDURE [dbo].[pbs_MC_PRESCRIPTION_{XXX}_Update]
         @LINE_NO int,
         @PATIENT_CODE varchar(15),
@@ -1543,6 +1566,7 @@
         [UPDATED] = @UPDATED,
         [UPDATED_BY] = @UPDATED_BY
         WHERE [LINE_NO] = @LINE_NO
+        '
         END
       </Install>
     </DBO>
@@ -1583,6 +1607,7 @@
       <Install>
         IF NOT EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'[dbo].[pbs_MC_PRESCRIPTION_DETAIL_{XXX}_Insert]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
         BEGIN
+        EXEC dbo.sp_executesql @statement = N'
         CREATE PROCEDURE [dbo].[pbs_MC_PRESCRIPTION_DETAIL_{XXX}_Insert]
         @LINE_NO int output,
         @PRESCRIPTION_NO int,
@@ -1644,6 +1669,7 @@
         @UPDATED_BY)
 
         SET @LINE_NO = SCOPE_IDENTITY()
+        '
         END
       </Install>
     </DBO>
@@ -1651,6 +1677,7 @@
       <Install>
         IF NOT EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'[dbo].[pbs_MC_PRESCRIPTION_DETAIL_{XXX}_Update]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
         BEGIN
+        EXEC dbo.sp_executesql @statement = N'
         CREATE PROCEDURE [dbo].[pbs_MC_PRESCRIPTION_DETAIL_{XXX}_Update]
         @LINE_NO int,
         @PRESCRIPTION_NO int,
@@ -1693,6 +1720,7 @@
         [UPDATED] = @UPDATED,
         [UPDATED_BY] = @UPDATED_BY
         WHERE [LINE_NO] = @LINE_NO
+        '
         END
       </Install>
     </DBO>
@@ -1732,6 +1760,7 @@
       <Install>
         IF NOT EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'[dbo].[pbs_MC_SURGERY_{XXX}_Insert]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
         BEGIN
+        EXEC dbo.sp_executesql @statement = N'
         CREATE PROCEDURE [dbo].[pbs_MC_SURGERY_{XXX}_Insert]
         @LINE_NO int output,
         @PATIENT_CODE varchar(15),
@@ -1790,7 +1819,7 @@
         @UPDATED_BY)
 
         SET @LINE_NO = SCOPE_IDENTITY()
-
+        '
         END
       </Install>
     </DBO>
@@ -1798,6 +1827,7 @@
       <Install>
         IF NOT EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'[dbo].[pbs_MC_SURGERY_{XXX}_Update]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
         BEGIN
+        EXEC dbo.sp_executesql @statement = N'
         CREATE PROCEDURE [dbo].[pbs_MC_SURGERY_{XXX}_Update]
         @LINE_NO int,
         @PATIENT_CODE varchar(15),
@@ -1838,6 +1868,7 @@
         [UPDATED] = @UPDATED,
         [UPDATED_BY] = @UPDATED_BY
         WHERE [LINE_NO] = @LINE_NO
+        '
         END
       </Install>
     </DBO>
@@ -1874,6 +1905,7 @@
       <Install>
         IF NOT EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'[dbo].[pbs_MC_TRANSFER_{XXX}_Insert]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
         BEGIN
+        EXEC dbo.sp_executesql @statement = N'
         CREATE PROCEDURE [dbo].[pbs_MC_TRANSFER_{XXX}_Insert]
         @LINE_NO int output,
         @PATIENT_CODE varchar(15),
@@ -1923,7 +1955,7 @@
         @UPDATED_BY)
 
         SET @LINE_NO = SCOPE_IDENTITY()
-
+        '
         END
       </Install>
     </DBO>
@@ -1931,6 +1963,7 @@
       <Install>
         IF NOT EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'[dbo].[pbs_MC_TRANSFER_{XXX}_Update]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
         BEGIN
+        EXEC dbo.sp_executesql @statement = N'
         CREATE PROCEDURE [dbo].[pbs_MC_TRANSFER_{XXX}_Update]
         @LINE_NO int,
         @PATIENT_CODE varchar(15),
@@ -1965,7 +1998,7 @@
         [UPDATED] = @UPDATED,
         [UPDATED_BY] = @UPDATED_BY
         WHERE [LINE_NO] = @LINE_NO
-
+        '
         END
       </Install>
     </DBO>
@@ -2007,6 +2040,7 @@
       <Install>
         IF NOT EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'[dbo].[pbs_MC_SAMPLE_PRESCRIPTION_{XXX}_Insert]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
         BEGIN
+        EXEC dbo.sp_executesql @statement = N'
         CREATE PROCEDURE [dbo].[pbs_MC_SAMPLE_PRESCRIPTION_{XXX}_Insert]
         @LINE_NO int output,
         @SAMPLE_PRESCRIPTION_CODE varchar(15),
@@ -2071,6 +2105,7 @@
         @UPDATED_BY)
 
         SET @LINE_NO = SCOPE_IDENTITY()
+        '
         END
       </Install>
     </DBO>
@@ -2078,6 +2113,7 @@
       <Install>
         IF NOT EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'[dbo].[pbs_MC_SAMPLE_PRESCRIPTION_{XXX}_Update]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
         BEGIN
+        EXEC dbo.sp_executesql @statement = N'
         CREATE PROCEDURE [dbo].[pbs_MC_SAMPLE_PRESCRIPTION_{XXX}_Update]
         @LINE_NO int,
         @SAMPLE_PRESCRIPTION_CODE varchar(15),
@@ -2122,6 +2158,7 @@
         [UPDATED] = @UPDATED,
         [UPDATED_BY] = @UPDATED_BY
         WHERE [LINE_NO] = @LINE_NO
+        '
         END
       </Install>
     </DBO>
@@ -2168,86 +2205,87 @@
       <Install>
         IF NOT EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'[dbo].[pbs_MC_INVOICE_{XXX}_Insert]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
         BEGIN
+        EXEC dbo.sp_executesql @statement = N'
         CREATE PROCEDURE [dbo].[pbs_MC_INVOICE_{XXX}_Insert]
-        	@DOCUMENT_NO varchar(15),
-@DOCUMENT_DATE int,
-@CHECKIN_NO int,
-@PATIENT_CODE nvarchar (100),
-@INVOICE_PREFIX varchar(15),
-@INVOICE_NO varchar(15),
-@INVOICE_SERIAL varchar(15),
-@INVOICE_DATE int,
-@INVOICE_PERIOD int,
-@INVOICE_TYPE char(1),
-@CLIENT_ID varchar(15),
-@PURCH_NAME nvarchar (100),
-@ADDRESS nvarchar (100),
-@BANK_CODE varchar(15),
-@BANK_DETAIL nvarchar (100),
-@PAY_METHOD nvarchar (20),
-@TAX_CODE varchar(15),
-@SALESMAN varchar(15),
-@CONTRACT_ID varchar(15),
-@CONV_CODE varchar(15),
-@CONV_RATE decimal(18, 0),
-@NOTES nvarchar (100),
-@STATUS varchar(15),
-@UPDATED int,
-@UPDATED_BY varchar(15)
+        @DOCUMENT_NO varchar(15),
+        @DOCUMENT_DATE int,
+        @CHECKIN_NO int,
+        @PATIENT_CODE nvarchar (100),
+        @INVOICE_PREFIX varchar(15),
+        @INVOICE_NO varchar(15),
+        @INVOICE_SERIAL varchar(15),
+        @INVOICE_DATE int,
+        @INVOICE_PERIOD int,
+        @INVOICE_TYPE char(1),
+        @CLIENT_ID varchar(15),
+        @PURCH_NAME nvarchar (100),
+        @ADDRESS nvarchar (100),
+        @BANK_CODE varchar(15),
+        @BANK_DETAIL nvarchar (100),
+        @PAY_METHOD nvarchar (20),
+        @TAX_CODE varchar(15),
+        @SALESMAN varchar(15),
+        @CONTRACT_ID varchar(15),
+        @CONV_CODE varchar(15),
+        @CONV_RATE decimal(18, 0),
+        @NOTES nvarchar (100),
+        @STATUS varchar(15),
+        @UPDATED int,
+        @UPDATED_BY varchar(15)
         AS
 
         SET NOCOUNT ON
         INSERT INTO [dbo].[pbs_MC_INVOICE_{XXX}] ([DOCUMENT_NO],
-[DOCUMENT_DATE],
-[CHECKIN_NO],
-[PATIENT_CODE],
-[INVOICE_PREFIX],
-[INVOICE_NO],
-[INVOICE_SERIAL],
-[INVOICE_DATE],
-[INVOICE_PERIOD],
-[INVOICE_TYPE],
-[CLIENT_ID],
-[PURCH_NAME],
-[ADDRESS],
-[BANK_CODE],
-[BANK_DETAIL],
-[PAY_METHOD],
-[TAX_CODE],
-[SALESMAN],
-[CONTRACT_ID],
-[CONV_CODE],
-[CONV_RATE],
-[NOTES],
-[STATUS],
-[UPDATED],
-[UPDATED_BY]) 
+        [DOCUMENT_DATE],
+        [CHECKIN_NO],
+        [PATIENT_CODE],
+        [INVOICE_PREFIX],
+        [INVOICE_NO],
+        [INVOICE_SERIAL],
+        [INVOICE_DATE],
+        [INVOICE_PERIOD],
+        [INVOICE_TYPE],
+        [CLIENT_ID],
+        [PURCH_NAME],
+        [ADDRESS],
+        [BANK_CODE],
+        [BANK_DETAIL],
+        [PAY_METHOD],
+        [TAX_CODE],
+        [SALESMAN],
+        [CONTRACT_ID],
+        [CONV_CODE],
+        [CONV_RATE],
+        [NOTES],
+        [STATUS],
+        [UPDATED],
+        [UPDATED_BY])
         VALUES (@DOCUMENT_NO,
-@DOCUMENT_DATE,
-@CHECKIN_NO,
-@PATIENT_CODE,
-@INVOICE_PREFIX,
-@INVOICE_NO,
-@INVOICE_SERIAL,
-@INVOICE_DATE,
-@INVOICE_PERIOD,
-@INVOICE_TYPE,
-@CLIENT_ID,
-@PURCH_NAME,
-@ADDRESS,
-@BANK_CODE,
-@BANK_DETAIL,
-@PAY_METHOD,
-@TAX_CODE,
-@SALESMAN,
-@CONTRACT_ID,
-@CONV_CODE,
-@CONV_RATE,
-@NOTES,
-@STATUS,
-@UPDATED,
-@UPDATED_BY)
-
+        @DOCUMENT_DATE,
+        @CHECKIN_NO,
+        @PATIENT_CODE,
+        @INVOICE_PREFIX,
+        @INVOICE_NO,
+        @INVOICE_SERIAL,
+        @INVOICE_DATE,
+        @INVOICE_PERIOD,
+        @INVOICE_TYPE,
+        @CLIENT_ID,
+        @PURCH_NAME,
+        @ADDRESS,
+        @BANK_CODE,
+        @BANK_DETAIL,
+        @PAY_METHOD,
+        @TAX_CODE,
+        @SALESMAN,
+        @CONTRACT_ID,
+        @CONV_CODE,
+        @CONV_RATE,
+        @NOTES,
+        @STATUS,
+        @UPDATED,
+        @UPDATED_BY)
+        '
         END
       </Install>
     </DBO>
@@ -2255,61 +2293,62 @@
       <Install>
         IF NOT EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'[dbo].[pbs_MC_INVOICE_{XXX}_Update]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
         BEGIN
+        EXEC dbo.sp_executesql @statement = N'
         CREATE PROCEDURE [dbo].[pbs_MC_INVOICE_{XXX}_Update]
-        	@DOCUMENT_NO varchar(15),
-@DOCUMENT_DATE int,
-@CHECKIN_NO int,
-@PATIENT_CODE nvarchar (100),
-@INVOICE_PREFIX varchar(15),
-@INVOICE_NO varchar(15),
-@INVOICE_SERIAL varchar(15),
-@INVOICE_DATE int,
-@INVOICE_PERIOD int,
-@INVOICE_TYPE char(1),
-@CLIENT_ID varchar(15),
-@PURCH_NAME nvarchar (100),
-@ADDRESS nvarchar (100),
-@BANK_CODE varchar(15),
-@BANK_DETAIL nvarchar (100),
-@PAY_METHOD nvarchar (20),
-@TAX_CODE varchar(15),
-@SALESMAN varchar(15),
-@CONTRACT_ID varchar(15),
-@CONV_CODE varchar(15),
-@CONV_RATE decimal(18, 0),
-@NOTES nvarchar (100),
-@STATUS varchar(15),
-@UPDATED int,
-@UPDATED_BY varchar(15)
+        @DOCUMENT_NO varchar(15),
+        @DOCUMENT_DATE int,
+        @CHECKIN_NO int,
+        @PATIENT_CODE nvarchar (100),
+        @INVOICE_PREFIX varchar(15),
+        @INVOICE_NO varchar(15),
+        @INVOICE_SERIAL varchar(15),
+        @INVOICE_DATE int,
+        @INVOICE_PERIOD int,
+        @INVOICE_TYPE char(1),
+        @CLIENT_ID varchar(15),
+        @PURCH_NAME nvarchar (100),
+        @ADDRESS nvarchar (100),
+        @BANK_CODE varchar(15),
+        @BANK_DETAIL nvarchar (100),
+        @PAY_METHOD nvarchar (20),
+        @TAX_CODE varchar(15),
+        @SALESMAN varchar(15),
+        @CONTRACT_ID varchar(15),
+        @CONV_CODE varchar(15),
+        @CONV_RATE decimal(18, 0),
+        @NOTES nvarchar (100),
+        @STATUS varchar(15),
+        @UPDATED int,
+        @UPDATED_BY varchar(15)
         AS
 
         SET NOCOUNT ON
         UPDATE [dbo].[pbs_MC_INVOICE_{XXX}] SET [DOCUMENT_DATE] = @DOCUMENT_DATE,
-[CHECKIN_NO] = @CHECKIN_NO,
-[PATIENT_CODE] = @PATIENT_CODE,
-[INVOICE_PREFIX] = @INVOICE_PREFIX,
-[INVOICE_NO] = @INVOICE_NO,
-[INVOICE_SERIAL] = @INVOICE_SERIAL,
-[INVOICE_DATE] = @INVOICE_DATE,
-[INVOICE_PERIOD] = @INVOICE_PERIOD,
-[INVOICE_TYPE] = @INVOICE_TYPE,
-[CLIENT_ID] = @CLIENT_ID,
-[PURCH_NAME] = @PURCH_NAME,
-[ADDRESS] = @ADDRESS,
-[BANK_CODE] = @BANK_CODE,
-[BANK_DETAIL] = @BANK_DETAIL,
-[PAY_METHOD] = @PAY_METHOD,
-[TAX_CODE] = @TAX_CODE,
-[SALESMAN] = @SALESMAN,
-[CONTRACT_ID] = @CONTRACT_ID,
-[CONV_CODE] = @CONV_CODE,
-[CONV_RATE] = @CONV_RATE,
-[NOTES] = @NOTES,
-[STATUS] = @STATUS,
-[UPDATED] = @UPDATED,
-[UPDATED_BY] = @UPDATED_BY
+        [CHECKIN_NO] = @CHECKIN_NO,
+        [PATIENT_CODE] = @PATIENT_CODE,
+        [INVOICE_PREFIX] = @INVOICE_PREFIX,
+        [INVOICE_NO] = @INVOICE_NO,
+        [INVOICE_SERIAL] = @INVOICE_SERIAL,
+        [INVOICE_DATE] = @INVOICE_DATE,
+        [INVOICE_PERIOD] = @INVOICE_PERIOD,
+        [INVOICE_TYPE] = @INVOICE_TYPE,
+        [CLIENT_ID] = @CLIENT_ID,
+        [PURCH_NAME] = @PURCH_NAME,
+        [ADDRESS] = @ADDRESS,
+        [BANK_CODE] = @BANK_CODE,
+        [BANK_DETAIL] = @BANK_DETAIL,
+        [PAY_METHOD] = @PAY_METHOD,
+        [TAX_CODE] = @TAX_CODE,
+        [SALESMAN] = @SALESMAN,
+        [CONTRACT_ID] = @CONTRACT_ID,
+        [CONV_CODE] = @CONV_CODE,
+        [CONV_RATE] = @CONV_RATE,
+        [NOTES] = @NOTES,
+        [STATUS] = @STATUS,
+        [UPDATED] = @UPDATED,
+        [UPDATED_BY] = @UPDATED_BY
         WHERE [DOCUMENT_NO] = @DOCUMENT_NO
-        
+        '
         END
       </Install>
     </DBO>
@@ -2364,110 +2403,111 @@
       <Install>
         IF NOT EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'[dbo].[pbs_MC_INVOICE_DET_{XXX}_Insert]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
         BEGIN
+        EXEC dbo.sp_executesql @statement = N'
         CREATE PROCEDURE [dbo].[pbs_MC_INVOICE_DET_{XXX}_Insert]
-        	@LINE_NO int output,
-@DOCUMENT_NO varchar(15),
-@ITEM_CODE varchar(15),
-@ITEM_GROUP varchar(15),
-@DESCRIPTN nvarchar (100),
-@UNIT char(5),
-@QTY numeric(18, 5),
-@PRICE numeric(18, 2),
-@NET numeric(18, 2),
-@VAT_RATE numeric(18, 2),
-@VAT numeric(18, 2),
-@LINE_VALUE numeric(18, 2),
-@CONV_CODE char(5),
-@CONV_RATE numeric(18, 9),
-@BASE_AMOUNT numeric(18, 2),
-@EXT_DESC1 nvarchar (100),
-@EXT_DESC2 nvarchar (100),
-@EXT_DESC3 nvarchar (100),
-@NC_SI0 varchar(15),
-@NC_SI1 varchar(15),
-@NC_SI2 varchar(15),
-@NC_SI3 varchar(15),
-@NC_SI4 varchar(15),
-@NC_SI5 varchar(15),
-@NC_SI6 varchar(15),
-@NC_SI7 varchar(15),
-@NC_SI8 varchar(15),
-@NC_SI9 varchar(15),
-@COVERED_BY_INSURANCE numeric(18, 2),
-@DISCOUNT numeric(18, 2),
-@PAID_BY_PATIENT numeric(18, 2),
-@UPDATED int,
-@UPDATED_BY varchar(15)
+        @LINE_NO int output,
+        @DOCUMENT_NO varchar(15),
+        @ITEM_CODE varchar(15),
+        @ITEM_GROUP varchar(15),
+        @DESCRIPTN nvarchar (100),
+        @UNIT char(5),
+        @QTY numeric(18, 5),
+        @PRICE numeric(18, 2),
+        @NET numeric(18, 2),
+        @VAT_RATE numeric(18, 2),
+        @VAT numeric(18, 2),
+        @LINE_VALUE numeric(18, 2),
+        @CONV_CODE char(5),
+        @CONV_RATE numeric(18, 9),
+        @BASE_AMOUNT numeric(18, 2),
+        @EXT_DESC1 nvarchar (100),
+        @EXT_DESC2 nvarchar (100),
+        @EXT_DESC3 nvarchar (100),
+        @NC_SI0 varchar(15),
+        @NC_SI1 varchar(15),
+        @NC_SI2 varchar(15),
+        @NC_SI3 varchar(15),
+        @NC_SI4 varchar(15),
+        @NC_SI5 varchar(15),
+        @NC_SI6 varchar(15),
+        @NC_SI7 varchar(15),
+        @NC_SI8 varchar(15),
+        @NC_SI9 varchar(15),
+        @COVERED_BY_INSURANCE numeric(18, 2),
+        @DISCOUNT numeric(18, 2),
+        @PAID_BY_PATIENT numeric(18, 2),
+        @UPDATED int,
+        @UPDATED_BY varchar(15)
         AS
 
         SET NOCOUNT ON
         INSERT INTO [dbo].[pbs_MC_INVOICE_DET_{XXX}] ([DOCUMENT_NO],
-[ITEM_CODE],
-[ITEM_GROUP],
-[DESCRIPTN],
-[UNIT],
-[QTY],
-[PRICE],
-[NET],
-[VAT_RATE],
-[VAT],
-[LINE_VALUE],
-[CONV_CODE],
-[CONV_RATE],
-[BASE_AMOUNT],
-[EXT_DESC1],
-[EXT_DESC2],
-[EXT_DESC3],
-[NC_SI0],
-[NC_SI1],
-[NC_SI2],
-[NC_SI3],
-[NC_SI4],
-[NC_SI5],
-[NC_SI6],
-[NC_SI7],
-[NC_SI8],
-[NC_SI9],
-[COVERED_BY_INSURANCE],
-[DISCOUNT],
-[PAID_BY_PATIENT],
-[UPDATED],
-[UPDATED_BY]) 
+        [ITEM_CODE],
+        [ITEM_GROUP],
+        [DESCRIPTN],
+        [UNIT],
+        [QTY],
+        [PRICE],
+        [NET],
+        [VAT_RATE],
+        [VAT],
+        [LINE_VALUE],
+        [CONV_CODE],
+        [CONV_RATE],
+        [BASE_AMOUNT],
+        [EXT_DESC1],
+        [EXT_DESC2],
+        [EXT_DESC3],
+        [NC_SI0],
+        [NC_SI1],
+        [NC_SI2],
+        [NC_SI3],
+        [NC_SI4],
+        [NC_SI5],
+        [NC_SI6],
+        [NC_SI7],
+        [NC_SI8],
+        [NC_SI9],
+        [COVERED_BY_INSURANCE],
+        [DISCOUNT],
+        [PAID_BY_PATIENT],
+        [UPDATED],
+        [UPDATED_BY])
         VALUES (@DOCUMENT_NO,
-@ITEM_CODE,
-@ITEM_GROUP,
-@DESCRIPTN,
-@UNIT,
-@QTY,
-@PRICE,
-@NET,
-@VAT_RATE,
-@VAT,
-@LINE_VALUE,
-@CONV_CODE,
-@CONV_RATE,
-@BASE_AMOUNT,
-@EXT_DESC1,
-@EXT_DESC2,
-@EXT_DESC3,
-@NC_SI0,
-@NC_SI1,
-@NC_SI2,
-@NC_SI3,
-@NC_SI4,
-@NC_SI5,
-@NC_SI6,
-@NC_SI7,
-@NC_SI8,
-@NC_SI9,
-@COVERED_BY_INSURANCE,
-@DISCOUNT,
-@PAID_BY_PATIENT,
-@UPDATED,
-@UPDATED_BY)
+        @ITEM_CODE,
+        @ITEM_GROUP,
+        @DESCRIPTN,
+        @UNIT,
+        @QTY,
+        @PRICE,
+        @NET,
+        @VAT_RATE,
+        @VAT,
+        @LINE_VALUE,
+        @CONV_CODE,
+        @CONV_RATE,
+        @BASE_AMOUNT,
+        @EXT_DESC1,
+        @EXT_DESC2,
+        @EXT_DESC3,
+        @NC_SI0,
+        @NC_SI1,
+        @NC_SI2,
+        @NC_SI3,
+        @NC_SI4,
+        @NC_SI5,
+        @NC_SI6,
+        @NC_SI7,
+        @NC_SI8,
+        @NC_SI9,
+        @COVERED_BY_INSURANCE,
+        @DISCOUNT,
+        @PAID_BY_PATIENT,
+        @UPDATED,
+        @UPDATED_BY)
 
-         SET @LINE_NO = SCOPE_IDENTITY()
-        
+        SET @LINE_NO = SCOPE_IDENTITY()
+        '
         END
       </Install>
     </DBO>
@@ -2475,77 +2515,78 @@
       <Install>
         IF NOT EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'[dbo].[pbs_MC_INVOICE_DET_{XXX}_Update]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
         BEGIN
-                CREATE PROCEDURE [dbo].[pbs_MC_INVOICE_DET_{XXX}_Update]
-        	@LINE_NO int,
-@DOCUMENT_NO varchar(15),
-@ITEM_CODE varchar(15),
-@ITEM_GROUP varchar(15),
-@DESCRIPTN nvarchar (100),
-@UNIT char(5),
-@QTY numeric(18, 5),
-@PRICE numeric(18, 2),
-@NET numeric(18, 2),
-@VAT_RATE numeric(18, 2),
-@VAT numeric(18, 2),
-@LINE_VALUE numeric(18, 2),
-@CONV_CODE char(5),
-@CONV_RATE numeric(18, 9),
-@BASE_AMOUNT numeric(18, 2),
-@EXT_DESC1 nvarchar (100),
-@EXT_DESC2 nvarchar (100),
-@EXT_DESC3 nvarchar (100),
-@NC_SI0 varchar(15),
-@NC_SI1 varchar(15),
-@NC_SI2 varchar(15),
-@NC_SI3 varchar(15),
-@NC_SI4 varchar(15),
-@NC_SI5 varchar(15),
-@NC_SI6 varchar(15),
-@NC_SI7 varchar(15),
-@NC_SI8 varchar(15),
-@NC_SI9 varchar(15),
-@COVERED_BY_INSURANCE numeric(18, 2),
-@DISCOUNT numeric(18, 2),
-@PAID_BY_PATIENT numeric(18, 2),
-@UPDATED int,
-@UPDATED_BY varchar(15)
+        EXEC dbo.sp_executesql @statement = N'
+        CREATE PROCEDURE [dbo].[pbs_MC_INVOICE_DET_{XXX}_Update]
+        @LINE_NO int,
+        @DOCUMENT_NO varchar(15),
+        @ITEM_CODE varchar(15),
+        @ITEM_GROUP varchar(15),
+        @DESCRIPTN nvarchar (100),
+        @UNIT char(5),
+        @QTY numeric(18, 5),
+        @PRICE numeric(18, 2),
+        @NET numeric(18, 2),
+        @VAT_RATE numeric(18, 2),
+        @VAT numeric(18, 2),
+        @LINE_VALUE numeric(18, 2),
+        @CONV_CODE char(5),
+        @CONV_RATE numeric(18, 9),
+        @BASE_AMOUNT numeric(18, 2),
+        @EXT_DESC1 nvarchar (100),
+        @EXT_DESC2 nvarchar (100),
+        @EXT_DESC3 nvarchar (100),
+        @NC_SI0 varchar(15),
+        @NC_SI1 varchar(15),
+        @NC_SI2 varchar(15),
+        @NC_SI3 varchar(15),
+        @NC_SI4 varchar(15),
+        @NC_SI5 varchar(15),
+        @NC_SI6 varchar(15),
+        @NC_SI7 varchar(15),
+        @NC_SI8 varchar(15),
+        @NC_SI9 varchar(15),
+        @COVERED_BY_INSURANCE numeric(18, 2),
+        @DISCOUNT numeric(18, 2),
+        @PAID_BY_PATIENT numeric(18, 2),
+        @UPDATED int,
+        @UPDATED_BY varchar(15)
         AS
 
         SET NOCOUNT ON
         UPDATE [dbo].[pbs_MC_INVOICE_DET_{XXX}] SET [DOCUMENT_NO] = @DOCUMENT_NO,
-[ITEM_CODE] = @ITEM_CODE,
-[ITEM_GROUP] = @ITEM_GROUP,
-[DESCRIPTN] = @DESCRIPTN,
-[UNIT] = @UNIT,
-[QTY] = @QTY,
-[PRICE] = @PRICE,
-[NET] = @NET,
-[VAT_RATE] = @VAT_RATE,
-[VAT] = @VAT,
-[LINE_VALUE] = @LINE_VALUE,
-[CONV_CODE] = @CONV_CODE,
-[CONV_RATE] = @CONV_RATE,
-[BASE_AMOUNT] = @BASE_AMOUNT,
-[EXT_DESC1] = @EXT_DESC1,
-[EXT_DESC2] = @EXT_DESC2,
-[EXT_DESC3] = @EXT_DESC3,
-[NC_SI0] = @NC_SI0,
-[NC_SI1] = @NC_SI1,
-[NC_SI2] = @NC_SI2,
-[NC_SI3] = @NC_SI3,
-[NC_SI4] = @NC_SI4,
-[NC_SI5] = @NC_SI5,
-[NC_SI6] = @NC_SI6,
-[NC_SI7] = @NC_SI7,
-[NC_SI8] = @NC_SI8,
-[NC_SI9] = @NC_SI9,
-[COVERED_BY_INSURANCE] = @COVERED_BY_INSURANCE,
-[DISCOUNT] = @DISCOUNT,
-[PAID_BY_PATIENT] = @PAID_BY_PATIENT,
-[UPDATED] = @UPDATED,
-[UPDATED_BY] = @UPDATED_BY
+        [ITEM_CODE] = @ITEM_CODE,
+        [ITEM_GROUP] = @ITEM_GROUP,
+        [DESCRIPTN] = @DESCRIPTN,
+        [UNIT] = @UNIT,
+        [QTY] = @QTY,
+        [PRICE] = @PRICE,
+        [NET] = @NET,
+        [VAT_RATE] = @VAT_RATE,
+        [VAT] = @VAT,
+        [LINE_VALUE] = @LINE_VALUE,
+        [CONV_CODE] = @CONV_CODE,
+        [CONV_RATE] = @CONV_RATE,
+        [BASE_AMOUNT] = @BASE_AMOUNT,
+        [EXT_DESC1] = @EXT_DESC1,
+        [EXT_DESC2] = @EXT_DESC2,
+        [EXT_DESC3] = @EXT_DESC3,
+        [NC_SI0] = @NC_SI0,
+        [NC_SI1] = @NC_SI1,
+        [NC_SI2] = @NC_SI2,
+        [NC_SI3] = @NC_SI3,
+        [NC_SI4] = @NC_SI4,
+        [NC_SI5] = @NC_SI5,
+        [NC_SI6] = @NC_SI6,
+        [NC_SI7] = @NC_SI7,
+        [NC_SI8] = @NC_SI8,
+        [NC_SI9] = @NC_SI9,
+        [COVERED_BY_INSURANCE] = @COVERED_BY_INSURANCE,
+        [DISCOUNT] = @DISCOUNT,
+        [PAID_BY_PATIENT] = @PAID_BY_PATIENT,
+        [UPDATED] = @UPDATED,
+        [UPDATED_BY] = @UPDATED_BY
         WHERE [LINE_NO] = @LINE_NO
-
+        '
         END
       </Install>
     </DBO>
@@ -2620,170 +2661,171 @@
       <Install>
         IF NOT EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'[dbo].[pbs_MC_JRNAL_{XXX}_Insert]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
         BEGIN
-                CREATE PROCEDURE [dbo].[pbs_MC_JRNAL_{XXX}_Insert]
-        	@JRNAL_NO int output,
-@TRANS_TYPE varchar(15),
-@REFERENCE varchar(15),
-@TRANS_DATE int,
-@PERIOD int,
-@DESCRIPTION nvarchar (200),
-@CANDIDATE_ID int,
-@PATIENT_CODE varchar(15),
-@CLINIC varchar(15),
-@CONV_CODE varchar(15),
-@CONV_RATE numeric(18, 9),
-@PAYMENT_REF nvarchar (50),
-@PAY_METHOD varchar(15),
-@PAYMENT_DATE int,
-@PAYMENT_PERIOD int,
-@DIRECT_INVOICE varchar(1),
-@INVOICE_INFO varchar(15),
-@INVOICE_NO varchar(15),
-@INVOICE_SERIAL varchar(15),
-@INVOICE_BOOK varchar(15),
-@INVOICE_DATE int,
-@INVOICE_PERIOD int,
-@VAT_RATE varchar(15),
-@NC_PL0 varchar(15),
-@NC_PL1 varchar(15),
-@NC_PL2 varchar(15),
-@NC_PL3 varchar(15),
-@NC_PL4 varchar(15),
-@NC_PL5 varchar(15),
-@NC_PL6 varchar(15),
-@NC_PL7 varchar(15),
-@NC_PL8 varchar(15),
-@NC_PL9 varchar(15),
-@STATUS varchar(15),
-@POSTING_DATE int,
-@POSTED_BY varchar(15),
-@EXT_DESC1 nvarchar (100),
-@EXT_DESC2 nvarchar (100),
-@EXT_DESC3 nvarchar (100),
-@EXT_DESC4 nvarchar (100),
-@EXT_DESC5 nvarchar (100),
-@EXT_DATE1 int,
-@EXT_DATE2 int,
-@EXT_DATE3 int,
-@EXT_DATE4 int,
-@EXT_DATE5 int,
-@EXT_VAL1 numeric(18, 3),
-@EXT_VAL2 numeric(18, 3),
-@EXT_VAL3 numeric(18, 3),
-@EXT_VAL4 numeric(18, 3),
-@EXT_VAL5 numeric(18, 3),
-@ENTRY_DATE int,
-@ENTRY_BY varchar(15)
+        EXEC dbo.sp_executesql @statement = N'
+        CREATE PROCEDURE [dbo].[pbs_MC_JRNAL_{XXX}_Insert]
+        @JRNAL_NO int output,
+        @TRANS_TYPE varchar(15),
+        @REFERENCE varchar(15),
+        @TRANS_DATE int,
+        @PERIOD int,
+        @DESCRIPTION nvarchar (200),
+        @CANDIDATE_ID int,
+        @PATIENT_CODE varchar(15),
+        @CLINIC varchar(15),
+        @CONV_CODE varchar(15),
+        @CONV_RATE numeric(18, 9),
+        @PAYMENT_REF nvarchar (50),
+        @PAY_METHOD varchar(15),
+        @PAYMENT_DATE int,
+        @PAYMENT_PERIOD int,
+        @DIRECT_INVOICE varchar(1),
+        @INVOICE_INFO varchar(15),
+        @INVOICE_NO varchar(15),
+        @INVOICE_SERIAL varchar(15),
+        @INVOICE_BOOK varchar(15),
+        @INVOICE_DATE int,
+        @INVOICE_PERIOD int,
+        @VAT_RATE varchar(15),
+        @NC_PL0 varchar(15),
+        @NC_PL1 varchar(15),
+        @NC_PL2 varchar(15),
+        @NC_PL3 varchar(15),
+        @NC_PL4 varchar(15),
+        @NC_PL5 varchar(15),
+        @NC_PL6 varchar(15),
+        @NC_PL7 varchar(15),
+        @NC_PL8 varchar(15),
+        @NC_PL9 varchar(15),
+        @STATUS varchar(15),
+        @POSTING_DATE int,
+        @POSTED_BY varchar(15),
+        @EXT_DESC1 nvarchar (100),
+        @EXT_DESC2 nvarchar (100),
+        @EXT_DESC3 nvarchar (100),
+        @EXT_DESC4 nvarchar (100),
+        @EXT_DESC5 nvarchar (100),
+        @EXT_DATE1 int,
+        @EXT_DATE2 int,
+        @EXT_DATE3 int,
+        @EXT_DATE4 int,
+        @EXT_DATE5 int,
+        @EXT_VAL1 numeric(18, 3),
+        @EXT_VAL2 numeric(18, 3),
+        @EXT_VAL3 numeric(18, 3),
+        @EXT_VAL4 numeric(18, 3),
+        @EXT_VAL5 numeric(18, 3),
+        @ENTRY_DATE int,
+        @ENTRY_BY varchar(15)
         AS
 
         SET NOCOUNT ON
         INSERT INTO [dbo].[pbs_MC_JRNAL_{XXX}] ([TRANS_TYPE],
-[REFERENCE],
-[TRANS_DATE],
-[PERIOD],
-[DESCRIPTION],
-[CANDIDATE_ID],
-[PATIENT_CODE],
-[CLINIC],
-[CONV_CODE],
-[CONV_RATE],
-[PAYMENT_REF],
-[PAY_METHOD],
-[PAYMENT_DATE],
-[PAYMENT_PERIOD],
-[DIRECT_INVOICE],
-[INVOICE_INFO],
-[INVOICE_NO],
-[INVOICE_SERIAL],
-[INVOICE_BOOK],
-[INVOICE_DATE],
-[INVOICE_PERIOD],
-[VAT_RATE],
-[NC_PL0],
-[NC_PL1],
-[NC_PL2],
-[NC_PL3],
-[NC_PL4],
-[NC_PL5],
-[NC_PL6],
-[NC_PL7],
-[NC_PL8],
-[NC_PL9],
-[STATUS],
-[POSTING_DATE],
-[POSTED_BY],
-[EXT_DESC1],
-[EXT_DESC2],
-[EXT_DESC3],
-[EXT_DESC4],
-[EXT_DESC5],
-[EXT_DATE1],
-[EXT_DATE2],
-[EXT_DATE3],
-[EXT_DATE4],
-[EXT_DATE5],
-[EXT_VAL1],
-[EXT_VAL2],
-[EXT_VAL3],
-[EXT_VAL4],
-[EXT_VAL5],
-[ENTRY_DATE],
-[ENTRY_BY]) 
+        [REFERENCE],
+        [TRANS_DATE],
+        [PERIOD],
+        [DESCRIPTION],
+        [CANDIDATE_ID],
+        [PATIENT_CODE],
+        [CLINIC],
+        [CONV_CODE],
+        [CONV_RATE],
+        [PAYMENT_REF],
+        [PAY_METHOD],
+        [PAYMENT_DATE],
+        [PAYMENT_PERIOD],
+        [DIRECT_INVOICE],
+        [INVOICE_INFO],
+        [INVOICE_NO],
+        [INVOICE_SERIAL],
+        [INVOICE_BOOK],
+        [INVOICE_DATE],
+        [INVOICE_PERIOD],
+        [VAT_RATE],
+        [NC_PL0],
+        [NC_PL1],
+        [NC_PL2],
+        [NC_PL3],
+        [NC_PL4],
+        [NC_PL5],
+        [NC_PL6],
+        [NC_PL7],
+        [NC_PL8],
+        [NC_PL9],
+        [STATUS],
+        [POSTING_DATE],
+        [POSTED_BY],
+        [EXT_DESC1],
+        [EXT_DESC2],
+        [EXT_DESC3],
+        [EXT_DESC4],
+        [EXT_DESC5],
+        [EXT_DATE1],
+        [EXT_DATE2],
+        [EXT_DATE3],
+        [EXT_DATE4],
+        [EXT_DATE5],
+        [EXT_VAL1],
+        [EXT_VAL2],
+        [EXT_VAL3],
+        [EXT_VAL4],
+        [EXT_VAL5],
+        [ENTRY_DATE],
+        [ENTRY_BY])
         VALUES (@TRANS_TYPE,
-@REFERENCE,
-@TRANS_DATE,
-@PERIOD,
-@DESCRIPTION,
-@CANDIDATE_ID,
-@PATIENT_CODE,
-@CLINIC,
-@CONV_CODE,
-@CONV_RATE,
-@PAYMENT_REF,
-@PAY_METHOD,
-@PAYMENT_DATE,
-@PAYMENT_PERIOD,
-@DIRECT_INVOICE,
-@INVOICE_INFO,
-@INVOICE_NO,
-@INVOICE_SERIAL,
-@INVOICE_BOOK,
-@INVOICE_DATE,
-@INVOICE_PERIOD,
-@VAT_RATE,
-@NC_PL0,
-@NC_PL1,
-@NC_PL2,
-@NC_PL3,
-@NC_PL4,
-@NC_PL5,
-@NC_PL6,
-@NC_PL7,
-@NC_PL8,
-@NC_PL9,
-@STATUS,
-@POSTING_DATE,
-@POSTED_BY,
-@EXT_DESC1,
-@EXT_DESC2,
-@EXT_DESC3,
-@EXT_DESC4,
-@EXT_DESC5,
-@EXT_DATE1,
-@EXT_DATE2,
-@EXT_DATE3,
-@EXT_DATE4,
-@EXT_DATE5,
-@EXT_VAL1,
-@EXT_VAL2,
-@EXT_VAL3,
-@EXT_VAL4,
-@EXT_VAL5,
-@ENTRY_DATE,
-@ENTRY_BY)
+        @REFERENCE,
+        @TRANS_DATE,
+        @PERIOD,
+        @DESCRIPTION,
+        @CANDIDATE_ID,
+        @PATIENT_CODE,
+        @CLINIC,
+        @CONV_CODE,
+        @CONV_RATE,
+        @PAYMENT_REF,
+        @PAY_METHOD,
+        @PAYMENT_DATE,
+        @PAYMENT_PERIOD,
+        @DIRECT_INVOICE,
+        @INVOICE_INFO,
+        @INVOICE_NO,
+        @INVOICE_SERIAL,
+        @INVOICE_BOOK,
+        @INVOICE_DATE,
+        @INVOICE_PERIOD,
+        @VAT_RATE,
+        @NC_PL0,
+        @NC_PL1,
+        @NC_PL2,
+        @NC_PL3,
+        @NC_PL4,
+        @NC_PL5,
+        @NC_PL6,
+        @NC_PL7,
+        @NC_PL8,
+        @NC_PL9,
+        @STATUS,
+        @POSTING_DATE,
+        @POSTED_BY,
+        @EXT_DESC1,
+        @EXT_DESC2,
+        @EXT_DESC3,
+        @EXT_DESC4,
+        @EXT_DESC5,
+        @EXT_DATE1,
+        @EXT_DATE2,
+        @EXT_DATE3,
+        @EXT_DATE4,
+        @EXT_DATE5,
+        @EXT_VAL1,
+        @EXT_VAL2,
+        @EXT_VAL3,
+        @EXT_VAL4,
+        @EXT_VAL5,
+        @ENTRY_DATE,
+        @ENTRY_BY)
 
-         SET @JRNAL_NO = SCOPE_IDENTITY()
-
+        SET @JRNAL_NO = SCOPE_IDENTITY()
+        '
         END
       </Install>
     </DBO>
@@ -2791,117 +2833,118 @@
       <Install>
         IF NOT EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'[dbo].[pbs_MC_JRNAL_{XXX}_Update]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
         BEGIN
+        EXEC dbo.sp_executesql @statement = N'
         CREATE PROCEDURE [dbo].[pbs_MC_JRNAL_{XXX}_Update]
-        	@JRNAL_NO int,
-@TRANS_TYPE varchar(15),
-@REFERENCE varchar(15),
-@TRANS_DATE int,
-@PERIOD int,
-@DESCRIPTION nvarchar (200),
-@CANDIDATE_ID int,
-@PATIENT_CODE varchar(15),
-@CLINIC varchar(15),
-@CONV_CODE varchar(15),
-@CONV_RATE numeric(18, 9),
-@PAYMENT_REF nvarchar (50),
-@PAY_METHOD varchar(15),
-@PAYMENT_DATE int,
-@PAYMENT_PERIOD int,
-@DIRECT_INVOICE varchar(1),
-@INVOICE_INFO varchar(15),
-@INVOICE_NO varchar(15),
-@INVOICE_SERIAL varchar(15),
-@INVOICE_BOOK varchar(15),
-@INVOICE_DATE int,
-@INVOICE_PERIOD int,
-@VAT_RATE varchar(15),
-@NC_PL0 varchar(15),
-@NC_PL1 varchar(15),
-@NC_PL2 varchar(15),
-@NC_PL3 varchar(15),
-@NC_PL4 varchar(15),
-@NC_PL5 varchar(15),
-@NC_PL6 varchar(15),
-@NC_PL7 varchar(15),
-@NC_PL8 varchar(15),
-@NC_PL9 varchar(15),
-@STATUS varchar(15),
-@POSTING_DATE int,
-@POSTED_BY varchar(15),
-@EXT_DESC1 nvarchar (100),
-@EXT_DESC2 nvarchar (100),
-@EXT_DESC3 nvarchar (100),
-@EXT_DESC4 nvarchar (100),
-@EXT_DESC5 nvarchar (100),
-@EXT_DATE1 int,
-@EXT_DATE2 int,
-@EXT_DATE3 int,
-@EXT_DATE4 int,
-@EXT_DATE5 int,
-@EXT_VAL1 numeric(18, 3),
-@EXT_VAL2 numeric(18, 3),
-@EXT_VAL3 numeric(18, 3),
-@EXT_VAL4 numeric(18, 3),
-@EXT_VAL5 numeric(18, 3),
-@ENTRY_DATE int,
-@ENTRY_BY varchar(15)
+        @JRNAL_NO int,
+        @TRANS_TYPE varchar(15),
+        @REFERENCE varchar(15),
+        @TRANS_DATE int,
+        @PERIOD int,
+        @DESCRIPTION nvarchar (200),
+        @CANDIDATE_ID int,
+        @PATIENT_CODE varchar(15),
+        @CLINIC varchar(15),
+        @CONV_CODE varchar(15),
+        @CONV_RATE numeric(18, 9),
+        @PAYMENT_REF nvarchar (50),
+        @PAY_METHOD varchar(15),
+        @PAYMENT_DATE int,
+        @PAYMENT_PERIOD int,
+        @DIRECT_INVOICE varchar(1),
+        @INVOICE_INFO varchar(15),
+        @INVOICE_NO varchar(15),
+        @INVOICE_SERIAL varchar(15),
+        @INVOICE_BOOK varchar(15),
+        @INVOICE_DATE int,
+        @INVOICE_PERIOD int,
+        @VAT_RATE varchar(15),
+        @NC_PL0 varchar(15),
+        @NC_PL1 varchar(15),
+        @NC_PL2 varchar(15),
+        @NC_PL3 varchar(15),
+        @NC_PL4 varchar(15),
+        @NC_PL5 varchar(15),
+        @NC_PL6 varchar(15),
+        @NC_PL7 varchar(15),
+        @NC_PL8 varchar(15),
+        @NC_PL9 varchar(15),
+        @STATUS varchar(15),
+        @POSTING_DATE int,
+        @POSTED_BY varchar(15),
+        @EXT_DESC1 nvarchar (100),
+        @EXT_DESC2 nvarchar (100),
+        @EXT_DESC3 nvarchar (100),
+        @EXT_DESC4 nvarchar (100),
+        @EXT_DESC5 nvarchar (100),
+        @EXT_DATE1 int,
+        @EXT_DATE2 int,
+        @EXT_DATE3 int,
+        @EXT_DATE4 int,
+        @EXT_DATE5 int,
+        @EXT_VAL1 numeric(18, 3),
+        @EXT_VAL2 numeric(18, 3),
+        @EXT_VAL3 numeric(18, 3),
+        @EXT_VAL4 numeric(18, 3),
+        @EXT_VAL5 numeric(18, 3),
+        @ENTRY_DATE int,
+        @ENTRY_BY varchar(15)
         AS
 
         SET NOCOUNT ON
         UPDATE [dbo].[pbs_MC_JRNAL_{XXX}] SET [TRANS_TYPE] = @TRANS_TYPE,
-[REFERENCE] = @REFERENCE,
-[TRANS_DATE] = @TRANS_DATE,
-[PERIOD] = @PERIOD,
-[DESCRIPTION] = @DESCRIPTION,
-[CANDIDATE_ID] = @CANDIDATE_ID,
-[PATIENT_CODE] = @PATIENT_CODE,
-[CLINIC] = @CLINIC,
-[CONV_CODE] = @CONV_CODE,
-[CONV_RATE] = @CONV_RATE,
-[PAYMENT_REF] = @PAYMENT_REF,
-[PAY_METHOD] = @PAY_METHOD,
-[PAYMENT_DATE] = @PAYMENT_DATE,
-[PAYMENT_PERIOD] = @PAYMENT_PERIOD,
-[DIRECT_INVOICE] = @DIRECT_INVOICE,
-[INVOICE_INFO] = @INVOICE_INFO,
-[INVOICE_NO] = @INVOICE_NO,
-[INVOICE_SERIAL] = @INVOICE_SERIAL,
-[INVOICE_BOOK] = @INVOICE_BOOK,
-[INVOICE_DATE] = @INVOICE_DATE,
-[INVOICE_PERIOD] = @INVOICE_PERIOD,
-[VAT_RATE] = @VAT_RATE,
-[NC_PL0] = @NC_PL0,
-[NC_PL1] = @NC_PL1,
-[NC_PL2] = @NC_PL2,
-[NC_PL3] = @NC_PL3,
-[NC_PL4] = @NC_PL4,
-[NC_PL5] = @NC_PL5,
-[NC_PL6] = @NC_PL6,
-[NC_PL7] = @NC_PL7,
-[NC_PL8] = @NC_PL8,
-[NC_PL9] = @NC_PL9,
-[STATUS] = @STATUS,
-[POSTING_DATE] = @POSTING_DATE,
-[POSTED_BY] = @POSTED_BY,
-[EXT_DESC1] = @EXT_DESC1,
-[EXT_DESC2] = @EXT_DESC2,
-[EXT_DESC3] = @EXT_DESC3,
-[EXT_DESC4] = @EXT_DESC4,
-[EXT_DESC5] = @EXT_DESC5,
-[EXT_DATE1] = @EXT_DATE1,
-[EXT_DATE2] = @EXT_DATE2,
-[EXT_DATE3] = @EXT_DATE3,
-[EXT_DATE4] = @EXT_DATE4,
-[EXT_DATE5] = @EXT_DATE5,
-[EXT_VAL1] = @EXT_VAL1,
-[EXT_VAL2] = @EXT_VAL2,
-[EXT_VAL3] = @EXT_VAL3,
-[EXT_VAL4] = @EXT_VAL4,
-[EXT_VAL5] = @EXT_VAL5,
-[ENTRY_DATE] = @ENTRY_DATE,
-[ENTRY_BY] = @ENTRY_BY
+        [REFERENCE] = @REFERENCE,
+        [TRANS_DATE] = @TRANS_DATE,
+        [PERIOD] = @PERIOD,
+        [DESCRIPTION] = @DESCRIPTION,
+        [CANDIDATE_ID] = @CANDIDATE_ID,
+        [PATIENT_CODE] = @PATIENT_CODE,
+        [CLINIC] = @CLINIC,
+        [CONV_CODE] = @CONV_CODE,
+        [CONV_RATE] = @CONV_RATE,
+        [PAYMENT_REF] = @PAYMENT_REF,
+        [PAY_METHOD] = @PAY_METHOD,
+        [PAYMENT_DATE] = @PAYMENT_DATE,
+        [PAYMENT_PERIOD] = @PAYMENT_PERIOD,
+        [DIRECT_INVOICE] = @DIRECT_INVOICE,
+        [INVOICE_INFO] = @INVOICE_INFO,
+        [INVOICE_NO] = @INVOICE_NO,
+        [INVOICE_SERIAL] = @INVOICE_SERIAL,
+        [INVOICE_BOOK] = @INVOICE_BOOK,
+        [INVOICE_DATE] = @INVOICE_DATE,
+        [INVOICE_PERIOD] = @INVOICE_PERIOD,
+        [VAT_RATE] = @VAT_RATE,
+        [NC_PL0] = @NC_PL0,
+        [NC_PL1] = @NC_PL1,
+        [NC_PL2] = @NC_PL2,
+        [NC_PL3] = @NC_PL3,
+        [NC_PL4] = @NC_PL4,
+        [NC_PL5] = @NC_PL5,
+        [NC_PL6] = @NC_PL6,
+        [NC_PL7] = @NC_PL7,
+        [NC_PL8] = @NC_PL8,
+        [NC_PL9] = @NC_PL9,
+        [STATUS] = @STATUS,
+        [POSTING_DATE] = @POSTING_DATE,
+        [POSTED_BY] = @POSTED_BY,
+        [EXT_DESC1] = @EXT_DESC1,
+        [EXT_DESC2] = @EXT_DESC2,
+        [EXT_DESC3] = @EXT_DESC3,
+        [EXT_DESC4] = @EXT_DESC4,
+        [EXT_DESC5] = @EXT_DESC5,
+        [EXT_DATE1] = @EXT_DATE1,
+        [EXT_DATE2] = @EXT_DATE2,
+        [EXT_DATE3] = @EXT_DATE3,
+        [EXT_DATE4] = @EXT_DATE4,
+        [EXT_DATE5] = @EXT_DATE5,
+        [EXT_VAL1] = @EXT_VAL1,
+        [EXT_VAL2] = @EXT_VAL2,
+        [EXT_VAL3] = @EXT_VAL3,
+        [EXT_VAL4] = @EXT_VAL4,
+        [EXT_VAL5] = @EXT_VAL5,
+        [ENTRY_DATE] = @ENTRY_DATE,
+        [ENTRY_BY] = @ENTRY_BY
         WHERE [JRNAL_NO] = @JRNAL_NO
-        
+        '
         END
       </Install>
     </DBO>
@@ -2990,212 +3033,213 @@
       <Install>
         IF NOT EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'[dbo].[pbs_MC_LEDGER_{XXX}_Insert]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
         BEGIN
+        EXEC dbo.sp_executesql @statement = N'
         CREATE PROCEDURE [dbo].[pbs_MC_LEDGER_{XXX}_Insert]
-        	@LINE_NO int output,
-@REFERENCE varchar(15),
-@TRANS_TYPE varchar(15),
-@TRANS_DATE int,
-@PERIOD int,
-@CANDIDATE_ID int,
-@PATIENT_CODE varchar(15),
-@CLINIC varchar(15),
-@ITEM_CODE varchar(15),
-@DESCRIPTION nvarchar (200),
-@QUANTITY numeric(18, 3),
-@UNIT_CODE varchar(15),
-@UNIT_PRICE numeric(18, 5),
-@TRANS_AMT numeric(18, 3),
-@CONV_CODE varchar(15),
-@CONV_RATE numeric(18, 9),
-@AMOUNT numeric(18, 3),
-@D_C varchar(1),
-@PAYMENT_REF nvarchar (50),
-@PAY_METHOD varchar(15),
-@PAYMENT_DATE int,
-@PAYMENT_PERIOD int,
-@DIRECT_INVOICE varchar(1),
-@INVOICE_INFO varchar(15),
-@INVOICE_NO varchar(15),
-@INVOICE_SERIAL varchar(15),
-@INVOICE_BOOK varchar(15),
-@INVOICE_DATE int,
-@INVOICE_PERIOD int,
-@VAT_RATE varchar(15),
-@VAT_AMOUNT numeric(18, 3),
-@NC_PL0 varchar(15),
-@NC_PL1 varchar(15),
-@NC_PL2 varchar(15),
-@NC_PL3 varchar(15),
-@NC_PL4 varchar(15),
-@NC_PL5 varchar(15),
-@NC_PL6 varchar(15),
-@NC_PL7 varchar(15),
-@NC_PL8 varchar(15),
-@NC_PL9 varchar(15),
-@ALLOCATION varchar(1),
-@ALLOC_REF int,
-@ALLOC_DATE int,
-@ALLOC_PERIOD int,
-@STATUS varchar(15),
-@LOCK_FLAG varchar(1),
-@POSTING_DATE int,
-@POSTED_BY varchar(15),
-@HOLD_OP_ID varchar(15),
-@BPH_NO int,
-@PFD_NO int,
-@EXT_DESC1 nvarchar (100),
-@EXT_DESC2 nvarchar (100),
-@EXT_DESC3 nvarchar (100),
-@EXT_DESC4 nvarchar (100),
-@EXT_DESC5 nvarchar (100),
-@EXT_DATE1 int,
-@EXT_DATE2 int,
-@EXT_DATE3 int,
-@EXT_DATE4 int,
-@EXT_DATE5 int,
-@EXT_VAL1 numeric(18, 3),
-@EXT_VAL2 numeric(18, 3),
-@EXT_VAL3 numeric(18, 3),
-@EXT_VAL4 numeric(18, 3),
-@EXT_VAL5 numeric(18, 3)
+        @LINE_NO int output,
+        @REFERENCE varchar(15),
+        @TRANS_TYPE varchar(15),
+        @TRANS_DATE int,
+        @PERIOD int,
+        @CANDIDATE_ID int,
+        @PATIENT_CODE varchar(15),
+        @CLINIC varchar(15),
+        @ITEM_CODE varchar(15),
+        @DESCRIPTION nvarchar (200),
+        @QUANTITY numeric(18, 3),
+        @UNIT_CODE varchar(15),
+        @UNIT_PRICE numeric(18, 5),
+        @TRANS_AMT numeric(18, 3),
+        @CONV_CODE varchar(15),
+        @CONV_RATE numeric(18, 9),
+        @AMOUNT numeric(18, 3),
+        @D_C varchar(1),
+        @PAYMENT_REF nvarchar (50),
+        @PAY_METHOD varchar(15),
+        @PAYMENT_DATE int,
+        @PAYMENT_PERIOD int,
+        @DIRECT_INVOICE varchar(1),
+        @INVOICE_INFO varchar(15),
+        @INVOICE_NO varchar(15),
+        @INVOICE_SERIAL varchar(15),
+        @INVOICE_BOOK varchar(15),
+        @INVOICE_DATE int,
+        @INVOICE_PERIOD int,
+        @VAT_RATE varchar(15),
+        @VAT_AMOUNT numeric(18, 3),
+        @NC_PL0 varchar(15),
+        @NC_PL1 varchar(15),
+        @NC_PL2 varchar(15),
+        @NC_PL3 varchar(15),
+        @NC_PL4 varchar(15),
+        @NC_PL5 varchar(15),
+        @NC_PL6 varchar(15),
+        @NC_PL7 varchar(15),
+        @NC_PL8 varchar(15),
+        @NC_PL9 varchar(15),
+        @ALLOCATION varchar(1),
+        @ALLOC_REF int,
+        @ALLOC_DATE int,
+        @ALLOC_PERIOD int,
+        @STATUS varchar(15),
+        @LOCK_FLAG varchar(1),
+        @POSTING_DATE int,
+        @POSTED_BY varchar(15),
+        @HOLD_OP_ID varchar(15),
+        @BPH_NO int,
+        @PFD_NO int,
+        @EXT_DESC1 nvarchar (100),
+        @EXT_DESC2 nvarchar (100),
+        @EXT_DESC3 nvarchar (100),
+        @EXT_DESC4 nvarchar (100),
+        @EXT_DESC5 nvarchar (100),
+        @EXT_DATE1 int,
+        @EXT_DATE2 int,
+        @EXT_DATE3 int,
+        @EXT_DATE4 int,
+        @EXT_DATE5 int,
+        @EXT_VAL1 numeric(18, 3),
+        @EXT_VAL2 numeric(18, 3),
+        @EXT_VAL3 numeric(18, 3),
+        @EXT_VAL4 numeric(18, 3),
+        @EXT_VAL5 numeric(18, 3)
         AS
 
         SET NOCOUNT ON
         INSERT INTO [dbo].[pbs_MC_LEDGER_{XXX}] ([REFERENCE],
-[TRANS_TYPE],
-[TRANS_DATE],
-[PERIOD],
-[CANDIDATE_ID],
-[PATIENT_CODE],
-[CLINIC],
-[ITEM_CODE],
-[DESCRIPTION],
-[QUANTITY],
-[UNIT_CODE],
-[UNIT_PRICE],
-[TRANS_AMT],
-[CONV_CODE],
-[CONV_RATE],
-[AMOUNT],
-[D_C],
-[PAYMENT_REF],
-[PAY_METHOD],
-[PAYMENT_DATE],
-[PAYMENT_PERIOD],
-[DIRECT_INVOICE],
-[INVOICE_INFO],
-[INVOICE_NO],
-[INVOICE_SERIAL],
-[INVOICE_BOOK],
-[INVOICE_DATE],
-[INVOICE_PERIOD],
-[VAT_RATE],
-[VAT_AMOUNT],
-[NC_PL0],
-[NC_PL1],
-[NC_PL2],
-[NC_PL3],
-[NC_PL4],
-[NC_PL5],
-[NC_PL6],
-[NC_PL7],
-[NC_PL8],
-[NC_PL9],
-[ALLOCATION],
-[ALLOC_REF],
-[ALLOC_DATE],
-[ALLOC_PERIOD],
-[STATUS],
-[LOCK_FLAG],
-[POSTING_DATE],
-[POSTED_BY],
-[HOLD_OP_ID],
-[BPH_NO],
-[PFD_NO],
-[EXT_DESC1],
-[EXT_DESC2],
-[EXT_DESC3],
-[EXT_DESC4],
-[EXT_DESC5],
-[EXT_DATE1],
-[EXT_DATE2],
-[EXT_DATE3],
-[EXT_DATE4],
-[EXT_DATE5],
-[EXT_VAL1],
-[EXT_VAL2],
-[EXT_VAL3],
-[EXT_VAL4],
-[EXT_VAL5]) 
+        [TRANS_TYPE],
+        [TRANS_DATE],
+        [PERIOD],
+        [CANDIDATE_ID],
+        [PATIENT_CODE],
+        [CLINIC],
+        [ITEM_CODE],
+        [DESCRIPTION],
+        [QUANTITY],
+        [UNIT_CODE],
+        [UNIT_PRICE],
+        [TRANS_AMT],
+        [CONV_CODE],
+        [CONV_RATE],
+        [AMOUNT],
+        [D_C],
+        [PAYMENT_REF],
+        [PAY_METHOD],
+        [PAYMENT_DATE],
+        [PAYMENT_PERIOD],
+        [DIRECT_INVOICE],
+        [INVOICE_INFO],
+        [INVOICE_NO],
+        [INVOICE_SERIAL],
+        [INVOICE_BOOK],
+        [INVOICE_DATE],
+        [INVOICE_PERIOD],
+        [VAT_RATE],
+        [VAT_AMOUNT],
+        [NC_PL0],
+        [NC_PL1],
+        [NC_PL2],
+        [NC_PL3],
+        [NC_PL4],
+        [NC_PL5],
+        [NC_PL6],
+        [NC_PL7],
+        [NC_PL8],
+        [NC_PL9],
+        [ALLOCATION],
+        [ALLOC_REF],
+        [ALLOC_DATE],
+        [ALLOC_PERIOD],
+        [STATUS],
+        [LOCK_FLAG],
+        [POSTING_DATE],
+        [POSTED_BY],
+        [HOLD_OP_ID],
+        [BPH_NO],
+        [PFD_NO],
+        [EXT_DESC1],
+        [EXT_DESC2],
+        [EXT_DESC3],
+        [EXT_DESC4],
+        [EXT_DESC5],
+        [EXT_DATE1],
+        [EXT_DATE2],
+        [EXT_DATE3],
+        [EXT_DATE4],
+        [EXT_DATE5],
+        [EXT_VAL1],
+        [EXT_VAL2],
+        [EXT_VAL3],
+        [EXT_VAL4],
+        [EXT_VAL5])
         VALUES (@REFERENCE,
-@TRANS_TYPE,
-@TRANS_DATE,
-@PERIOD,
-@CANDIDATE_ID,
-@PATIENT_CODE,
-@CLINIC,
-@ITEM_CODE,
-@DESCRIPTION,
-@QUANTITY,
-@UNIT_CODE,
-@UNIT_PRICE,
-@TRANS_AMT,
-@CONV_CODE,
-@CONV_RATE,
-@AMOUNT,
-@D_C,
-@PAYMENT_REF,
-@PAY_METHOD,
-@PAYMENT_DATE,
-@PAYMENT_PERIOD,
-@DIRECT_INVOICE,
-@INVOICE_INFO,
-@INVOICE_NO,
-@INVOICE_SERIAL,
-@INVOICE_BOOK,
-@INVOICE_DATE,
-@INVOICE_PERIOD,
-@VAT_RATE,
-@VAT_AMOUNT,
-@NC_PL0,
-@NC_PL1,
-@NC_PL2,
-@NC_PL3,
-@NC_PL4,
-@NC_PL5,
-@NC_PL6,
-@NC_PL7,
-@NC_PL8,
-@NC_PL9,
-@ALLOCATION,
-@ALLOC_REF,
-@ALLOC_DATE,
-@ALLOC_PERIOD,
-@STATUS,
-@LOCK_FLAG,
-@POSTING_DATE,
-@POSTED_BY,
-@HOLD_OP_ID,
-@BPH_NO,
-@PFD_NO,
-@EXT_DESC1,
-@EXT_DESC2,
-@EXT_DESC3,
-@EXT_DESC4,
-@EXT_DESC5,
-@EXT_DATE1,
-@EXT_DATE2,
-@EXT_DATE3,
-@EXT_DATE4,
-@EXT_DATE5,
-@EXT_VAL1,
-@EXT_VAL2,
-@EXT_VAL3,
-@EXT_VAL4,
-@EXT_VAL5)
+        @TRANS_TYPE,
+        @TRANS_DATE,
+        @PERIOD,
+        @CANDIDATE_ID,
+        @PATIENT_CODE,
+        @CLINIC,
+        @ITEM_CODE,
+        @DESCRIPTION,
+        @QUANTITY,
+        @UNIT_CODE,
+        @UNIT_PRICE,
+        @TRANS_AMT,
+        @CONV_CODE,
+        @CONV_RATE,
+        @AMOUNT,
+        @D_C,
+        @PAYMENT_REF,
+        @PAY_METHOD,
+        @PAYMENT_DATE,
+        @PAYMENT_PERIOD,
+        @DIRECT_INVOICE,
+        @INVOICE_INFO,
+        @INVOICE_NO,
+        @INVOICE_SERIAL,
+        @INVOICE_BOOK,
+        @INVOICE_DATE,
+        @INVOICE_PERIOD,
+        @VAT_RATE,
+        @VAT_AMOUNT,
+        @NC_PL0,
+        @NC_PL1,
+        @NC_PL2,
+        @NC_PL3,
+        @NC_PL4,
+        @NC_PL5,
+        @NC_PL6,
+        @NC_PL7,
+        @NC_PL8,
+        @NC_PL9,
+        @ALLOCATION,
+        @ALLOC_REF,
+        @ALLOC_DATE,
+        @ALLOC_PERIOD,
+        @STATUS,
+        @LOCK_FLAG,
+        @POSTING_DATE,
+        @POSTED_BY,
+        @HOLD_OP_ID,
+        @BPH_NO,
+        @PFD_NO,
+        @EXT_DESC1,
+        @EXT_DESC2,
+        @EXT_DESC3,
+        @EXT_DESC4,
+        @EXT_DESC5,
+        @EXT_DATE1,
+        @EXT_DATE2,
+        @EXT_DATE3,
+        @EXT_DATE4,
+        @EXT_DATE5,
+        @EXT_VAL1,
+        @EXT_VAL2,
+        @EXT_VAL3,
+        @EXT_VAL4,
+        @EXT_VAL5)
 
-         SET @LINE_NO = SCOPE_IDENTITY()
-        
+        SET @LINE_NO = SCOPE_IDENTITY()
+        '
         END
       </Install>
     </DBO>
@@ -3203,145 +3247,146 @@
       <Install>
         IF NOT EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'[dbo].[pbs_MC_LEDGER_{XXX}_Update]') AND OBJECTPROPERTY(id,N'IsProcedure') = 1)
         BEGIN
+        EXEC dbo.sp_executesql @statement = N'
         CREATE PROCEDURE [dbo].[pbs_MC_LEDGER_{XXX}_Update]
-        	@LINE_NO int,
-@REFERENCE varchar(15),
-@TRANS_TYPE varchar(15),
-@TRANS_DATE int,
-@PERIOD int,
-@CANDIDATE_ID int,
-@PATIENT_CODE varchar(15),
-@CLINIC varchar(15),
-@ITEM_CODE varchar(15),
-@DESCRIPTION nvarchar (200),
-@QUANTITY numeric(18, 3),
-@UNIT_CODE varchar(15),
-@UNIT_PRICE numeric(18, 5),
-@TRANS_AMT numeric(18, 3),
-@CONV_CODE varchar(15),
-@CONV_RATE numeric(18, 9),
-@AMOUNT numeric(18, 3),
-@D_C varchar(1),
-@PAYMENT_REF nvarchar (50),
-@PAY_METHOD varchar(15),
-@PAYMENT_DATE int,
-@PAYMENT_PERIOD int,
-@DIRECT_INVOICE varchar(1),
-@INVOICE_INFO varchar(15),
-@INVOICE_NO varchar(15),
-@INVOICE_SERIAL varchar(15),
-@INVOICE_BOOK varchar(15),
-@INVOICE_DATE int,
-@INVOICE_PERIOD int,
-@VAT_RATE varchar(15),
-@VAT_AMOUNT numeric(18, 3),
-@NC_PL0 varchar(15),
-@NC_PL1 varchar(15),
-@NC_PL2 varchar(15),
-@NC_PL3 varchar(15),
-@NC_PL4 varchar(15),
-@NC_PL5 varchar(15),
-@NC_PL6 varchar(15),
-@NC_PL7 varchar(15),
-@NC_PL8 varchar(15),
-@NC_PL9 varchar(15),
-@ALLOCATION varchar(1),
-@ALLOC_REF int,
-@ALLOC_DATE int,
-@ALLOC_PERIOD int,
-@STATUS varchar(15),
-@LOCK_FLAG varchar(1),
-@POSTING_DATE int,
-@POSTED_BY varchar(15),
-@HOLD_OP_ID varchar(15),
-@BPH_NO int,
-@PFD_NO int,
-@EXT_DESC1 nvarchar (100),
-@EXT_DESC2 nvarchar (100),
-@EXT_DESC3 nvarchar (100),
-@EXT_DESC4 nvarchar (100),
-@EXT_DESC5 nvarchar (100),
-@EXT_DATE1 int,
-@EXT_DATE2 int,
-@EXT_DATE3 int,
-@EXT_DATE4 int,
-@EXT_DATE5 int,
-@EXT_VAL1 numeric(18, 3),
-@EXT_VAL2 numeric(18, 3),
-@EXT_VAL3 numeric(18, 3),
-@EXT_VAL4 numeric(18, 3),
-@EXT_VAL5 numeric(18, 3)
+        @LINE_NO int,
+        @REFERENCE varchar(15),
+        @TRANS_TYPE varchar(15),
+        @TRANS_DATE int,
+        @PERIOD int,
+        @CANDIDATE_ID int,
+        @PATIENT_CODE varchar(15),
+        @CLINIC varchar(15),
+        @ITEM_CODE varchar(15),
+        @DESCRIPTION nvarchar (200),
+        @QUANTITY numeric(18, 3),
+        @UNIT_CODE varchar(15),
+        @UNIT_PRICE numeric(18, 5),
+        @TRANS_AMT numeric(18, 3),
+        @CONV_CODE varchar(15),
+        @CONV_RATE numeric(18, 9),
+        @AMOUNT numeric(18, 3),
+        @D_C varchar(1),
+        @PAYMENT_REF nvarchar (50),
+        @PAY_METHOD varchar(15),
+        @PAYMENT_DATE int,
+        @PAYMENT_PERIOD int,
+        @DIRECT_INVOICE varchar(1),
+        @INVOICE_INFO varchar(15),
+        @INVOICE_NO varchar(15),
+        @INVOICE_SERIAL varchar(15),
+        @INVOICE_BOOK varchar(15),
+        @INVOICE_DATE int,
+        @INVOICE_PERIOD int,
+        @VAT_RATE varchar(15),
+        @VAT_AMOUNT numeric(18, 3),
+        @NC_PL0 varchar(15),
+        @NC_PL1 varchar(15),
+        @NC_PL2 varchar(15),
+        @NC_PL3 varchar(15),
+        @NC_PL4 varchar(15),
+        @NC_PL5 varchar(15),
+        @NC_PL6 varchar(15),
+        @NC_PL7 varchar(15),
+        @NC_PL8 varchar(15),
+        @NC_PL9 varchar(15),
+        @ALLOCATION varchar(1),
+        @ALLOC_REF int,
+        @ALLOC_DATE int,
+        @ALLOC_PERIOD int,
+        @STATUS varchar(15),
+        @LOCK_FLAG varchar(1),
+        @POSTING_DATE int,
+        @POSTED_BY varchar(15),
+        @HOLD_OP_ID varchar(15),
+        @BPH_NO int,
+        @PFD_NO int,
+        @EXT_DESC1 nvarchar (100),
+        @EXT_DESC2 nvarchar (100),
+        @EXT_DESC3 nvarchar (100),
+        @EXT_DESC4 nvarchar (100),
+        @EXT_DESC5 nvarchar (100),
+        @EXT_DATE1 int,
+        @EXT_DATE2 int,
+        @EXT_DATE3 int,
+        @EXT_DATE4 int,
+        @EXT_DATE5 int,
+        @EXT_VAL1 numeric(18, 3),
+        @EXT_VAL2 numeric(18, 3),
+        @EXT_VAL3 numeric(18, 3),
+        @EXT_VAL4 numeric(18, 3),
+        @EXT_VAL5 numeric(18, 3)
         AS
 
         SET NOCOUNT ON
         UPDATE [dbo].[pbs_MC_LEDGER_{XXX}] SET [REFERENCE] = @REFERENCE,
-[TRANS_TYPE] = @TRANS_TYPE,
-[TRANS_DATE] = @TRANS_DATE,
-[PERIOD] = @PERIOD,
-[CANDIDATE_ID] = @CANDIDATE_ID,
-[PATIENT_CODE] = @PATIENT_CODE,
-[CLINIC] = @CLINIC,
-[ITEM_CODE] = @ITEM_CODE,
-[DESCRIPTION] = @DESCRIPTION,
-[QUANTITY] = @QUANTITY,
-[UNIT_CODE] = @UNIT_CODE,
-[UNIT_PRICE] = @UNIT_PRICE,
-[TRANS_AMT] = @TRANS_AMT,
-[CONV_CODE] = @CONV_CODE,
-[CONV_RATE] = @CONV_RATE,
-[AMOUNT] = @AMOUNT,
-[D_C] = @D_C,
-[PAYMENT_REF] = @PAYMENT_REF,
-[PAY_METHOD] = @PAY_METHOD,
-[PAYMENT_DATE] = @PAYMENT_DATE,
-[PAYMENT_PERIOD] = @PAYMENT_PERIOD,
-[DIRECT_INVOICE] = @DIRECT_INVOICE,
-[INVOICE_INFO] = @INVOICE_INFO,
-[INVOICE_NO] = @INVOICE_NO,
-[INVOICE_SERIAL] = @INVOICE_SERIAL,
-[INVOICE_BOOK] = @INVOICE_BOOK,
-[INVOICE_DATE] = @INVOICE_DATE,
-[INVOICE_PERIOD] = @INVOICE_PERIOD,
-[VAT_RATE] = @VAT_RATE,
-[VAT_AMOUNT] = @VAT_AMOUNT,
-[NC_PL0] = @NC_PL0,
-[NC_PL1] = @NC_PL1,
-[NC_PL2] = @NC_PL2,
-[NC_PL3] = @NC_PL3,
-[NC_PL4] = @NC_PL4,
-[NC_PL5] = @NC_PL5,
-[NC_PL6] = @NC_PL6,
-[NC_PL7] = @NC_PL7,
-[NC_PL8] = @NC_PL8,
-[NC_PL9] = @NC_PL9,
-[ALLOCATION] = @ALLOCATION,
-[ALLOC_REF] = @ALLOC_REF,
-[ALLOC_DATE] = @ALLOC_DATE,
-[ALLOC_PERIOD] = @ALLOC_PERIOD,
-[STATUS] = @STATUS,
-[LOCK_FLAG] = @LOCK_FLAG,
-[POSTING_DATE] = @POSTING_DATE,
-[POSTED_BY] = @POSTED_BY,
-[HOLD_OP_ID] = @HOLD_OP_ID,
-[BPH_NO] = @BPH_NO,
-[PFD_NO] = @PFD_NO,
-[EXT_DESC1] = @EXT_DESC1,
-[EXT_DESC2] = @EXT_DESC2,
-[EXT_DESC3] = @EXT_DESC3,
-[EXT_DESC4] = @EXT_DESC4,
-[EXT_DESC5] = @EXT_DESC5,
-[EXT_DATE1] = @EXT_DATE1,
-[EXT_DATE2] = @EXT_DATE2,
-[EXT_DATE3] = @EXT_DATE3,
-[EXT_DATE4] = @EXT_DATE4,
-[EXT_DATE5] = @EXT_DATE5,
-[EXT_VAL1] = @EXT_VAL1,
-[EXT_VAL2] = @EXT_VAL2,
-[EXT_VAL3] = @EXT_VAL3,
-[EXT_VAL4] = @EXT_VAL4,
-[EXT_VAL5] = @EXT_VAL5
+        [TRANS_TYPE] = @TRANS_TYPE,
+        [TRANS_DATE] = @TRANS_DATE,
+        [PERIOD] = @PERIOD,
+        [CANDIDATE_ID] = @CANDIDATE_ID,
+        [PATIENT_CODE] = @PATIENT_CODE,
+        [CLINIC] = @CLINIC,
+        [ITEM_CODE] = @ITEM_CODE,
+        [DESCRIPTION] = @DESCRIPTION,
+        [QUANTITY] = @QUANTITY,
+        [UNIT_CODE] = @UNIT_CODE,
+        [UNIT_PRICE] = @UNIT_PRICE,
+        [TRANS_AMT] = @TRANS_AMT,
+        [CONV_CODE] = @CONV_CODE,
+        [CONV_RATE] = @CONV_RATE,
+        [AMOUNT] = @AMOUNT,
+        [D_C] = @D_C,
+        [PAYMENT_REF] = @PAYMENT_REF,
+        [PAY_METHOD] = @PAY_METHOD,
+        [PAYMENT_DATE] = @PAYMENT_DATE,
+        [PAYMENT_PERIOD] = @PAYMENT_PERIOD,
+        [DIRECT_INVOICE] = @DIRECT_INVOICE,
+        [INVOICE_INFO] = @INVOICE_INFO,
+        [INVOICE_NO] = @INVOICE_NO,
+        [INVOICE_SERIAL] = @INVOICE_SERIAL,
+        [INVOICE_BOOK] = @INVOICE_BOOK,
+        [INVOICE_DATE] = @INVOICE_DATE,
+        [INVOICE_PERIOD] = @INVOICE_PERIOD,
+        [VAT_RATE] = @VAT_RATE,
+        [VAT_AMOUNT] = @VAT_AMOUNT,
+        [NC_PL0] = @NC_PL0,
+        [NC_PL1] = @NC_PL1,
+        [NC_PL2] = @NC_PL2,
+        [NC_PL3] = @NC_PL3,
+        [NC_PL4] = @NC_PL4,
+        [NC_PL5] = @NC_PL5,
+        [NC_PL6] = @NC_PL6,
+        [NC_PL7] = @NC_PL7,
+        [NC_PL8] = @NC_PL8,
+        [NC_PL9] = @NC_PL9,
+        [ALLOCATION] = @ALLOCATION,
+        [ALLOC_REF] = @ALLOC_REF,
+        [ALLOC_DATE] = @ALLOC_DATE,
+        [ALLOC_PERIOD] = @ALLOC_PERIOD,
+        [STATUS] = @STATUS,
+        [LOCK_FLAG] = @LOCK_FLAG,
+        [POSTING_DATE] = @POSTING_DATE,
+        [POSTED_BY] = @POSTED_BY,
+        [HOLD_OP_ID] = @HOLD_OP_ID,
+        [BPH_NO] = @BPH_NO,
+        [PFD_NO] = @PFD_NO,
+        [EXT_DESC1] = @EXT_DESC1,
+        [EXT_DESC2] = @EXT_DESC2,
+        [EXT_DESC3] = @EXT_DESC3,
+        [EXT_DESC4] = @EXT_DESC4,
+        [EXT_DESC5] = @EXT_DESC5,
+        [EXT_DATE1] = @EXT_DATE1,
+        [EXT_DATE2] = @EXT_DATE2,
+        [EXT_DATE3] = @EXT_DATE3,
+        [EXT_DATE4] = @EXT_DATE4,
+        [EXT_DATE5] = @EXT_DATE5,
+        [EXT_VAL1] = @EXT_VAL1,
+        [EXT_VAL2] = @EXT_VAL2,
+        [EXT_VAL3] = @EXT_VAL3,
+        [EXT_VAL4] = @EXT_VAL4,
+        [EXT_VAL5] = @EXT_VAL5
         WHERE [LINE_NO] = @LINE_NO
-        
+        '
         END
       </Install>
     </DBO>
