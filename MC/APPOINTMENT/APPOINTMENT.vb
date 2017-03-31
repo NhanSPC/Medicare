@@ -31,15 +31,17 @@ Namespace MC
             Select e.PropertyName
                 Case "PatientCode"
                     Dim pt = PATIENTInfoList.GetPATIENTInfo(PatientCode)
-                    Gender = pt.Gender
-                    Phone = pt.Phone
-                    Name = pt.Fullname
-                    Dob = pt.Dob
-                    Email = pt.Email
-                    Address = pt.Address
-                    Ward = pt.Ward
-                    District = pt.District
-                    City = pt.City
+                    _gender = pt.Gender
+                    _phone = pt.Phone
+                    _name = pt.Fullname
+                    _dob.Text = pt.Dob
+                    _email = pt.Email
+                    _address = pt.Address
+                    _ward = pt.Ward
+                    _district = pt.District
+                    _city = pt.City
+
+                    PropertyHasChanged("Gender")
 
                     '    Case "OrderType"
                     '        If Not Me.GetOrderTypeInfo.ManualRef Then
@@ -76,9 +78,9 @@ Namespace MC
         Private _DTB As String = String.Empty
 
 
-        Private _lineNo As String = String.Empty
+        Private _lineNo As Integer
         <System.ComponentModel.DataObjectField(True, True)>
-        Public ReadOnly Property LineNo() As String
+        Public ReadOnly Property LineNo() As Integer
             Get
                 Return _lineNo
             End Get
@@ -133,7 +135,7 @@ Namespace MC
         End Property
 
         Private _dob As pbs.Helper.SmartDate = New pbs.Helper.SmartDate(0)
-        <CellInfo(GroupName:="Appointment Info", Tips:="Enter birthday of person make an appointment")>
+        <CellInfo("CALENDAR", GroupName:="Appointment Info", Tips:="Enter birthday of person make an appointment")>
         Public Property Dob() As String
             Get
                 Return _dob.Text
@@ -359,33 +361,35 @@ Namespace MC
         End Property
 
         Private _updated As pbs.Helper.SmartDate = New pbs.Helper.SmartDate()
-        Public Property Updated() As String
+        <CellInfo(Hidden:=True)>
+        Public ReadOnly Property Updated() As String
             Get
                 Return _updated.Text
             End Get
-            Set(ByVal value As String)
-                CanWriteProperty("Updated", True)
-                If value Is Nothing Then value = String.Empty
-                If Not _updated.Equals(value) Then
-                    _updated.Text = value
-                    PropertyHasChanged("Updated")
-                End If
-            End Set
+            'Set(ByVal value As String)
+            '    CanWriteProperty("Updated", True)
+            '    If value Is Nothing Then value = String.Empty
+            '    If Not _updated.Equals(value) Then
+            '        _updated.Text = value
+            '        PropertyHasChanged("Updated")
+            '    End If
+            'End Set
         End Property
 
         Private _updatedBy As String = String.Empty
-        Public Property UpdatedBy() As String
+        <CellInfo(Hidden:=True)>
+        Public ReadOnly Property UpdatedBy() As String
             Get
                 Return _updatedBy
             End Get
-            Set(ByVal value As String)
-                CanWriteProperty("UpdatedBy", True)
-                If value Is Nothing Then value = String.Empty
-                If Not _updatedBy.Equals(value) Then
-                    _updatedBy = value
-                    PropertyHasChanged("UpdatedBy")
-                End If
-            End Set
+            'Set(ByVal value As String)
+            '    CanWriteProperty("UpdatedBy", True)
+            '    If value Is Nothing Then value = String.Empty
+            '    If Not _updatedBy.Equals(value) Then
+            '        _updatedBy = value
+            '        PropertyHasChanged("UpdatedBy")
+            '    End If
+            'End Set
         End Property
 
 
@@ -397,7 +401,7 @@ Namespace MC
         'IComparable
         Public Function CompareTo(ByVal IDObject) As Integer Implements System.IComparable.CompareTo
             Dim ID = IDObject.ToString
-            Dim pLineNo As String = ID.Trim
+            Dim pLineNo As Integer = ID.Trim.ToInteger
             If _lineNo < pLineNo Then Return -1
             If _lineNo > pLineNo Then Return 1
             Return 0
@@ -469,7 +473,7 @@ Namespace MC
         End Function
 
         Public Shared Function NewAPPOINTMENT(ByVal pLineNo As String) As APPOINTMENT
-            If KeyDuplicated(pLineNo) Then ExceptionThower.BusinessRuleStop(String.Format(ResStr(ResStrConst.NOACCESS), ResStr("APPOINTMENT")))
+            'If KeyDuplicated(pLineNo) Then ExceptionThower.BusinessRuleStop(String.Format(ResStr(ResStrConst.NOACCESS), ResStr("APPOINTMENT")))
             Return DataPortal.Create(Of APPOINTMENT)(New Criteria(pLineNo))
         End Function
 
@@ -504,10 +508,11 @@ Namespace MC
 
         Public Function CloneAPPOINTMENT(ByVal pLineNo As String) As APPOINTMENT
 
-            If APPOINTMENT.KeyDuplicated(pLineNo) Then ExceptionThower.BusinessRuleStop(ResStr(ResStrConst.CreateAlreadyExists), Me.GetType.ToString.Leaf.Translate)
+            'If APPOINTMENT.KeyDuplicated(pLineNo) Then ExceptionThower.BusinessRuleStop(ResStr(ResStrConst.CreateAlreadyExists), Me.GetType.ToString.Leaf.Translate)
 
             Dim cloningAPPOINTMENT As APPOINTMENT = MyBase.Clone
-            cloningAPPOINTMENT._lineNo = pLineNo
+            cloningAPPOINTMENT._lineNo = 0
+            cloningAPPOINTMENT._DTB = Context.CurrentBECode
 
             'Todo:Remember to reset status of the new object here 
             cloningAPPOINTMENT.MarkNew()
@@ -524,10 +529,10 @@ Namespace MC
 
         <Serializable()>
         Private Class Criteria
-            Public _lineNo As String = String.Empty
+            Public _lineNo As Integer
 
             Public Sub New(ByVal pLineNo As String)
-                _lineNo = pLineNo
+                _lineNo = pLineNo.ToInteger
 
             End Sub
         End Class
@@ -543,7 +548,7 @@ Namespace MC
             Using ctx = ConnectionManager.GetManager
                 Using cm = ctx.Connection.CreateCommand()
                     cm.CommandType = CommandType.Text
-                    cm.CommandText = <SqlText>SELECT * FROM pbs_MC_APPOINTMENT_<%= _DTB %> WHERE LINE_NO= '<%= criteria._lineNo %>' </SqlText>.Value.Trim
+                    cm.CommandText = <SqlText>SELECT * FROM pbs_MC_APPOINTMENT_<%= _DTB %> WHERE LINE_NO= <%= criteria._lineNo %></SqlText>.Value.Trim
 
                     Using dr As New SafeDataReader(cm.ExecuteReader)
                         If dr.Read Then
@@ -589,7 +594,7 @@ Namespace MC
                         cm.CommandType = CommandType.StoredProcedure
                         cm.CommandText = String.Format("pbs_MC_APPOINTMENT_{0}_Insert", _DTB)
 
-                        cm.Parameters.AddWithValue("@LINE_NO", _lineNo.Trim.ToInteger).Direction = ParameterDirection.Output
+                        cm.Parameters.AddWithValue("@LINE_NO", _lineNo).Direction = ParameterDirection.Output
                         AddInsertParameters(cm)
                         cm.ExecuteNonQuery()
 
@@ -618,8 +623,8 @@ Namespace MC
             cm.Parameters.AddWithValue("@APPOINTMENT_TYPE", _appointmentType.Trim)
             cm.Parameters.AddWithValue("@REMINDER_DATE", _reminderDate.DBValue)
             cm.Parameters.AddWithValue("@NOTES", _notes.Trim)
-            cm.Parameters.AddWithValue("@UPDATED", _updated.DBValue)
-            cm.Parameters.AddWithValue("@UPDATED_BY", _updatedBy.Trim)
+            cm.Parameters.AddWithValue("@UPDATED", ToDay.ToSunDate)
+            cm.Parameters.AddWithValue("@UPDATED_BY", Context.CurrentUserCode)
         End Sub
 
 
@@ -631,7 +636,7 @@ Namespace MC
                         cm.CommandType = CommandType.StoredProcedure
                         cm.CommandText = String.Format("pbs_MC_APPOINTMENT_{0}_Update", _DTB)
 
-                        cm.Parameters.AddWithValue("@LINE_NO", _lineNo.Trim)
+                        cm.Parameters.AddWithValue("@LINE_NO", _lineNo)
                         AddInsertParameters(cm)
                         cm.ExecuteNonQuery()
 
@@ -650,7 +655,7 @@ Namespace MC
                 Using cm = ctx.Connection.CreateCommand()
 
                     cm.CommandType = CommandType.Text
-                    cm.CommandText = <SqlText>DELETE pbs_MC_APPOINTMENT_<%= _DTB %> WHERE LINE_NO= '<%= criteria._lineNo %>' </SqlText>.Value.Trim
+                    cm.CommandText = <SqlText>DELETE pbs_MC_APPOINTMENT_<%= _DTB %> WHERE LINE_NO= <%= criteria._lineNo %></SqlText>.Value.Trim
                     cm.ExecuteNonQuery()
 
                 End Using
@@ -658,11 +663,11 @@ Namespace MC
 
         End Sub
 
-        Protected Overrides Sub DataPortal_OnDataPortalInvokeComplete(ByVal e As Csla.DataPortalEventArgs)
-            If Csla.ApplicationContext.ExecutionLocation = ExecutionLocations.Server Then
-                APPOINTMENTInfoList.InvalidateCache()
-            End If
-        End Sub
+        'Protected Overrides Sub DataPortal_OnDataPortalInvokeComplete(ByVal e As Csla.DataPortalEventArgs)
+        '    If Csla.ApplicationContext.ExecutionLocation = ExecutionLocations.Server Then
+        '        APPOINTMENTInfoList.InvalidateCache()
+        '    End If
+        'End Sub
 
 
 #End Region 'Data Access                           
@@ -672,10 +677,10 @@ Namespace MC
             Return APPOINTMENTInfoList.ContainsCode(pLineNo)
         End Function
 
-        Public Shared Function KeyDuplicated(ByVal pLineNo As String) As Boolean
-            Dim SqlText = <SqlText>SELECT COUNT(*) FROM pbs_MC_APPOINTMENT_<%= Context.CurrentBECode %> WHERE LINE_NO= '<%= pLineNo %>'</SqlText>.Value.Trim
-            Return SQLCommander.GetScalarInteger(SqlText) > 0
-        End Function
+        'Public Shared Function KeyDuplicated(ByVal pLineNo As String) As Boolean
+        '    Dim SqlText = <SqlText>SELECT COUNT(*) FROM pbs_MC_APPOINTMENT_<%= Context.CurrentBECode %> WHERE LINE_NO= '<%= pLineNo %>'</SqlText>.Value.Trim
+        '    Return SQLCommander.GetScalarInteger(SqlText) > 0
+        'End Function
 #End Region
 
 #Region " IGenpart "
